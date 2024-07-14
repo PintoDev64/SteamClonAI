@@ -1,0 +1,19 @@
+{
+  "name": "steamclonai",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "web:dev": "npm run dev -w Web",
+    "ser:dev": "npm run dev -w Server",
+    "cli:dev": "npm run start -w Client"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "workspaces": [
+    "Client",
+    "Web",
+    "Server"
+  ]
+}

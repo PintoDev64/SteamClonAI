@@ -1,0 +1,12 @@
+{
+  "theme-picker:open-theme-picker": [
+    {
+      "modifiers": [
+        "Alt",
+        "Mod",
+        "Shift"
+      ],
+      "key": "T"
+    }
+  ]
+}
