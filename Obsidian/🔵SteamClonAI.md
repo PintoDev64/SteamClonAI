@@ -23,7 +23,7 @@ _Enlace a la demostración del proyecto, si aplica_
 **Instrucciones de Configuración**
 _Pasos para configurar y ejecutar el proyecto_
 - R/
-
-## DOC
+## Documentacion
 [💻ClientStructure](💻ClientStructure)
 [🧱ServerStructure](🧱ServerStructure.md)
+[🌐WebStructure](🌐WebStructure)

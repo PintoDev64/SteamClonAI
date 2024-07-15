@@ -1,9 +1,9 @@
 ## Tecnologías
 [Express](https://expressjs.com/), [JSON Web Tokens - jwt.io](https://jwt.io/), [MySQL](https://www.mysql.com/), [MongoDB](https://www.mongodb.com/), [Socket.IO](https://socket.io/)
 ## Server Hostings
-[Cloud Application Hosting | Render](https://render.com/) [Clever Cloud](https://www.clever-cloud.com/)
+[Render](https://render.com/) [Clever Cloud](https://www.clever-cloud.com/)
 ## Estructura
->[!NOTE] LISTA DE ENDPOINTS Y METODOS
+>[!NOTE] LISTA DE ENDPOINTS Y METODOS "src/modules"
 
 - #🔷Core Conexión A SteamWebServer
 	- **WEBSOCKET:** datos del usuario (Status, Notificaciones)

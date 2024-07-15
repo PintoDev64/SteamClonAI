@@ -4,12 +4,23 @@
     "type": "split",
     "children": [
       {
-        "id": "736cf575bdd9b253",
+        "id": "4159e266d70e2251",
         "type": "tabs",
-        "dimension": 56.55430711610487,
         "children": [
           {
-            "id": "13c728d0d3fe92fb",
+            "id": "76b121c395494013",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📚DatabaseStructure.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "3c8c488195e7027e",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -19,35 +30,9 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "488ea089931dfe5b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "🔵SteamClonAI.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ]
-      },
-      {
-        "id": "8404ed88d5b3369c",
-        "type": "tabs",
-        "dimension": 43.445692883895134,
-        "children": [
-          {
-            "id": "389fc6f0d6c90321",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {}
-            }
-          }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -76,7 +61,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#🔷Settings",
+                "query": "tag:#🔷Core",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -97,7 +82,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 318.5
   },
   "right": {
     "id": "c4819d7c0efcafbe",
@@ -113,6 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "🧱ServerStructure.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -129,6 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "🧱ServerStructure.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +137,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "🧱ServerStructure.md"
+              }
             }
           }
         ]
@@ -170,11 +159,26 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "389fc6f0d6c90321",
+  "active": "3c8c488195e7027e",
   "lastOpenFiles": [
+    "📚DatabaseStructure.md",
     "🧱ServerStructure.md",
-    "🔵SteamClonAI.md",
+    "Pictures/store page.png",
+    "Pictures/games.png",
+    "Pictures/client store.png",
+    "Pictures/client store-1.png",
     "💻ClientStructure.md",
+    "🌐WebStructure.md",
+    "🔵SteamClonAI.md",
+    "📖Desing.md",
+    "Pictures/browse.png",
+    "Pictures/profile settings.png",
+    "Pictures/privacy settings.png",
+    "Pictures/settings.png",
+    "Pictures/library collections.png",
+    "Pictures/library home detail view-1.png",
+    "Pictures",
+    "New folder",
     "SteamClonAI.md",
     "Steam.md",
     "Welcome.md"
