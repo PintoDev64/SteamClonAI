@@ -2,7 +2,7 @@ import { response } from 'express';
 import Database from '../..';
 
 type insertGameData = Promise<{ status: number; error?: any }>
-type findGameData = Promise<{ status: number; error?: any } | { [key: string]: any } | undefined | void>
+type findGameData = Promise<{ status: number; data?: any }>
 
 export default class GameData extends Database {
     constructor() {
@@ -35,19 +35,27 @@ export default class GameData extends Database {
             const db = await this.createConnection();
             const collection = db.collection('GameData');
 
+            //------> Test - Throw Error
+
+            // throw new Error()
+            
+            //------> Test - Throw Error
+
             const result = await collection.findOne({ idGame: idGame })
             if (result) {
                 const { _id, ...rest } = result
                 return {
-                    ...rest
+                    status: 200,
+                    data: {...rest}
                 }
             } else {
-                return undefined
+                return {
+                    status: 404
+                }
             }
         } catch (err: any) {
             return {
-                status: 500,
-                error: err.message
+                status: 500
             };
         } finally {
             await this.closeConnection();
