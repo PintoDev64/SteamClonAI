@@ -2,8 +2,12 @@ declare type DatabaseConstructor = {
     url: string
 }
 
+type HTTPCodes = "200" | "302" | "404" | "500"
+declare type MethodReturnStructure = { status: HTTPCodes; data?: any }
+
+declare type PublicIdType = string
+declare type IdGameType = { idGame: `${string}-${string}-${string}-${string}-${string}` }
 declare type GameDataType = {
-    idGame: `${string}-${string}-${string}-${string}-${string}`,
     name: string,
     shortDescription: string,
     icon: string,
@@ -69,4 +73,31 @@ declare type GameDataType = {
         }
     }[],
     about: string
+}
+
+declare type ProfileReviewsType = { 
+    data: [{
+		username: string,
+		image: string,
+		userUrl: string,
+		content: string,
+		date: `${string}-${string}-${string}` // "DD-MM-YYYY"
+	}]
+}
+
+declare type GameReviewsType = {
+	data: {
+		type: "recommended" | "non-recomended",
+		username: string,
+		image: string,
+		userUrl: string,
+		content: string,
+		date: `${string}-${string}-${string}` // "DD-MM-YYYY",
+		hours: number,
+		reactions: {
+			yes: number,
+			no: number,
+			funny: number
+		}
+	}[]
 }

@@ -1,8 +1,10 @@
 {
   "name": "steamserver",
   "version": "1.0.0",
+  "main": "./dist/index.js",
   "scripts": {
-    "dev": "tsc && node --watch ./dist/index.js",
+    "dev": "tsc && node --watch .",
+    "start": "tsc && node .",
     "build": "tsc"
   },
   "keywords": [],

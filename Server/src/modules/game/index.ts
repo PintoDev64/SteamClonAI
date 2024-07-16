@@ -1,53 +1,76 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
+import { randomUUID } from 'node:crypto'
 
 // Database
 import GameData from '../../database/models/GameData';
 
-// Constants
-import { DEFAULT_404, DEFAULT_500 } from '../../constants';
+// Utils
+import { HTTPResponses } from '../../utils';
+import GameReviews from '../../database/models/GameReviews';
 
 // Router
 const GameRouter = express.Router()
 
 // Database Classes
 const { insertGameData, findGameData } = new GameData()
+const { insertGameReview, createGameReview } = new GameReviews()
 
 // Local Constants
 const PathService = "/game"
 
+// Middleware
+function createIdGame(request: Request, response: Response, next: NextFunction) {
+    const { body } = request
+    // @ts-ignore
+    body.idGame = randomUUID()
+    request.body = body
+    next()
+}
+
 /**
  * 
  */
-GameRouter.post(PathService, async (request, response) => {
-    response.json({
-        operation: "insertGameData",
-        status: 200
+GameRouter.post(PathService, createIdGame, async (request, response) => {
+    const { body } = request
+    const gameInsert = await insertGameData(body)
+    await createGameReview({
+        idGame: body.idGame,
+        data: []
     })
-    response.json(await insertGameData(JSON.parse(request.body)))
+    response.json(gameInsert)
 })
 
 /**
  * 
  */
-GameRouter.get(PathService, async (request, response) => {
+GameRouter.get(PathService, (request, response) => {
     const { query } = request
     if (query.idGame) {
         findGameData({ idGame: query.idGame as string })
-        .then(({ status, data }) => {
-            if (status === 200) {
-                response.json(data)
-            } else if (status === 404) {
-                response.json(DEFAULT_404)
-            } else if (status === 500) {
-                response.json(DEFAULT_500)
-            } else if (status === 302) {
-                response.redirect("https://steam-clon-ai-web.vercel.app/")
-            }
-        })
-        .catch(err => console.log(err))
+            .then(({ status, data }) => {
+                HTTPResponses[status](response, data)
+            })
+            .catch(err => console.log(err))
     } else {
         response.redirect("https://steam-clon-ai-web.vercel.app/")
     }
+})
+
+/**
+ * 
+ */
+GameRouter.put(PathService, (request, response) => {
+    const { query, body } = request
+    if (query.idGame) {
+        insertGameReview({ data: body, idGame: query.idGame as string })
+            .then(({ status, data }) => {
+                HTTPResponses[status](response, data)
+            })
+            .catch(err => console.log(err))
+    } else {
+        response.redirect("https://steam-clon-ai-web.vercel.app/")
+    }
+
 })
 
 export default GameRouter

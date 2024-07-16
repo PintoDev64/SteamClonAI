@@ -4,8 +4,12 @@ import { MongoClient, Db } from 'mongodb'
 import { MONGODB_DBNAME, MONGODB_URI } from '../constants';
 
 export default class Database {
-    protected mongoClient: MongoClient = new MongoClient(MONGODB_URI);
+    protected mongoClient: MongoClient;
     protected db: Db | null = null;
+
+    constructor() {
+        this.mongoClient = new MongoClient(MONGODB_URI);
+    }
 
     protected async createConnection(): Promise<Db> {
         if (!this.db) {

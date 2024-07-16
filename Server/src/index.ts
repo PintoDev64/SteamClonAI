@@ -9,6 +9,8 @@ import { SERVERPORT } from "./constants";
 
 const SteamServer = express()
 
+SteamServer.use(express.json())
+
 SteamServer.disable("x-powered-by");
 
 SteamServer.use("/api", ApplictionRouter)
