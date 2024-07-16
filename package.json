@@ -5,6 +5,7 @@
   "scripts": {
     "web:dev": "npm run dev -w Web",
     "ser:dev": "npm run dev -w Server",
+    "ser:bui": "npm run build -w Server",
     "cli:dev": "npm run start -w Client"
   },
   "keywords": [],

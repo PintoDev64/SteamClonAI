@@ -44,7 +44,7 @@
 	}
 	platforms: ({
 		(Win | Mac | Lin): {
-		OS: string,
+			OS: string,
 			processor: string,
 			Memory: string,
 			Graphics: string,
@@ -53,7 +53,7 @@
 			SoundCard?: string,
 			AddiotionalNotes?: string,
 		}
-	})[],
+	}),
 	products: [{
 		name: string,
 		price: {

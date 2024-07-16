@@ -1,14 +1,18 @@
 import express from "express";
-import { config } from "dotenv"
+import { resolve } from 'node:path'
 
-config({
-    path: process.env.NODE_ENV === "development" ? "vars.development.env" : "vars.production.env"
-})
+// Main Router
+import ApplictionRouter from "./modules";
+
+// Const
+import { SERVERPORT } from "./constants";
 
 const SteamServer = express()
 
-SteamServer.disable("X-Powered-By");
+SteamServer.disable("x-powered-by");
 
-SteamServer.listen(() => {
-    console.log(`Steam Server Up on: ${process.env.PORT ?? 0}`);
+SteamServer.use("/api", ApplictionRouter)
+
+SteamServer.listen(SERVERPORT, () => {
+    console.log(`Steam Server Up on: ${SERVERPORT}`);
 })

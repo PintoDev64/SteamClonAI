@@ -1,1 +1,3 @@
-GET http://localhost:1234
+GET http://localhost:1234/api/v1/game/5ad0a5be-ea8d-47fb-bfc3-83ff95ca7165
+### 
+GET http://localhost:1234/api/v1/game/e8463af1-f89d-4746-a791-573949ead507
