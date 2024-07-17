@@ -1,19 +1,17 @@
-import Database from '..';
+import { MongoDatabase } from '..';
 
-type insertGameDataType = Promise<MethodReturnStructure>
-type findGameDataType = Promise<MethodReturnStructure>
-
-export default class GameData extends Database {
+export default class GameData extends MongoDatabase {
+    private collectionName = "GameData";
     constructor() {
         super();
         this.insertGameData = this.insertGameData.bind(this);
         this.findGameData = this.findGameData.bind(this);
     }
 
-    public async insertGameData(data: GameDataType & IdGameType): insertGameDataType {
+    public async insertGameData(data: GameDataType & IdGameType): GenericClassReturnType {
         try {
             const db = await this.createConnection();
-            const collection = db.collection('GameData');
+            const collection = db.collection(this.collectionName);
 
             await collection.insertOne(data);
             return {
@@ -29,10 +27,10 @@ export default class GameData extends Database {
         }
     }
 
-    public async findGameData({ idGame }: { idGame: string }): findGameDataType {
+    public async findGameData({ idGame }: { idGame: string }): GenericClassReturnType {
         try {
             const db = await this.createConnection();
-            const collection = db.collection('GameData');
+            const collection = db.collection(this.collectionName);
 
             //------> Test - Throw Error
 

@@ -1,21 +1,18 @@
-import Database from "..";
+import { MongoDatabase } from "..";
 
-type createGameReviewType = Promise<MethodReturnStructure>
-type insertGameReviewType = Promise<MethodReturnStructure>
-type findGameReviewType = Promise<MethodReturnStructure>
-
-export default class GameReviews extends Database {
+export default class ProfileReviews extends MongoDatabase {
+    private collectionName = "ProfileReviews";
     constructor() {
         super();
-        this.createGameReview = this.createGameReview.bind(this);
-        this.insertGameReview = this.insertGameReview.bind(this);
-        this.findGameReviews = this.findGameReviews.bind(this);
+        this.createProfileReview = this.createProfileReview.bind(this);
+        this.insertProfileReview = this.insertProfileReview.bind(this);
+        /* this.findProfileReviews = this.findProfileReviews.bind(this); */
     }
 
-    public async createGameReview(data: GameReviewsType & IdGameType): createGameReviewType {
+    public async createProfileReview(data: ProfileReviewsType & PublicIdType): GenericClassReturnType {
         try {
             const db = await this.createConnection();
-            const collection = db.collection('GameReviews');
+            const collection = db.collection(this.collectionName);
 
             await collection.insertOne(data);
             return {
@@ -31,19 +28,19 @@ export default class GameReviews extends Database {
         }
     }
 
-    public async insertGameReview({ data, idGame }: { data: GameReviewsType & IdGameType, idGame: string }): insertGameReviewType {
+    public async insertProfileReview({ data, publicId }: { data: ProfileReviewsType & PublicIdType, publicId: string }): GenericClassReturnType {
         try {
             const db = await this.createConnection();
-            const collection = db.collection('GameReviews');
+            const collection = db.collection(this.collectionName);
 
-            const result = await collection.findOne({ idGame });
+            const result = await collection.findOne({ publicId });
 
             if (result) {
                 const updatedData = [...result.data, data];
 
                 // Actualizamos el documento con el array `data` modificado
                 await collection.updateOne(
-                    { idGame },
+                    { publicId },
                     { $set: { data: updatedData } }
                 );
                 return {
@@ -64,10 +61,10 @@ export default class GameReviews extends Database {
         }
     }
 
-    public async findGameReviews({ idGame }: { idGame: string }): findGameReviewType {
+    /* public async findProfileReviews({ publicId }: { publicId: string }): findProfileReviewType {
         try {
             const db = await this.createConnection();
-            const collection = db.collection('GameReviews');
+            const collection = db.collection(this.collectionName);
 
             //------> Test - Throw Error
 
@@ -75,7 +72,7 @@ export default class GameReviews extends Database {
 
             //------> Test - Throw Error
 
-            const result = await collection.findOne({ idGame })
+            const result = await collection.findOne({ publicId })
             if (result) {
                 const { _id, ...rest } = result
                 return {
@@ -94,5 +91,5 @@ export default class GameReviews extends Database {
         } finally {
             await this.closeConnection();
         }
-    }
+    } */
 }

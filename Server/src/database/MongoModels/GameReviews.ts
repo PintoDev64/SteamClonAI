@@ -1,21 +1,18 @@
-import Database from "..";
+import { MongoDatabase } from "..";
 
-type createProfileReviewType = Promise<MethodReturnStructure>
-type insertProfileReviewType = Promise<MethodReturnStructure>
-type findProfileReviewType = Promise<MethodReturnStructure>
-
-export default class ProfileReviews extends Database {
+export default class GameReviews extends MongoDatabase {
+    private collectionName = "GameReviews";
     constructor() {
         super();
-        this.createProfileReview = this.createProfileReview.bind(this);
-        this.insertProfileReview = this.insertProfileReview.bind(this);
-        this.findProfileReviews = this.findProfileReviews.bind(this);
+        this.createGameReview = this.createGameReview.bind(this);
+        this.insertGameReview = this.insertGameReview.bind(this);
+        this.findGameReviews = this.findGameReviews.bind(this);
     }
 
-    public async createProfileReview(data: ProfileReviewsType & IdGameType): createProfileReviewType {
+    public async createGameReview(data: GameReviewsType & IdGameType): GenericClassReturnType {
         try {
             const db = await this.createConnection();
-            const collection = db.collection('GameReviews');
+            const collection = db.collection(this.collectionName);
 
             await collection.insertOne(data);
             return {
@@ -31,10 +28,10 @@ export default class ProfileReviews extends Database {
         }
     }
 
-    public async insertProfileReview({ data, idGame }: { data: ProfileReviewsType & IdGameType, idGame: string }): insertProfileReviewType {
+    public async insertGameReview({ data, idGame }: { data: GameReviewsType & IdGameType, idGame: string }): GenericClassReturnType {
         try {
             const db = await this.createConnection();
-            const collection = db.collection('GameReviews');
+            const collection = db.collection(this.collectionName);
 
             const result = await collection.findOne({ idGame });
 
@@ -64,10 +61,10 @@ export default class ProfileReviews extends Database {
         }
     }
 
-    public async findProfileReviews({ idGame }: { idGame: string }): findProfileReviewType {
+    public async findGameReviews({ idGame }: { idGame: string }): GenericClassReturnType {
         try {
             const db = await this.createConnection();
-            const collection = db.collection('GameReviews');
+            const collection = db.collection(this.collectionName);
 
             //------> Test - Throw Error
 

@@ -1,0 +1,19 @@
+### Test 1
+POST http://localhost:1234/api/v1/profile
+content-type: application/json
+
+{
+    "status": "Online",
+    "profileName": "pepito123",
+    "AccountName": "pepito123",
+    "realName": "pepito",
+    "vacStatus": 1,
+    "mail": "pepito@gmail.com",
+    "theme": 1,
+    "profilePicture": 1,
+    "backgroundImage": 1,
+    "password": "pepito123"
+}
+### 
+POST https://steamclonai.onrender.com/api/v1/profile
+### Test 2

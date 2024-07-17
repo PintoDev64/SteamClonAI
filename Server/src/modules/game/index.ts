@@ -2,11 +2,11 @@ import express, { NextFunction, Request, Response } from 'express';
 import { randomUUID } from 'node:crypto'
 
 // Database
-import GameData from '../../database/models/GameData';
+import GameData from '../../database/MongoModels/GameData';
 
 // Utils
 import { HTTPResponses } from '../../utils';
-import GameReviews from '../../database/models/GameReviews';
+import GameReviews from '../../database/MongoModels/GameReviews';
 
 // Router
 const GameRouter = express.Router()
