@@ -1,6 +1,6 @@
-import { MongoDatabase } from '..';
+import Database from '..';
 
-export default class GameData extends MongoDatabase {
+export default class GameData extends Database {
     private collectionName = "GameData";
     constructor() {
         super();
@@ -10,7 +10,7 @@ export default class GameData extends MongoDatabase {
 
     public async insertGameData(data: GameDataType & IdGameType): GenericClassReturnType {
         try {
-            const db = await this.createConnection();
+            const db = await this.createMongoConnection();
             const collection = db.collection(this.collectionName);
 
             await collection.insertOne(data);
@@ -23,13 +23,13 @@ export default class GameData extends MongoDatabase {
                 status: "500"
             };
         } finally {
-            await this.closeConnection();
+            await this.closeMongoConnection();
         }
     }
 
     public async findGameData({ idGame }: { idGame: string }): GenericClassReturnType {
         try {
-            const db = await this.createConnection();
+            const db = await this.createMongoConnection();
             const collection = db.collection(this.collectionName);
 
             //------> Test - Throw Error
@@ -55,7 +55,7 @@ export default class GameData extends MongoDatabase {
                 status: "500"
             };
         } finally {
-            await this.closeConnection();
+            await this.closeMongoConnection();
         }
     }
 }

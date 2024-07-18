@@ -3,17 +3,59 @@ POST http://localhost:1234/api/v1/profile
 content-type: application/json
 
 {
-    "status": "Online",
-    "profileName": "pepito123",
-    "AccountName": "pepito123",
-    "realName": "pepito",
+    "status": "Offline",
+    "profileName": "jose",
+    "AccountName": "jose51",
+    "realName": "jose alveira",
     "vacStatus": 1,
-    "mail": "pepito@gmail.com",
+    "mail": "jose51@gmail.com",
     "theme": 1,
     "profilePicture": 1,
     "backgroundImage": 1,
-    "password": "pepito123"
+    "password": "jose51"
 }
 ### 
 POST https://steamclonai.onrender.com/api/v1/profile
+content-type: application/json
+
+{
+    "status": "Offline",
+    "profileName": "jose",
+    "AccountName": "jose51",
+    "realName": "jose alveira",
+    "vacStatus": 1,
+    "mail": "jose51@gmail.com",
+    "theme": 1,
+    "profilePicture": 1,
+    "backgroundImage": 1,
+    "password": "jose51"
+}
 ### Test 2
+GET http://localhost:1234/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0
+
+### Test 3 - Make a Friend
+POST http://localhost:1234/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0
+content-type: application/json
+
+{
+    "From": "0f14ce24-fff7-42de-a664-1e5d2af3520d"
+}
+
+### Test 4 - Comment an Account
+POST http://localhost:1234/api/v1/profile/0f14ce24-fff7-42de-a664-1e5d2af3520d/comment
+content-type: application/json
+
+{
+    "publicId": "bf1f7936-c98f-4714-bb53-50dbb6d52fe0",
+	"content": "XDDDDD"
+}
+
+### Test 5 - Response To Friend Request
+POST http://localhost:1234/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0/confirmation
+content-type: application/json
+
+{
+    "responseFriend": true,
+    "publicId": "0f14ce24-fff7-42de-a664-1e5d2af3520d"
+}
+

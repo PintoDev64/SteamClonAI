@@ -1,6 +1,9 @@
-import { MongoDatabase } from "..";
+import { FieldPacket, QueryResult } from "mysql2";
+import Database from "..";
 
-export default class ProfileReviews extends MongoDatabase {
+type ProfileReviewsSendStructureType = { publicId: string, content: string }
+
+export default class ProfileReviews extends Database {
     private collectionName = "ProfileReviews";
     constructor() {
         super();
@@ -11,7 +14,7 @@ export default class ProfileReviews extends MongoDatabase {
 
     public async createProfileReview(data: ProfileReviewsType & PublicIdType): GenericClassReturnType {
         try {
-            const db = await this.createConnection();
+            const db = await this.createMongoConnection();
             const collection = db.collection(this.collectionName);
 
             await collection.insertOne(data);
@@ -24,25 +27,41 @@ export default class ProfileReviews extends MongoDatabase {
                 status: "500"
             };
         } finally {
-            await this.closeConnection();
+            await this.closeMongoConnection();
         }
     }
 
-    public async insertProfileReview({ data, publicId }: { data: ProfileReviewsType & PublicIdType, publicId: string }): GenericClassReturnType {
+    public async insertProfileReview({ data, publicId }: { data: ProfileReviewsSendStructureType, publicId: string }): GenericClassReturnType {
         try {
-            const db = await this.createConnection();
-            const collection = db.collection(this.collectionName);
+            const mysql = await this.createMysqlConnection()
+            const mongo = await this.createMongoConnection();
+            const collection = mongo.collection(this.collectionName);
 
             const result = await collection.findOne({ publicId });
 
-            if (result) {
-                const updatedData = [...result.data, data];
+            const [results]: [any, FieldPacket[]] = await mysql.query(
+                "SELECT PROFILE_NAME, PROFILE_PICTURE FROM User WHERE PUBLIC_ID = ?",
+                [data.publicId]
+            )
 
-                // Actualizamos el documento con el array `data` modificado
+            if (result) {
+                const queryResult: UserTableInterface = results[0]
+
+                const updatedData = [...result.data, {
+                    publicId: data.publicId,
+                    content: data.content,
+                    image: queryResult.PROFILE_PICTURE,
+                    username: queryResult.PROFILE_NAME,
+                    date: `${new Date().getDay()}-${new Date().getMonth()}-${new Date().getFullYear()}`
+                } as ProfileReviewsStructureType];
+
+                console.log(updatedData);
+
                 await collection.updateOne(
                     { publicId },
                     { $set: { data: updatedData } }
                 );
+
                 return {
                     status: "200",
                     data: "Operation Complete"
@@ -53,11 +72,13 @@ export default class ProfileReviews extends MongoDatabase {
                 }
             }
         } catch (err: any) {
+            console.log(err);
             return {
                 status: "500"
             };
         } finally {
-            await this.closeConnection();
+            await this.closeMysqlConnection();
+            await this.closeMongoConnection();
         }
     }
 

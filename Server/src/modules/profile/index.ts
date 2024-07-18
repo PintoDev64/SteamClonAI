@@ -1,44 +1,21 @@
-import express, { NextFunction, Request, Response } from 'express';
-import { sign } from 'jsonwebtoken'
+import express from 'express';
 import User from '../../database/MysqlModels/User';
-import { JWT_SECRET } from '../../constants';
-import { randomUUID } from 'crypto';
+import Friends from '../../database/MysqlModels/Friends';
+import ProfileReviews from '../../database/MongoModels/ProfileReviews';
 
 // Router
 const ProfileRouter = express.Router()
 
 // Database Classes
-const { createUser } = new User()
+const { insertProfileReview } = new ProfileReviews()
+const { createUser, getUser } = new User()
+const { submitFriendRequest, responseFriendRequest } = new Friends()
 
 // Local Constants
 const PathService = "/profile"
 
 // Middleware
-type bodyMiddlware = UserType & PasswordType
-function createPublicId(request: Request, response: Response, next: NextFunction) {
-    const { body }: { body: bodyMiddlware } = request
-
-    const tokenPayload = {
-        accountName: body.AccountName,
-        mail: body.mail,
-        password: body.password
-    };
-    const passwordPayload = {
-        password: body.password
-    }
-    
-    const tokenHash = sign(tokenPayload, JWT_SECRET, { expiresIn: "30d" })
-    const passwordHash = sign(passwordPayload, JWT_SECRET, { expiresIn: 7889400000 })
-
-    // @ts-ignore
-    body.publicId = randomUUID()
-    // @ts-ignore
-    body.token = tokenHash
-    body.password = passwordHash
-
-    request.body = body
-    next()
-}
+import { createPublicId } from './middleware';
 
 /**
  * 
@@ -48,6 +25,57 @@ ProfileRouter.post(PathService, createPublicId, async (request, response) => {
     const { body }: { body: bodyPOST } = request
     const userCreated = await createUser(body)
     response.json(userCreated)
+})
+
+/**
+ * 
+ */
+ProfileRouter.get(`${PathService}/:publicId`, async (request, response)  => {
+    const { params } = request
+    const users = await getUser({ publicId: params.publicId })
+    response.json(users)
+})
+
+/**
+ * 
+ */
+type friendRequestType = { From: string }
+ProfileRouter.post(`${PathService}/:publicId`, async (request, response)  => {
+    const { body, params }: { body: friendRequestType, params: { publicId: string } } = request
+    const relation = await submitFriendRequest({
+        friendOne: body.From,
+        friendTwo: params.publicId
+    })
+    response.json(relation)
+})
+
+/**
+ * 
+ */
+type ProfileReviewsSendStructureType = { publicId: string, content: string }
+ProfileRouter.post(`${PathService}/:publicId/comment`, async (request, response)  => {
+    const { body, params }: { body: ProfileReviewsSendStructureType, params: { publicId: string } } = request
+    const comment = await insertProfileReview({
+        data: body,
+        publicId: params.publicId
+    })
+    response.json(comment)
+})
+
+/**
+ * 
+ */
+type Confirmation = { responseFriend: boolean, publicId: string }
+ProfileRouter.post(`${PathService}/:publicId/confirmation`, async (request, response) => {
+    const { body, params } = request;
+    const { publicId, responseFriend }: Confirmation = body;
+    
+    const FriendRequet = await responseFriendRequest({
+        response: responseFriend,
+        requestFriend: params.publicId,
+        yourPublicId: publicId
+    })
+    response.json(FriendRequet)
 })
 
 export default ProfileRouter

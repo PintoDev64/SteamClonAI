@@ -126,7 +126,7 @@
 	publicId: string,
 	data: [{
 		username: string,
-		image: string<url,
+		image: number,
 		userUrl: string<url>,
 		content: string,
 		date: "DD-MM-YYYY"
@@ -136,11 +136,10 @@
 ### Friends Chat
 ```json
 {
-	relationId: string,
+	relationId: number,
 	data: [{
 		username: string,
-		image: string<url,
-		userUrl: string<url>,
+		image: number,
 		content: string,
 		date: "DD-MM-YYYY"
 	}]
@@ -183,6 +182,11 @@ STATUS: BOOLEAN
 FRIEND_ONE_ID: FOREING KEY - PUBLIC_ID (USERS)
 FRIEND_TWO_ID: FOREING KEY - PUBLIC_ID (USERS)
 ```
+### Notifications
+```sql
+ACCOUNT_ID: FOREING KEY - PUBLIC_ID (USERS)
+NOTIFICATIONS: JSON([{ publicId: string, message: string }])
+```
 ### Cart
 ```sql
 ACCOUNT_ID: FOREING KEY - ACCOUNT_ID (USERS)
@@ -192,9 +196,4 @@ ITEMS: JSON([type<Juegos>{ name, price, platform, images[0] }, ...rest])
 ```sql
 ACCOUNT_ID: FOREING KEY - PUBLIC_ID (USERS)
 ITEMS: JSON([type<Juegos & { dateAdded }>{ name, price, platform, images[0], categories, releaseDate, dateAdded }, ...rest])
-```
-### Notifications
-```sql
-ACCOUNT_ID: FOREING KEY - PUBLIC_ID (USERS)
-NOTIFICATIONS: JSON([{ publicId: string, message: string }])
 ```

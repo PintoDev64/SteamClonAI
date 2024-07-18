@@ -147,3 +147,5 @@ Client/.vite/
 # Electron-Forge
 Client/out/
 
+
+.vercel

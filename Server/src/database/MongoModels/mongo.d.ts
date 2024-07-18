@@ -70,29 +70,30 @@ declare type GameDataType = {
     about: string
 }
 
-declare type ProfileReviewsType = { 
-    data: [{
-		username: string,
-		image: string,
-		userUrl: string,
-		content: string,
-		date: `${string}-${string}-${string}` // "DD-MM-YYYY"
-	}]
+declare type ProfileReviewsStructureType = {
+    publicId: `${string}-${string}-${string}-${string}-${string}`,
+    username: string,
+    image: number,
+    content: string,
+    date: `${string}-${string}-${string}` // "DD-MM-YYYY"
+}
+declare type ProfileReviewsType = {
+    data: ProfileReviewsStructureType[]
 }
 
 declare type GameReviewsType = {
-	data: {
-		type: "recommended" | "non-recomended",
-		username: string,
-		image: string,
-		userUrl: string,
-		content: string,
-		date: `${string}-${string}-${string}` // "DD-MM-YYYY",
-		hours: number,
-		reactions: {
-			yes: number,
-			no: number,
-			funny: number
-		}
-	}[]
+    data: {
+        type: "recommended" | "non-recomended",
+        username: string,
+        image: string,
+        userUrl: string,
+        content: string,
+        date: `${string}-${string}-${string}` // "DD-MM-YYYY",
+        hours: number,
+        reactions: {
+            yes: number,
+            no: number,
+            funny: number
+        }
+    }[]
 }

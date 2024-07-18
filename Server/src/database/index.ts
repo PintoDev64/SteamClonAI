@@ -4,15 +4,16 @@ import { createConnection, Connection } from 'mysql2/promise';
 // Constants
 import { MONGODB_DBNAME, MONGODB_URI, MYSQLDB_URI, MYSQLDB_DBNAME, MYSQLDB_USER, MYSQLDB_PASSWORD, MYSQLDB_PORT } from '../constants';
 
-export class MongoDatabase {
+export default class Database {
     protected mongoClient: MongoClient;
     protected db: Db | null = null;
+    protected mysqlClient: Connection | null = null;
 
     constructor() {
         this.mongoClient = new MongoClient(MONGODB_URI);
     }
 
-    protected async createConnection(): Promise<Db> {
+    protected async createMongoConnection(): Promise<Db> {
         if (!this.db) {
             await this.mongoClient.connect();
             this.db = this.mongoClient.db(MONGODB_DBNAME);
@@ -20,16 +21,7 @@ export class MongoDatabase {
         return this.db;
     }
 
-    protected async closeConnection(): Promise<void> {
-        await this.mongoClient.close();
-        this.db = null;
-    }
-}
-
-export class MysqlDatabase {
-    protected mysqlClient: Connection | null = null;
-
-    protected async createConnection(): Promise<Connection> {
+    protected async createMysqlConnection(): Promise<Connection> {
         if (!this.mysqlClient) {
             this.mysqlClient = await createConnection({
                 host: MYSQLDB_URI,
@@ -47,7 +39,12 @@ export class MysqlDatabase {
         return this.mysqlClient;
     }
 
-    protected async closeConnection(): Promise<void> {
+    protected async closeMongoConnection(): Promise<void> {
+        await this.mongoClient.close();
+        this.db = null;
+    }
+
+    protected async closeMysqlConnection(): Promise<void> {
         this.mysqlClient = null
     }
 }

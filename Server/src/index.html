@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      /* Estilo simple para el chat */
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        padding: 8px;
+        margin-bottom: 10px;
+        background-color: #f4f4f4;
+      }
+      input {
+        padding: 10px;
+        width: calc(100% - 22px);
+        margin-bottom: 10px;
+      }
+      button {
+        padding: 10px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="messages"></div>
+    <input id="m" autocomplete="off" /><button>Send</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      // Conectar al namespace /chat
+      var socket = io('/chat');
+      var input = document.getElementById('m');
+
+      document.querySelector('button').addEventListener('click', function() {
+        socket.emit('chat message', input.value);
+        input.value = '';
+        return false;
+      });
+
+      socket.on('chat message', function(msg) {
+        let imageElement = document.createElement("img")
+        imageElement.src = msg
+        imageElement.onload = () => {
+            document.getElementById('messages').appendChild(imageElement);
+        }
+      });
+    </script>
+  </body>
+</html>

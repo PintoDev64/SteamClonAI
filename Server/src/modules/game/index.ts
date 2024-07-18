@@ -1,5 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express';
-import { randomUUID } from 'node:crypto'
+import express from 'express';
 
 // Database
 import GameData from '../../database/MongoModels/GameData';
@@ -19,16 +18,10 @@ const { insertGameReview, createGameReview } = new GameReviews()
 const PathService = "/game"
 
 // Middleware
-function createIdGame(request: Request, response: Response, next: NextFunction) {
-    const { body } = request
-    // @ts-ignore
-    body.idGame = randomUUID()
-    request.body = body
-    next()
-}
+import { createIdGame } from './middleware';
 
 /**
- * 
+ * Crea un juego
  */
 GameRouter.post(PathService, createIdGame, async (request, response) => {
     const { body } = request

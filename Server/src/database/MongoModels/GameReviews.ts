@@ -1,6 +1,6 @@
-import { MongoDatabase } from "..";
+import Database from "..";
 
-export default class GameReviews extends MongoDatabase {
+export default class GameReviews extends Database {
     private collectionName = "GameReviews";
     constructor() {
         super();
@@ -11,7 +11,7 @@ export default class GameReviews extends MongoDatabase {
 
     public async createGameReview(data: GameReviewsType & IdGameType): GenericClassReturnType {
         try {
-            const db = await this.createConnection();
+            const db = await this.createMongoConnection();
             const collection = db.collection(this.collectionName);
 
             await collection.insertOne(data);
@@ -24,13 +24,13 @@ export default class GameReviews extends MongoDatabase {
                 status: "500"
             };
         } finally {
-            await this.closeConnection();
+            await this.closeMongoConnection();
         }
     }
 
     public async insertGameReview({ data, idGame }: { data: GameReviewsType & IdGameType, idGame: string }): GenericClassReturnType {
         try {
-            const db = await this.createConnection();
+            const db = await this.createMongoConnection();
             const collection = db.collection(this.collectionName);
 
             const result = await collection.findOne({ idGame });
@@ -57,13 +57,13 @@ export default class GameReviews extends MongoDatabase {
                 status: "500"
             };
         } finally {
-            await this.closeConnection();
+            await this.closeMongoConnection();
         }
     }
 
     public async findGameReviews({ idGame }: { idGame: string }): GenericClassReturnType {
         try {
-            const db = await this.createConnection();
+            const db = await this.createMongoConnection();
             const collection = db.collection(this.collectionName);
 
             //------> Test - Throw Error
@@ -89,7 +89,7 @@ export default class GameReviews extends MongoDatabase {
                 status: "500"
             };
         } finally {
-            await this.closeConnection();
+            await this.closeMongoConnection();
         }
     }
 }
