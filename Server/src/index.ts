@@ -1,13 +1,19 @@
 import express from "express";
-import { join } from 'node:path';
 import { createServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
+import { join } from "node:path";
 
 // Main Router
 import ApplictionRouter from "./modules";
 
 // Const
 import { SERVERPORT } from "./constants";
+
+// Websockets
+import ChatWebsocket from "./modules/chats";
+
+// Websockets Middleware
+import checkChatIdentification from "./modules/chats/middleware";
 
 const SteamServer = express();
 const httpServer = createServer(SteamServer);
@@ -18,23 +24,21 @@ SteamServer.disable("x-powered-by");
 
 SteamServer.use("/api", ApplictionRouter);
 
-SteamServer.get("/chat", (req, res) => {
-    res.sendFile(join(__dirname, '../src/index.html'));
+SteamServer.get("/chat1", (req, res) => {
+    res.sendFile(join(__dirname, '../src/chat1.html'));
+});
+SteamServer.get("/chat2", (req, res) => {
+    res.sendFile(join(__dirname, '../src/chat2.html'));
 });
 
-// Configuración de Socket.IO
+// ------------> Socket.IO Config - "/chat"
 const Websocket = io.of("/chat")
-Websocket.on("connection", (socket) => {
-    console.log('a user connected to /chat');
-    socket.on('disconnect', () => {
-        console.log('user disconnected from /chat');
-    });
+Websocket.use(checkChatIdentification)
+Websocket.on("connection", ChatWebsocket);
 
-    socket.on('chat message', (msg) => {
-        Websocket.emit('chat message', msg);
-    });
-});
+// ------------> Socket.IO Config - "/notifications"
 
+// Server Listing
 httpServer.listen(SERVERPORT, () => {
     console.log(`Steam Server Up on: http://localhost:${SERVERPORT}`);
 });

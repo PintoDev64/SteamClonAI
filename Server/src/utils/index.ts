@@ -25,3 +25,9 @@ export const HTTPResponses = {
         response.json(DEFAULT_500)
     }
 }
+
+// |-----------------------> Functions
+
+export function creteNewDate(): `${string}-${string}-${string}` {
+    return `${new Date().getDay()}-${new Date().getMonth()}-${new Date().getFullYear()}`
+}

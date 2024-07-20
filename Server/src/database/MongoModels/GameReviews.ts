@@ -1,15 +1,16 @@
 import Database from "..";
+import { CreateGameReviewParam, GameReviewContract, GetGameReviewsParams, InsertGameReviewParams } from "./contracts/GameReviewContract";
 
-export default class GameReviews extends Database {
+export default class GameReviews extends Database implements GameReviewContract {
     private collectionName = "GameReviews";
     constructor() {
         super();
         this.createGameReview = this.createGameReview.bind(this);
         this.insertGameReview = this.insertGameReview.bind(this);
-        this.findGameReviews = this.findGameReviews.bind(this);
+        this.getGameReviews = this.getGameReviews.bind(this);
     }
 
-    public async createGameReview(data: GameReviewsType & IdGameType): GenericClassReturnType {
+    public async createGameReview(data: CreateGameReviewParam): GenericClassReturnType {
         try {
             const db = await this.createMongoConnection();
             const collection = db.collection(this.collectionName);
@@ -28,7 +29,7 @@ export default class GameReviews extends Database {
         }
     }
 
-    public async insertGameReview({ data, idGame }: { data: GameReviewsType & IdGameType, idGame: string }): GenericClassReturnType {
+    public async insertGameReview({ data, idGame }: InsertGameReviewParams): GenericClassReturnType {
         try {
             const db = await this.createMongoConnection();
             const collection = db.collection(this.collectionName);
@@ -61,16 +62,10 @@ export default class GameReviews extends Database {
         }
     }
 
-    public async findGameReviews({ idGame }: { idGame: string }): GenericClassReturnType {
+    public async getGameReviews({ idGame }: GetGameReviewsParams): GenericClassReturnType {
         try {
             const db = await this.createMongoConnection();
             const collection = db.collection(this.collectionName);
-
-            //------> Test - Throw Error
-
-            // throw new Error()
-
-            //------> Test - Throw Error
 
             const result = await collection.findOne({ idGame })
             if (result) {

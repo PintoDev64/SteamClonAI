@@ -38,6 +38,15 @@ POST http://localhost:1234/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0
 content-type: application/json
 
 {
+    "From": "e3722ea6-0dec-4b78-8fe8-4ede8ad0ef0a"
+}
+
+### Test 3 - Make a Friend to Another
+
+POST http://localhost:1234/api/v1/profile/e3722ea6-0dec-4b78-8fe8-4ede8ad0ef0a
+content-type: application/json
+
+{
     "From": "0f14ce24-fff7-42de-a664-1e5d2af3520d"
 }
 
@@ -52,6 +61,15 @@ content-type: application/json
 
 ### Test 5 - Response To Friend Request
 POST http://localhost:1234/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0/confirmation
+content-type: application/json
+
+{
+    "responseFriend": true,
+    "publicId": "e3722ea6-0dec-4b78-8fe8-4ede8ad0ef0a"
+}
+
+### Test 5 - Response To Friend Request to Another
+POST http://localhost:1234/api/v1/profile/e3722ea6-0dec-4b78-8fe8-4ede8ad0ef0a/confirmation
 content-type: application/json
 
 {

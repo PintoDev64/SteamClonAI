@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Socket.IO chat</title>
+  <style>
+    /* Estilo simple para el chat */
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      padding: 8px;
+      margin-bottom: 10px;
+      background-color: #f4f4f4;
+    }
+
+    input {
+      padding: 10px;
+      width: calc(100% - 22px);
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Chat - 1</h1>
+  <div id="messages"></div>
+  <input id="m" autocomplete="off" /><button>Send</button>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    let messages
+    const button = document.querySelector('button')
+    const input = document.getElementById('m');
+    const messagesList = document.getElementById('messages');
+    // Conectar al namespace /chat
+    var socket = io('/chat', {
+      query: {
+        chatId: 7,
+        yourPublicId: "0f14ce24-fff7-42de-a664-1e5d2af3520d"
+      }
+    });
+
+    button.addEventListener('click', function () {
+      socket.emit('chat message', {
+        yourFriendId: "bf1f7936-c98f-4714-bb53-50dbb6d52fe0",
+        ProfileImage: "https://i.pinimg.com/236x/03/4b/de/034bde783ea726b922100c86547831e8.jpg",
+        ProfileName: "jose",
+        message: input.value
+      });
+      input.value = '';
+      return false;
+    });
+
+    input.addEventListener("keyup", (_event) => {
+      if (_event.keyCode === 13) {
+        button.click()
+      }
+    })
+
+    socket.once('get messages', (data) => {
+      console.log(data);
+      messages = data
+      renderMessages(data)
+      ScrollSmoth()
+    })
+
+    function renderMessages(messagesData) {
+      const item = document.createElement('li');
+      const img = document.createElement('img');
+      console.log("cargando elementos");
+      // Crear un elemento <li> para cada mensaje en el array
+      messagesData.map((msg, _index) => {
+        messagesList.innerHTML += `
+        <li><img src="${msg.image}" width="50" height="50">${msg.username}: ${msg.content}</li>
+        `
+      });
+    }
+
+    function ScrollSmoth() {
+      const lastMessage = messagesList.lastElementChild;
+      lastMessage.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    socket.on('chat message', function (msg) {
+      messages.push(msg)
+      renderMessages(messages)
+      ScrollSmoth()
+    });
+
+    socket.on('connect_error', (err) => {
+      console.error(`Connection failed: ${err.message}`);
+    });
+  </script>
+</body>
+
+</html>

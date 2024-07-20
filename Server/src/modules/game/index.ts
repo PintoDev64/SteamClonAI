@@ -11,7 +11,7 @@ import GameReviews from '../../database/MongoModels/GameReviews';
 const GameRouter = express.Router()
 
 // Database Classes
-const { insertGameData, findGameData } = new GameData()
+const { insertGameData, getGameData } = new GameData()
 const { insertGameReview, createGameReview } = new GameReviews()
 
 // Local Constants
@@ -39,7 +39,7 @@ GameRouter.post(PathService, createIdGame, async (request, response) => {
 GameRouter.get(PathService, (request, response) => {
     const { query } = request
     if (query.idGame) {
-        findGameData({ idGame: query.idGame as string })
+        getGameData({ idGame: query.idGame as string })
             .then(({ status, data }) => {
                 HTTPResponses[status](response, data)
             })

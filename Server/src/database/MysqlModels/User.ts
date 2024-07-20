@@ -1,6 +1,9 @@
 import Database from "..";
 
-export default class User extends Database {
+// Class Type Definition
+import { createUserParams, getUserParams, UserContract } from "./contracts/UserContract";
+
+export default class User extends Database implements UserContract {
     private collectionName = "ProfileReviews"
     constructor() {
         super();
@@ -8,18 +11,19 @@ export default class User extends Database {
         this.getUser = this.getUser.bind(this);
     }
 
-    public async createUser(data: UserType & PublicIdType & TokenType & PasswordType): GenericClassReturnType {
+    public async createUser({ AccountName, backgroundImage, mail, password, profileName, profilePicture, publicId, realName, status, theme, token, vacStatus
+     }: createUserParams): GenericClassReturnType {
         try {
             const mysql = await this.createMysqlConnection()
             const mongo = await this.createMongoConnection()
 
             const [results, _fields] = await mysql.query(
                 "INSERT INTO `User` (`PUBLIC_ID`,`STATUS`,`PROFILE_NAME`,`ACCOUNT_NAME`,`REAL_NAME`,`VAC_STATUS`,`MAIL`,`THEME`,`PROFILE_PICTURE`,`BACKGROUND_IMAGE`,`TOKEN`,`PASSWORD`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);", 
-                [data.publicId,data.status,data.profileName,data.AccountName,data.realName,data.vacStatus,data.mail,data.theme,data.profilePicture,data.backgroundImage,data.token,data.password])
+                [publicId,status,profileName,AccountName,realName,vacStatus,mail,theme,profilePicture,backgroundImage,token,password])
             const collection = mongo.collection(this.collectionName)
 
             await collection.insertOne({
-                publicId: data.publicId,
+                publicId: publicId,
                 data: []
             })
 
@@ -37,7 +41,7 @@ export default class User extends Database {
             await this.closeMongoConnection()
         }
     }
-    public async getUser({ publicId }: { publicId: string }): GenericClassReturnType {
+    public async getUser({ publicId }: getUserParams): GenericClassReturnType {
         try {
             const db = await this.createMysqlConnection()
             const [results, _fields] = await db.query("SELECT PUBLIC_ID,STATUS,PROFILE_NAME,REAL_NAME,VAC_STATUS,THEME,PROFILE_PICTURE,BACKGROUND_IMAGE FROM `User` WHERE PUBLIC_ID = ?", [publicId])

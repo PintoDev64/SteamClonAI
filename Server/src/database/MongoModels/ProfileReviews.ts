@@ -1,7 +1,9 @@
-import { FieldPacket, QueryResult } from "mysql2";
+import { FieldPacket } from "mysql2";
 import Database from "..";
+import { creteNewDate } from "../../utils";
+import { GetProfileReviewDef, ProfileReviewsSendStructureType, ProfileReviewsStructureType, ProfileReviewsType } from "./contracts/ProfileReviewContract";
 
-type ProfileReviewsSendStructureType = { publicId: string, content: string }
+
 
 export default class ProfileReviews extends Database {
     private collectionName = "ProfileReviews";
@@ -52,7 +54,7 @@ export default class ProfileReviews extends Database {
                     content: data.content,
                     image: queryResult.PROFILE_PICTURE,
                     username: queryResult.PROFILE_NAME,
-                    date: `${new Date().getDay()}-${new Date().getMonth()}-${new Date().getFullYear()}`
+                    date: creteNewDate()
                 } as ProfileReviewsStructureType];
 
                 console.log(updatedData);
@@ -82,9 +84,9 @@ export default class ProfileReviews extends Database {
         }
     }
 
-    /* public async findProfileReviews({ publicId }: { publicId: string }): findProfileReviewType {
+    public async getProfileReviews({ publicId }: GetProfileReviewDef): GenericClassReturnType {
         try {
-            const db = await this.createConnection();
+            const db = await this.createMongoConnection();
             const collection = db.collection(this.collectionName);
 
             //------> Test - Throw Error
@@ -110,7 +112,7 @@ export default class ProfileReviews extends Database {
                 status: "500"
             };
         } finally {
-            await this.closeConnection();
+            await this.closeMongoConnection();
         }
-    } */
+    }
 }

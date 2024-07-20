@@ -1,8 +1,4 @@
-declare type DatabaseConstructor = {
-    url: string
-}
-
-declare type GameDataType = {
+export type GameDataType = {
     name: string,
     shortDescription: string,
     icon: string,
@@ -69,31 +65,10 @@ declare type GameDataType = {
     }[],
     about: string
 }
+export type InsertGameDataParam = GameDataType & IdGameType
+export type GetGameDataParam = { idGame: string }
 
-declare type ProfileReviewsStructureType = {
-    publicId: `${string}-${string}-${string}-${string}-${string}`,
-    username: string,
-    image: number,
-    content: string,
-    date: `${string}-${string}-${string}` // "DD-MM-YYYY"
-}
-declare type ProfileReviewsType = {
-    data: ProfileReviewsStructureType[]
-}
-
-declare type GameReviewsType = {
-    data: {
-        type: "recommended" | "non-recomended",
-        username: string,
-        image: string,
-        userUrl: string,
-        content: string,
-        date: `${string}-${string}-${string}` // "DD-MM-YYYY",
-        hours: number,
-        reactions: {
-            yes: number,
-            no: number,
-            funny: number
-        }
-    }[]
+export interface GameDataContract {
+    insertGameData(data: InsertGameDataParam): GenericClassReturnType
+    getGameData({ idGame }: GetGameDataParam): GenericClassReturnType
 }

@@ -1,23 +1,25 @@
 import { FieldPacket } from "mysql2";
 import Database from "..";
 
-type responseFriendRequestProps = { response: boolean, requestFriend: string, yourPublicId: string }
+// Class Type Definition
+import { FriendContract, FriendsParam, getFriendsParams, responseFriendRequestParams } from "./contracts/FriendsContract";
 
-export default class Friends extends Database {
+export default class Friends extends Database implements FriendContract {
     private collectionName = "FriendChat"
     constructor() {
         super();
         this.submitFriendRequest = this.submitFriendRequest.bind(this)
+        this.getFriends = this.getFriends.bind(this)
         this.responseFriendRequest = this.responseFriendRequest.bind(this)
     }
 
-    public async submitFriendRequest(data: FriendsType): GenericClassReturnType {
+    public async submitFriendRequest({ friendOne, friendTwo }: FriendsParam): GenericClassReturnType {
         try {
             const mysql = await this.createMysqlConnection()
 
             await mysql.query(
                 "INSERT INTO `Friends` (`STATUS`, `FRIEND_ONE_ID`, `FRIEND_TWO_ID`) VALUES (?,?,?)",
-                [false, data.friendOne, data.friendTwo],
+                [false, friendOne, friendTwo],
             )
 
             const [results, _fields] = await mysql.query(
@@ -38,8 +40,28 @@ export default class Friends extends Database {
         }
     }
 
+    public async getFriends({ limit }: getFriendsParams): GenericClassReturnType {
+        try {
+            const mysql = await this.createMysqlConnection()
+            const [results, _fields] = await mysql.query(
+                "SELECT STATUS FROM Friends ORDER BY RELATION_ID DESC LIMIT 1"
+            )
 
-    public async responseFriendRequest({ response, requestFriend, yourPublicId }: responseFriendRequestProps): GenericClassReturnType {
+            return {
+                status: "200",
+                data: results
+            }
+        } catch (err: any) {
+            console.log(err.message);
+            return {
+                status: "404"
+            }
+        } finally {
+            await this.closeMysqlConnection()
+        }
+    }
+
+    public async responseFriendRequest({ response, requestFriend, yourPublicId }: responseFriendRequestParams): GenericClassReturnType {
         try {
             const mysql = await this.createMysqlConnection();
             const mongo = await this.createMongoConnection();
