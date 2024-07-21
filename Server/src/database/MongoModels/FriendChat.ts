@@ -22,6 +22,7 @@ export default class ChatFriend extends Database implements ChatFriendContract {
     public async existFriendChat({ chatId, yourPublicId, yourFriendId }: ExistChatParams): Promise<boolean> {
         try {
             const mysql = await this.createMysqlConnection()
+            if (!mysql) return false
             const [FriendChatData, _field]: [any, FieldPacket[]] = await mysql.query("SELECT * FROM Friends WHERE RELATION_ID = ? LIMIT 1", [chatId])
 
             const resultFriendChatData: FriendsTableInterface = FriendChatData[0]
@@ -49,6 +50,7 @@ export default class ChatFriend extends Database implements ChatFriendContract {
     public async getChats({ relationId, limit }: GetChatParams): GenericClassReturnType {
         try {
             const mongo = await this.createMongoConnection();
+            if (!mongo) return { status: "500" }
             const collection = mongo.collection(this.collectionName);
 
             const MongoResponse = await collection.findOne({ relationId });
@@ -81,13 +83,9 @@ export default class ChatFriend extends Database implements ChatFriendContract {
 
     public async insertMessage(data: FriendChatStructureType, relationId: number): GenericClassReturnType {
         try {
-            console.log({
-                data,
-                relationId
-            });
-
-            const db = await this.createMongoConnection();
-            const collection = db.collection(this.collectionName);
+            const mongo = await this.createMongoConnection();
+            if (!mongo) return { status: "500" }
+            const collection = mongo.collection(this.collectionName);
 
             const result = await collection.findOne({ relationId });
 

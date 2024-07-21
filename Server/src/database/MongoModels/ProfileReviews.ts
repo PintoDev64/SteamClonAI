@@ -16,8 +16,9 @@ export default class ProfileReviews extends Database {
 
     public async createProfileReview(data: ProfileReviewsType & PublicIdType): GenericClassReturnType {
         try {
-            const db = await this.createMongoConnection();
-            const collection = db.collection(this.collectionName);
+            const mongo = await this.createMongoConnection();
+            if (!mongo) return { status: "500" }
+            const collection = mongo.collection(this.collectionName);
 
             await collection.insertOne(data);
             return {
@@ -37,6 +38,7 @@ export default class ProfileReviews extends Database {
         try {
             const mysql = await this.createMysqlConnection()
             const mongo = await this.createMongoConnection();
+            if (!mongo || !mysql) return { status: "500" }
             const collection = mongo.collection(this.collectionName);
 
             const result = await collection.findOne({ publicId });
@@ -56,8 +58,6 @@ export default class ProfileReviews extends Database {
                     username: queryResult.PROFILE_NAME,
                     date: creteNewDate()
                 } as ProfileReviewsStructureType];
-
-                console.log(updatedData);
 
                 await collection.updateOne(
                     { publicId },
@@ -86,8 +86,9 @@ export default class ProfileReviews extends Database {
 
     public async getProfileReviews({ publicId }: GetProfileReviewDef): GenericClassReturnType {
         try {
-            const db = await this.createMongoConnection();
-            const collection = db.collection(this.collectionName);
+            const mongo = await this.createMongoConnection();
+            if (!mongo) return { status: "500" }
+            const collection = mongo.collection(this.collectionName);
 
             //------> Test - Throw Error
 

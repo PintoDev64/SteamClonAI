@@ -1,5 +1,6 @@
 # ---------------------> Global
 node_modules
+Tools
 
 # ---------------------> Editor directories and files
 .vscode/*

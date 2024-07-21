@@ -16,7 +16,7 @@ export default class Friends extends Database implements FriendContract {
     public async submitFriendRequest({ friendOne, friendTwo }: FriendsParam): GenericClassReturnType {
         try {
             const mysql = await this.createMysqlConnection()
-
+            if (!mysql) return { status: "500" }
             await mysql.query(
                 "INSERT INTO `Friends` (`STATUS`, `FRIEND_ONE_ID`, `FRIEND_TWO_ID`) VALUES (?,?,?)",
                 [false, friendOne, friendTwo],
@@ -43,6 +43,7 @@ export default class Friends extends Database implements FriendContract {
     public async getFriends({ limit }: getFriendsParams): GenericClassReturnType {
         try {
             const mysql = await this.createMysqlConnection()
+            if (!mysql) return { status: "500" }
             const [results, _fields] = await mysql.query(
                 "SELECT STATUS FROM Friends ORDER BY RELATION_ID DESC LIMIT 1"
             )
@@ -65,6 +66,8 @@ export default class Friends extends Database implements FriendContract {
         try {
             const mysql = await this.createMysqlConnection();
             const mongo = await this.createMongoConnection();
+
+            if (!mongo || !mysql) return { status: "500" }
 
             if (response) {
                 await mysql.query(

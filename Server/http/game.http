@@ -1,7 +1,7 @@
 ### Test 1
-GET http://localhost:1234/api/v1/game?idGame=5ad0a5be-ea8d-47fb-bfc3-83ff95ca7165
+GET http://localhost:1234/api/v1/game?idGame=b23b7da0-5b23-430c-a013-3e2c7e951490
 ###
-GET https://steamclonai.onrender.com/api/v1/game?idGame=5ad0a5be-ea8d-47fb-bfc3-83ff95ca7165
+GET https://steamclonai.onrender.com/api/v1/game?idGame=b23b7da0-5b23-430c-a013-3e2c7e951490
 ### Test 2
 GET http://localhost:1234/api/v1/game?idGame=e8463af1-f89d-4746-a791-573949ead507
 ###

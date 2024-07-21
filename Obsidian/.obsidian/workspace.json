@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "65ae9817588fa8e8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "📚DatabaseStructure.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -146,13 +159,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "76b121c395494013",
+  "active": "65ae9817588fa8e8",
   "lastOpenFiles": [
+    "🧱ServerStructure.md",
+    "🔵SteamClonAI.md",
     "🌐WebStructure.md",
     "💻ClientStructure.md",
     "📚DatabaseStructure.md",
-    "🧱ServerStructure.md",
-    "🔵SteamClonAI.md",
     "Pictures/store page.png",
     "Pictures/games.png",
     "Pictures/client store.png",

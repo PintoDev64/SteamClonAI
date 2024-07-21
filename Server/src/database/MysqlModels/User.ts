@@ -17,6 +17,8 @@ export default class User extends Database implements UserContract {
             const mysql = await this.createMysqlConnection()
             const mongo = await this.createMongoConnection()
 
+            if (!mongo || !mysql) return { status: "500" }
+
             const [results, _fields] = await mysql.query(
                 "INSERT INTO `User` (`PUBLIC_ID`,`STATUS`,`PROFILE_NAME`,`ACCOUNT_NAME`,`REAL_NAME`,`VAC_STATUS`,`MAIL`,`THEME`,`PROFILE_PICTURE`,`BACKGROUND_IMAGE`,`TOKEN`,`PASSWORD`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);", 
                 [publicId,status,profileName,AccountName,realName,vacStatus,mail,theme,profilePicture,backgroundImage,token,password])
@@ -36,15 +38,16 @@ export default class User extends Database implements UserContract {
             return {
                 status: "404"
             }
-        } finally {
+        }/*  finally {
             await this.closeMysqlConnection()
             await this.closeMongoConnection()
-        }
+        } */
     }
     public async getUser({ publicId }: getUserParams): GenericClassReturnType {
         try {
-            const db = await this.createMysqlConnection()
-            const [results, _fields] = await db.query("SELECT PUBLIC_ID,STATUS,PROFILE_NAME,REAL_NAME,VAC_STATUS,THEME,PROFILE_PICTURE,BACKGROUND_IMAGE FROM `User` WHERE PUBLIC_ID = ?", [publicId])
+            const mysql = this.createMysqlConnection()
+            if (!mysql) return { status: "500" }
+            const [results, _fields] = await mysql.query("SELECT PUBLIC_ID,STATUS,PROFILE_NAME,REAL_NAME,VAC_STATUS,THEME,PROFILE_PICTURE,BACKGROUND_IMAGE FROM `User` WHERE PUBLIC_ID = ?", [publicId])
 
             return {
                 status: "200",
@@ -55,8 +58,8 @@ export default class User extends Database implements UserContract {
             return {
                 status: "404"
             }
-        } finally {
+        } /* finally {
             await this.closeMysqlConnection()
-        }
+        } */
     }
 }

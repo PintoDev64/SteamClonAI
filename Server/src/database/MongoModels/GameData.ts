@@ -11,8 +11,9 @@ export default class GameData extends Database implements GameDataContract {
 
     public async insertGameData(data: InsertGameDataParam): GenericClassReturnType {
         try {
-            const db = await this.createMongoConnection();
-            const collection = db.collection(this.collectionName);
+            const mongo = await this.createMongoConnection();
+            if (!mongo) return { status: "500" }
+            const collection = mongo.collection(this.collectionName);
 
             await collection.insertOne(data);
             return {
@@ -23,15 +24,16 @@ export default class GameData extends Database implements GameDataContract {
             return {
                 status: "500"
             };
-        } finally {
+        }/*  finally {
             await this.closeMongoConnection();
-        }
+        } */
     }
 
     public async getGameData({ idGame }: GetGameDataParam): GenericClassReturnType {
         try {
-            const db = await this.createMongoConnection();
-            const collection = db.collection(this.collectionName)
+            const mongo = await this.createMongoConnection();
+            if (!mongo) return { status: "500" }
+            const collection = mongo.collection(this.collectionName)
 
             const result = await collection.findOne({ idGame })
             if (result) {
@@ -49,8 +51,8 @@ export default class GameData extends Database implements GameDataContract {
             return {
                 status: "500"
             };
-        } finally {
+        }/*  finally {
             await this.closeMongoConnection();
-        }
+        } */
     }
 }

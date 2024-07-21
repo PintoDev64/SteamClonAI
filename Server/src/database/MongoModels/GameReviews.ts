@@ -12,8 +12,9 @@ export default class GameReviews extends Database implements GameReviewContract 
 
     public async createGameReview(data: CreateGameReviewParam): GenericClassReturnType {
         try {
-            const db = await this.createMongoConnection();
-            const collection = db.collection(this.collectionName);
+            const mongo = await this.createMongoConnection();
+            if (!mongo) return { status: "500" }
+            const collection = mongo.collection(this.collectionName);
 
             await collection.insertOne(data);
             return {
@@ -31,8 +32,9 @@ export default class GameReviews extends Database implements GameReviewContract 
 
     public async insertGameReview({ data, idGame }: InsertGameReviewParams): GenericClassReturnType {
         try {
-            const db = await this.createMongoConnection();
-            const collection = db.collection(this.collectionName);
+            const mongo = await this.createMongoConnection();
+            if (!mongo) return { status: "500" }
+            const collection = mongo.collection(this.collectionName);
 
             const result = await collection.findOne({ idGame });
 
@@ -64,8 +66,9 @@ export default class GameReviews extends Database implements GameReviewContract 
 
     public async getGameReviews({ idGame }: GetGameReviewsParams): GenericClassReturnType {
         try {
-            const db = await this.createMongoConnection();
-            const collection = db.collection(this.collectionName);
+            const mongo = await this.createMongoConnection();
+            if (!mongo) return { status: "500" }
+            const collection = mongo.collection(this.collectionName);
 
             const result = await collection.findOne({ idGame })
             if (result) {
