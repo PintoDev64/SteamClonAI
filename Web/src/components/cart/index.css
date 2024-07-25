@@ -1,0 +1,102 @@
+.SteamCart,
+.SteamCart-Price,
+.SteamCart-PriceContainer {
+    display: flex;
+}
+
+.SteamCart {
+    user-select: none;
+}
+
+.SteamCart-DiscountDate {
+    position: relative;
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin: 0 13px 0 0;
+    bottom: -10px;
+}
+
+.SteamCart,
+.SteamCart-Price {
+    align-items: center;
+}
+
+.SteamCart-PriceContainer {
+    flex-direction: column;
+}
+
+.SteamCart-Prices-Normal {
+    font-family: "MotivaSansBold", sans-serif;
+    color: var(--text-main);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.SteamCart-PriceContainer {
+    width: 63px;
+    height: 44px;
+    justify-content: space-around
+}
+
+.SteamCart-PriceContainer-Real,
+.SteamCart-PriceContainer-Discount {
+    text-align: center;
+}
+
+.SteamCart-PriceContainer-Real {
+    position: relative;
+    color: var(--bg-hover);
+    font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.SteamCart-PriceContainer-Real:after {
+    position: absolute;
+    top: calc(19px / 2);
+    left: calc(63px / 5);
+    border-radius: 2px;
+    content: "";
+    width: 60%;
+    height: 0;
+    border: 1px solid var(--text-dim);
+}
+
+.SteamCart-PriceContainer-Discount {
+    font-family: "MotivaSansBold", sans-serif;
+    font-size: 18px;
+    color: var(--accent-green);
+    font-weight: bold;
+}
+
+.SteamCart-PricePercentage {
+    height: 39px;
+    width: 75px;
+    border-radius: 3px;
+    background-color: var(--accent-green);
+    display: grid;
+    place-content: center;
+}
+
+.SteamCart-PricePercentageText {
+    font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
+    font-size: 19px;
+    color: var(--bg-main);
+}
+
+.SteamCart-Button {
+    width: 122px;
+    height: 44px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: var(--color-secondary);
+}
+
+.SteamCart-ButtonText {
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 16px;
+    color: var(--text-main);
+}

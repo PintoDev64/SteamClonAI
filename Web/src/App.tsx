@@ -1,25 +1,24 @@
-import { useState } from 'react'
-import './App.css'
+import Install from './components/buttons/install'
+import Pause from './components/buttons/pause'
+import Play from './components/buttons/play'
+import AddtoCart from './components/cart'
+import SteamCheckbox from './components/checkbox'
+import ReviewsCounter from './components/reviews/counter'
+import SteamSwitch from './components/switch'
+import SteamWishlist from './components/wishlist'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
 
   return (
     <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <SteamSwitch />
+      <SteamWishlist />
+      <ReviewsCounter good={600} bad={150}/>
+      <SteamCheckbox />
+      <Play />
+      <Install />
+      <Pause />
+      <AddtoCart price={35.5} discount={30} discountDate='19-09-2024'/>
     </>
   )
 }
-
-export default App

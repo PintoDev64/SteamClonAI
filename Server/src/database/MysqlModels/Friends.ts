@@ -1,113 +1,82 @@
-import { FieldPacket } from "mysql2";
-import Database from "..";
 
-// Class Type Definition
-import { FriendContract, FriendsParam, getFriendsParams, responseFriendRequestParams } from "./contracts/FriendsContract";
+import { createMongoConnection, createMySQLConnection } from "..";
 
-export default class Friends extends Database implements FriendContract {
-    private collectionName = "FriendChat"
-    constructor() {
-        super();
-        this.submitFriendRequest = this.submitFriendRequest.bind(this)
-        this.getFriends = this.getFriends.bind(this)
-        this.responseFriendRequest = this.responseFriendRequest.bind(this)
-    }
+// Handlers
+import { handleFunction } from "../Handlers/Error";
 
-    public async submitFriendRequest({ friendOne, friendTwo }: FriendsParam): GenericClassReturnType {
-        try {
-            const mysql = await this.createMysqlConnection()
-            if (!mysql) return { status: "500" }
+// Constants
+const collectionName = "FriendChat"
+
+/**
+ * Crea un nuevo registro en la tabla "Friends" cuando se envia una solicitud de amistad
+ */
+export async function submitFriendRequest({ friendOne, friendTwo }: Friends.submitFriendRequestParam): DatabaseOperation.GenericClassReturnType {
+    return await handleFunction(async () => {
+        const mysql = await createMySQLConnection()
+        if (!mysql) return undefined
+        await mysql.query(
+            "INSERT INTO `Friends` (`STATUS`, `FRIEND_ONE_ID`, `FRIEND_TWO_ID`) VALUES (?,?,?)",
+            [false, friendOne, friendTwo],
+        )
+
+        const [results, _fields] = await mysql.query(
+            "SELECT STATUS FROM Friends ORDER BY RELATION_ID DESC LIMIT 1"
+        )
+
+        return results
+    })
+}
+/**
+ * Obtiene los amigos de un usuario
+ */
+export async function getFriends({ limit = 5 }: Friends.getFriendsParams): DatabaseOperation.GenericClassReturnType {
+    return await handleFunction(async () => {
+        const mysql = await createMySQLConnection()
+        if (!mysql) return undefined
+        const [results, _fields] = await mysql.query(
+            "SELECT STATUS FROM Friends ORDER BY RELATION_ID DESC LIMIT ?",
+            [limit]
+        )
+
+        return results
+    })
+}
+/**
+ * Actualiza el estado de una solicitud de amistad
+ */
+export async function responseFriendRequest({ response, requestFriend, yourPublicId }: Friends.responseFriendRequestParams): DatabaseOperation.GenericClassReturnType {
+    return await handleFunction(async () => {
+        const mongo = createMongoConnection()
+        const mysql = await createMySQLConnection()
+
+        if (!mongo || !mysql) return undefined
+
+        if (response) {
             await mysql.query(
-                "INSERT INTO `Friends` (`STATUS`, `FRIEND_ONE_ID`, `FRIEND_TWO_ID`) VALUES (?,?,?)",
-                [false, friendOne, friendTwo],
+                "UPDATE `Friends` SET `STATUS` = true WHERE `FRIEND_ONE_ID` = ? AND `FRIEND_TWO_ID` = ?",
+                [yourPublicId, requestFriend]
+            )
+            const [FriendChatData, _field]: MySQLSchemas.__QueryArray  = await mysql.query(
+                "SELECT RELATION_ID FROM Friends ORDER BY RELATION_ID DESC LIMIT 1"
             )
 
-            const [results, _fields] = await mysql.query(
-                "SELECT STATUS FROM Friends ORDER BY RELATION_ID DESC LIMIT 1"
+            const resultFriendChatData = FriendChatData[0] as MySQLSchemas.FriendsTable
+
+            const collection = mongo.collection(collectionName)
+
+            await collection.insertOne({
+                relationId: resultFriendChatData.RELATION_ID,
+                data: []
+            })
+
+            return "Operation Complete"
+        } else {
+            const [results, _fields]: MySQLSchemas.__QueryArray = await mysql.query(
+                "DELETE FROM `Friends` WHERE `FRIEND_ONE_ID` = ? AND `FRIEND_TWO_ID` = ?",
+                [yourPublicId, requestFriend]
             )
 
-            return {
-                status: "200",
-                data: results
-            }
-        } catch (err: any) {
-            console.log(err.message);
-            return {
-                status: "404"
-            }
-        } finally {
-            await this.closeMysqlConnection()
+            return results
         }
-    }
-
-    public async getFriends({ limit }: getFriendsParams): GenericClassReturnType {
-        try {
-            const mysql = await this.createMysqlConnection()
-            if (!mysql) return { status: "500" }
-            const [results, _fields] = await mysql.query(
-                "SELECT STATUS FROM Friends ORDER BY RELATION_ID DESC LIMIT 1"
-            )
-
-            return {
-                status: "200",
-                data: results
-            }
-        } catch (err: any) {
-            console.log(err.message);
-            return {
-                status: "404"
-            }
-        } finally {
-            await this.closeMysqlConnection()
-        }
-    }
-
-    public async responseFriendRequest({ response, requestFriend, yourPublicId }: responseFriendRequestParams): GenericClassReturnType {
-        try {
-            const mysql = await this.createMysqlConnection();
-            const mongo = await this.createMongoConnection();
-
-            if (!mongo || !mysql) return { status: "500" }
-
-            if (response) {
-                await mysql.query(
-                    "UPDATE `Friends` SET `STATUS` = true WHERE `FRIEND_ONE_ID` = ? AND `FRIEND_TWO_ID` = ?",
-                    [yourPublicId, requestFriend]
-                )
-                const [FriendChatData, _field]: [any, FieldPacket[]] = await mysql.query(
-                    "SELECT RELATION_ID FROM Friends ORDER BY RELATION_ID DESC LIMIT 1"
-                )
-
-                const resultFriendChatData: FriendsTableInterface = FriendChatData[0]
-
-                const collection = mongo.collection(this.collectionName)
-
-                await collection.insertOne({
-                    relationId: resultFriendChatData.RELATION_ID,
-                    data: []
-                })
-
-                return {
-                    status: "200",
-                    data: {}
-                }
-            } else {
-                const [results, _fields] = await mysql.query(
-                    "DELETE FROM `Friends` WHERE `FRIEND_ONE_ID` = ? AND `FRIEND_TWO_ID` = ?",
-                    [yourPublicId, requestFriend]
-                )
-
-                return {
-                    status: "200",
-                    data: results
-                }
-            }
-        } catch (err: any) {
-            return {
-                status: "404"
-            }
-        } finally {
-
-        }
-    }
+    })
 }

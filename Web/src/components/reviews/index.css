@@ -1,0 +1,61 @@
+.SteamReviews-Counter {
+    width: 138px;
+    height: 23px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    user-select: none;
+}
+
+.SteamReviews-CounterPercentage {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SteamReviews-CounterPercentage-Container {
+    width: 41px;
+    height: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.SteamReviews-CounterPercentage-GoodIcon,
+.SteamReviews-CounterPercentage-BadIcon {
+    width: 13px;
+    height: 13px;
+    display: grid;
+    place-content: center;
+}
+
+.SteamReviews-CounterPercentage-GoodText {
+    color: var(--color-primary);
+}
+.SteamReviews-CounterPercentage-BadText {
+    color: var(--accent-red);
+}
+.SteamReviews-CounterPercentage-GoodText,
+.SteamReviews-CounterPercentage-BadText {
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 12px;
+}
+
+.SteamReviews-CounterBar {
+    width: 138px;
+    height: 4px;
+    box-sizing: border-box;
+    display: flex;
+}
+.SteamReviews-CounterBar-Good,
+.SteamReviews-CounterBar-Bad {
+    height: 4px;
+    border-radius: 2px;
+}
+.SteamReviews-CounterBar-Good {
+    margin: 0 .5px 0 0;
+    background-color: var(--color-primary);
+}
+.SteamReviews-CounterBar-Bad {
+    height: 4px;
+    margin: 0 0 0 .5px;
+    background-color: var(--accent-red);
+}

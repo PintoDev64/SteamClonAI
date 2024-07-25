@@ -4,15 +4,15 @@ content-type: application/json
 
 {
     "status": "Offline",
-    "profileName": "jose",
-    "AccountName": "jose51",
-    "realName": "jose alveira",
+    "profileName": "Test",
+    "AccountName": "test123",
+    "realName": "test",
     "vacStatus": 1,
-    "mail": "jose51@gmail.com",
+    "mail": "test123@gmail.com",
     "theme": 1,
     "profilePicture": 1,
     "backgroundImage": 1,
-    "password": "jose51"
+    "password": "test123"
 }
 ### 
 POST https://steamclonai.onrender.com/api/v1/profile
@@ -32,6 +32,9 @@ content-type: application/json
 }
 ### Test 2
 GET http://localhost:1234/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0
+
+### Test 2.5 Get Public Library
+GET http://localhost:10000/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0/games
 
 ### Test 3 - Make a Friend
 POST http://localhost:1234/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0

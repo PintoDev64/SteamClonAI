@@ -1,15 +1,7 @@
 import express from 'express';
-import User from '../../database/MysqlModels/User';
-import Friends from '../../database/MysqlModels/Friends';
-import ProfileReviews from '../../database/MongoModels/ProfileReviews';
 
 // Router
 const ProfileRouter = express.Router()
-
-// Database Classes
-const { insertProfileReview } = new ProfileReviews()
-const { createUser, getUser } = new User()
-const { submitFriendRequest, responseFriendRequest } = new Friends()
 
 // Local Constants
 const PathService = "/profile"
@@ -17,10 +9,16 @@ const PathService = "/profile"
 // Middleware
 import { createPublicId } from './middleware';
 
+// Database Operations
+import { createUser, getUser } from '../../database/MysqlModels/User';
+import { getPublicLibraryUser } from '../../database/MysqlModels/Library';
+import { responseFriendRequest, submitFriendRequest } from '../../database/MysqlModels/Friends';
+import { insertProfileReview } from '../../database/MongoModels/ProfileReviews';
+
 /**
  * 
  */
-type bodyPOST = UserType & PublicIdType & TokenType & PasswordType
+type bodyPOST = GeneralTypes.UserType & PublicIdType & TokenType & PasswordType
 ProfileRouter.post(PathService, createPublicId, async (request, response) => {
     const { body }: { body: bodyPOST } = request
     const userCreated = await createUser(body)
@@ -34,6 +32,12 @@ ProfileRouter.get(`${PathService}/:publicId`, async (request, response)  => {
     const { params } = request
     const users = await getUser({ publicId: params.publicId })
     response.json(users)
+})
+
+ProfileRouter.get(`${PathService}/:publicId/games`, async (request, response) => {
+    const { params } = request
+    const libraryDetails = await getPublicLibraryUser({ publicId: params.publicId })
+    response.json(libraryDetails)
 })
 
 /**

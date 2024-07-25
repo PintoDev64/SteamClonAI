@@ -1,4 +1,7 @@
 // Local Constants
+
+import { Response } from "express"
+
 // Default HTTP Responses
 const DEFAULT_404 = {
     message: "resource could not be found"
@@ -8,8 +11,7 @@ const DEFAULT_500 = {
 }
 
 export const HTTPResponses = {
-    "200": <T>(response: T, data: any) => {
-        // @ts-ignore
+    "200": <T>(response: Response, data: any) => {
         response.json(data)
     },
     "302": <T>(response: T) => {

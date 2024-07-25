@@ -1,3 +1,5 @@
+import { FriendsTableInterface } from "../../database"
+
 type checkChatsIdsParams = {
     resultFriendChatData: FriendsTableInterface
     yourPublicId: string

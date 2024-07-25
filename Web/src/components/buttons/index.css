@@ -1,0 +1,45 @@
+.SteamButton-Install,
+.SteamButton-Pause,
+.SteamButton-Play {
+    padding: 0;
+    display: flex;
+    width: 130px;
+    height: 53px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+.SteamButton-Install {
+    background-color: var(--color-primary);
+}
+.SteamButton-Play {
+    background-color: var(--accent-green);
+}
+.SteamButton-Pause {
+    background-color: var(--bg-hover);
+}
+
+.SteamButton-PauseIcon,
+.SteamButton-InstallIcon,
+.SteamButton-PlayIcon {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-content: center;
+    margin: 0 10px 0 0;
+}
+
+.SteamButton-PauseText,
+.SteamButton-InstallText,
+.SteamButton-PlayText {
+    font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0 10px 0 0;
+}
+
+.SteamButton-PauseText {
+    color: var(--text-main);
+}

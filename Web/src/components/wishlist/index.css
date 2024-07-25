@@ -1,0 +1,23 @@
+.SteamWishlist {
+    width: 62px;
+    height: 58px;
+    border-radius: 3px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all .1s ease;
+    user-select: none;
+}
+
+.SteamWishlist.Desactive:hover,
+.SteamWishlist.Active {
+    background-color: var(--bg-hover);
+}
+
+.SteamWishlist.Active:hover {
+    background-color: var(--accent-red);
+}
+
+.SteamWishlist.Desactive {
+    background-color: var(--bg-highlight);
+}

@@ -1,58 +1,32 @@
-import Database from '..';
-import { GameDataContract, GetGameDataParam, InsertGameDataParam } from './contracts/GameDataContract';
+import { createMongoConnection } from '..';
+import { handleFunction } from '../Handlers/Error';
 
-export default class GameData extends Database implements GameDataContract {
-    private collectionName = "GameData";
-    constructor() {
-        super();
-        this.insertGameData = this.insertGameData.bind(this);
-        this.getGameData = this.getGameData.bind(this);
-    }
+// Constants
+const collectionName = "GameData";
 
-    public async insertGameData(data: InsertGameDataParam): GenericClassReturnType {
-        try {
-            const mongo = await this.createMongoConnection();
-            if (!mongo) return { status: "500" }
-            const collection = mongo.collection(this.collectionName);
+export async function insertGameData(data: GameData.InsertGameDataParam): DatabaseOperation.GenericClassReturnType {
+    return await handleFunction(async () => {
+        const mongo = createMongoConnection
+        ();
+        if (!mongo) return undefined
+        const collection = mongo.collection(collectionName);
 
-            await collection.insertOne(data);
-            return {
-                status: "200",
-                data: "Operation Complete"
-            };
-        } catch (err: any) {
-            return {
-                status: "500"
-            };
-        }/*  finally {
-            await this.closeMongoConnection();
-        } */
-    }
+        await collection.insertOne(data);
+        return "Operation Complete"
+    })
+}
 
-    public async getGameData({ idGame }: GetGameDataParam): GenericClassReturnType {
-        try {
-            const mongo = await this.createMongoConnection();
-            if (!mongo) return { status: "500" }
-            const collection = mongo.collection(this.collectionName)
+export async function getGameData({ idGame }: GameData.IdGameType): DatabaseOperation.GenericClassReturnType {
+    return await handleFunction(async () => {
+        const mongo = createMongoConnection();
+        if (!mongo) return undefined
+        const collection = mongo.collection(collectionName)
 
-            const result = await collection.findOne({ idGame })
-            if (result) {
-                const { _id, ...rest } = result
-                return {
-                    status: "200",
-                    data: { ...rest }
-                }
-            } else {
-                return {
-                    status: "404"
-                }
-            }
-        } catch (err: any) {
-            return {
-                status: "500"
-            };
-        }/*  finally {
-            await this.closeMongoConnection();
-        } */
-    }
+        const result = await collection.findOne({ idGame })
+        if (result) {
+            const { _id, downloadUrl, ...rest } = result as getGameDataType
+            return { ...rest }
+        }
+        return undefined
+    })
 }

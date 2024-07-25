@@ -1,0 +1,27 @@
+.SteamCheckbox {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.SteamCheckboxElement {
+    display: grid;
+    place-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: all .1s ease;
+}
+.SteamCheckboxElement.Desactive:hover,
+.SteamCheckboxElement.Active {
+    border: 2.5px solid var(--text-dim);
+}
+.SteamCheckboxElement.Desactive {
+    border: 2.5px solid var(--bg-hover);
+}
