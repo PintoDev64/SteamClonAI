@@ -1,9 +1,8 @@
-import { Namespace, Socket } from "socket.io";
-import ChatFriend from "../../database/MongoModels/FriendChat";
+import { Socket } from "socket.io";
+import { insertMessage, getChats } from "../../database/MongoModels/FriendChat";
 import { creteNewDate } from "../../utils";
 
 const userSockets = new Map();
-const { insertMessage, getChats } = new ChatFriend()
 
 export default async function ChatWebsocket(socket: Socket) {
     const { yourPublicId, chatId } = socket.handshake.query

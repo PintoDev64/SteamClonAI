@@ -1,11 +1,10 @@
 import express from 'express';
-import Cart from '../../database/MysqlModels/Cart';
+
+// Database Classes
+import { getProducts, setProducts, buyProducts } from '../../database/MysqlModels/Cart';
 
 // Router
 const CartRouter = express.Router()
-
-// Database Classes
-const { getProducts, setProducts, buyProducts } = new Cart()
 
 // Local Constants
 const PathService = "/cart"

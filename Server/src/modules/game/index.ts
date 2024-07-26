@@ -1,18 +1,14 @@
 import express from 'express';
 
-// Database
-import GameData from '../../database/MongoModels/GameData';
+// Database Classes
+import { insertGameData, getGameData } from '../../database/MongoModels/GameData';
+import { insertGameReview, createGameReview } from '../../database/MongoModels/GameReviews';
 
 // Utils
 import { HTTPResponses } from '../../utils';
-import GameReviews from '../../database/MongoModels/GameReviews';
 
 // Router
 const GameRouter = express.Router()
-
-// Database Classes
-const { insertGameData, getGameData } = new GameData()
-const { insertGameReview, createGameReview } = new GameReviews()
 
 // Local Constants
 const PathService = "/game"
@@ -39,7 +35,7 @@ GameRouter.post(PathService, createIdGame, async (request, response) => {
 GameRouter.get(PathService, (request, response) => {
     const { query } = request
     if (query.idGame) {
-        getGameData({ idGame: query.idGame as string })
+        getGameData({ idGame: query.idGame as UUIDPattern })
             .then(({ status, data }) => {
                 HTTPResponses[status](response, data)
             })

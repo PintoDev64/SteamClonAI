@@ -5,7 +5,7 @@ import { sign } from 'jsonwebtoken'
 // Constants
 import { JWT_SECRET } from '../../../constants';
 
-type bodyMiddlware = UserType & PasswordType
+type bodyMiddlware = GeneralTypes.UserType & PasswordType
 
 export function createPublicId(request: Request, response: Response, next: NextFunction) {
     const { body }: { body: bodyMiddlware } = request
