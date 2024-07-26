@@ -1,7 +1,5 @@
-import { FriendsTableInterface } from "../../database"
-
 type checkChatsIdsParams = {
-    resultFriendChatData: FriendsTableInterface
+    resultFriendChatData: MySQLSchemas.FriendsTable
     yourPublicId: string
     yourFriendId: string
 }
