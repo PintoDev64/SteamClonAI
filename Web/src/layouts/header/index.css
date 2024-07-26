@@ -1,0 +1,86 @@
+#SteamHeader {
+    /* position: fixed; */
+    width: 100%;
+    height: 57px;
+    background-color: var(--bg-tertiary);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7px;
+    box-sizing: border-box;
+}
+
+#SteamHeader-Personal,
+#SteamHeader-Pages {
+    display: flex;
+}
+
+.SteamHeader-PersonalTitles,
+.SteamHeader-PagesTitles {
+    width: 103px;
+    height: 45px;
+    display: grid;
+    place-content: center;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all .1s ease;
+}
+
+.SteamHeader-PersonalTitles:hover,
+.SteamHeader-PagesTitles:hover {
+    background-color: var(--bg-hover);
+}
+
+.SteamHeader-PagesTitles.Active,
+.SteamHeader-PersonalTitles.Active {
+    background-color: var(--color-secondary);
+}
+
+.SteamHeader-PersonalTitles:nth-child(even),
+.SteamHeader-PagesTitles:nth-child(even) {
+    margin: 0 7px;
+}
+
+.SteamHeader-PersonalTitlesText,
+.SteamHeader-PagesTitlesText {
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 16px;
+    color: var(--text-main);
+    text-align: center;
+}
+
+#SteamHeader-Search {
+    max-width: 507px;
+    width: 100%;
+    min-width: 307px;
+    height: 44px;
+    display: flex;
+    border-radius: 3px;
+    background-color: var(--bg-main-alter);
+    transition: all .1s ease;
+}
+
+#SteamHeader-Search:has(> #SteamHeader-SearchInput:focus) {
+    background-color: var(--bg-main);
+}
+
+#SteamHeader-SearchInput {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 14px;
+    padding: 0 0 0 12px;
+    color: var(--text-main);
+    background-color: transparent;
+}
+
+#SteamHeader-SearchIcon {
+    width: 20px;
+    height: 20px;
+    margin: 12px;
+    display: grid;
+    place-content: center;
+}

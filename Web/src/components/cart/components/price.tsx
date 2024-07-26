@@ -4,7 +4,6 @@ import { CalculatePriceDiscount } from "../utils"
 type ProductPriceProps = { price: number, discount?: number, date?: DatePattern | string }
 export default function ProductPrice({ price, discount, date }: ProductPriceProps) {
     if (discount && date) {
-        console.log(date.split("-"));
         const DateFormated = date.split("-")
         const GetMonth = parseInt(DateFormated[1])
         return (
