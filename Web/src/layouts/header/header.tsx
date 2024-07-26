@@ -4,8 +4,6 @@ import { HeaderPersonal, HeaderTitles } from './constants'
 import './index.css'
 import { GetActualPath } from './utils'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type HeaderProps = { X: number }
 export default function Header() {
 
   enum States {
