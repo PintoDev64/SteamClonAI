@@ -1,4 +1,5 @@
-.SteamWishlist {
+/* Square Mode */
+.SteamWishlistSquare {
     width: 62px;
     height: 58px;
     border-radius: 3px;
@@ -9,15 +10,47 @@
     user-select: none;
 }
 
-.SteamWishlist.Desactive:hover,
-.SteamWishlist.Active {
+.SteamWishlistSquare.Desactive:hover,
+.SteamWishlistSquare.Active {
     background-color: var(--bg-hover);
 }
 
-.SteamWishlist.Active:hover {
+.SteamWishlistSquare.Active:hover {
     background-color: var(--accent-red);
 }
 
-.SteamWishlist.Desactive {
+.SteamWishlistSquare.Desactive {
+    background-color: var(--bg-highlight);
+}
+
+/* Normal Mode */
+.SteamWishlistNormal {
+    width: 134px;
+    height: 44px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    cursor: pointer;
+    transition: all .1s ease;
+    user-select: none;
+}
+
+.SteamWishlistNormal-Text {
+    font-family: "MotivaSansBold", sans-serif;
+    font-size: 16px;
+    color: var(--text-main);
+}
+
+.SteamWishlistNormal.Desactive:hover,
+.SteamWishlistNormal.Active {
+    background-color: var(--bg-hover);
+}
+
+.SteamWishlistNormal.Active:hover {
+    background-color: var(--accent-red);
+}
+
+.SteamWishlistNormal.Desactive {
     background-color: var(--bg-highlight);
 }

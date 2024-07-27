@@ -1,6 +1,40 @@
 /// <reference types="vite/client" />
 
 declare type DatePattern = `${string}-${string}-${string}`
+type SystemRequeriments = {
+    OS: string,
+    processor: string,
+    Memory: string,
+    Graphics: string,
+    DirectX: string,
+    Storage: string
+}
+
+declare type GameShortDataType = {
+    name: string,
+    shortDescription: string,
+    images: {
+        type: string,
+        url: string
+    }[],
+    categories: string[],
+    platforms: {
+        [K: "Win" | "Mac" | "Lin" | string]: SystemRequeriments | undefined
+    },
+    products: [
+        {
+            name: string,
+            price: {
+                default: number,
+                format: "Dollar",
+                discount?: {
+                    value: number,
+                    finalDate: DatePattern // "DD-MM-YYYY"
+                }
+            }
+        }
+    ]
+}
 
 declare type GameDataType = {
     name: string,

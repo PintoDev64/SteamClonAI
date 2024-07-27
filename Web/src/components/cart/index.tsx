@@ -3,17 +3,21 @@ import ProductPrice from './components/price'
 import './index.css'
 
 type AddtoCartProps = {
-    price: number,
+  mode?: "Huge" | "Small"
+  price: {
+    value: number,
     discount?: number,
     discountDate?: DatePattern
+  },
+  text?: string,
 }
-export default function AddtoCart({ price, discount, discountDate }: AddtoCartProps) {
+export default function AddtoCart({ mode = "Huge", price, text }: AddtoCartProps) {
   return (
-    <div className="SteamCart">
-        <ProductPrice price={price} discount={discount} date={discountDate}/>
-        <button className="SteamCart-Button">
-            <span className="SteamCart-ButtonText">Add to Cart</span>
-        </button>
+    <div className={`SteamCart${mode}`}>
+      <ProductPrice mode={mode} price={price.value} discount={price.discount} date={price.discountDate} />
+      <button className={`SteamCart${mode}-Button`}>
+        <span className={`SteamCart${mode}-ButtonText`}>{text ? text : "Add to Cart"}</span>
+      </button>
     </div>
   )
 }

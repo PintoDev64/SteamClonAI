@@ -1,14 +1,18 @@
-.SteamCart,
-.SteamCart-Price,
-.SteamCart-PriceContainer {
+.SteamCartHuge,
+.SteamCartHuge-Price,
+.SteamCartHuge-PriceContainer {
     display: flex;
 }
 
-.SteamCart {
+.SteamCartHuge {
     user-select: none;
 }
 
-.SteamCart-DiscountDate {
+.SteamCartHuge-Price {
+    margin: 0 10px 0 0;
+}
+
+.SteamCartHuge-DiscountDate {
     position: relative;
     font-family: "MotivaSansRegular", sans-serif;
     font-size: 12px;
@@ -17,34 +21,34 @@
     bottom: -10px;
 }
 
-.SteamCart,
-.SteamCart-Price {
+.SteamCartHuge,
+.SteamCartHuge-Price {
     align-items: center;
 }
 
-.SteamCart-PriceContainer {
+.SteamCartHuge-PriceContainer {
     flex-direction: column;
 }
 
-.SteamCart-Prices-Normal {
+.SteamCartHuge-Prices-Normal {
     font-family: "MotivaSansBold", sans-serif;
     color: var(--text-main);
     font-size: 18px;
     font-weight: bold;
 }
 
-.SteamCart-PriceContainer {
+.SteamCartHuge-PriceContainer {
     width: 63px;
     height: 44px;
     justify-content: space-around
 }
 
-.SteamCart-PriceContainer-Real,
-.SteamCart-PriceContainer-Discount {
+.SteamCartHuge-PriceContainer-Real,
+.SteamCartHuge-PriceContainer-Discount {
     text-align: center;
 }
 
-.SteamCart-PriceContainer-Real {
+.SteamCartHuge-PriceContainer-Real {
     position: relative;
     color: var(--bg-hover);
     font-family: "MotivaSansBold", sans-serif;
@@ -52,7 +56,7 @@
     font-size: 18px;
 }
 
-.SteamCart-PriceContainer-Real:after {
+.SteamCartHuge-PriceContainer-Real:after {
     position: absolute;
     top: calc(19px / 2);
     left: calc(63px / 5);
@@ -63,14 +67,14 @@
     border: 1px solid var(--text-dim);
 }
 
-.SteamCart-PriceContainer-Discount {
+.SteamCartHuge-PriceContainer-Discount {
     font-family: "MotivaSansBold", sans-serif;
     font-size: 18px;
     color: var(--accent-green);
     font-weight: bold;
 }
 
-.SteamCart-PricePercentage {
+.SteamCartHuge-PricePercentage {
     height: 39px;
     width: 75px;
     border-radius: 3px;
@@ -79,24 +83,126 @@
     place-content: center;
 }
 
-.SteamCart-PricePercentageText {
+.SteamCartHuge-PricePercentageText {
     font-family: "MotivaSansBold", sans-serif;
     font-weight: bold;
     font-size: 19px;
     color: var(--bg-main);
 }
 
-.SteamCart-Button {
+.SteamCartHuge-Button {
     width: 122px;
     height: 44px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     background-color: var(--color-secondary);
+    transition: all .2s ease;
 }
 
-.SteamCart-ButtonText {
+.SteamCartHuge-Button:hover {
+    background-color: var(--color-primary);
+}
+
+.SteamCartHuge-Button:hover .SteamCartHuge-ButtonText {
+    color: var(--bg-main);
+}
+
+.SteamCartHuge-ButtonText {
     font-family: "MotivaSansRegular", sans-serif;
     font-size: 16px;
     color: var(--text-main);
+}
+
+/* Small Mode ===> Changes */
+.SteamCartSmall-Button,
+.SteamCartSmall-Button * {
+    display: none;
+}
+
+.SteamCartSmall-DiscountDate {
+    display: none;
+}
+
+.SteamCartSmall,
+.SteamCartSmall-Price,
+.SteamCartSmall-PriceContainer {
+    display: flex;
+}
+
+.SteamCartSmall,
+.SteamCartSmall-Price {
+    align-items: center;
+}
+
+.SteamCartSmall {
+    user-select: none;
+}
+
+.SteamCartSmall-Price {
+    margin: 0 10px 0 0;
+}
+
+.SteamCartSmall-PriceContainer {
+    flex-direction: column;
+}
+
+.SteamCartSmall-Prices-Normal {
+    font-family: "MotivaSansBold", sans-serif;
+    color: var(--text-main);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.SteamCartSmall-PriceContainer {
+    width: 63px;
+    height: 44px;
+    justify-content: space-around
+}
+
+.SteamCartSmall-PriceContainer-Real,
+.SteamCartSmall-PriceContainer-Discount {
+    text-align: center;
+}
+
+.SteamCartSmall-PriceContainer-Real {
+    position: relative;
+    color: var(--bg-hover);
+    font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.SteamCartSmall-PriceContainer-Real:after {
+    position: absolute;
+    top: calc(19px / 2);
+    left: calc(63px / 5);
+    border-radius: 2px;
+    content: "";
+    width: 60%;
+    height: 0;
+    border: 1px solid var(--text-dim);
+}
+
+.SteamCartSmall-PriceContainer-Discount {
+    font-family: "MotivaSansBold", sans-serif;
+    font-size: 18px;
+    color: var(--accent-green);
+    font-weight: bold;
+}
+
+.SteamCartSmall-PricePercentage {
+    height: 39px;
+    width: 75px;
+    border-radius: 3px;
+    background-color: var(--accent-green);
+    display: grid;
+    place-content: center;
+}
+
+.SteamCartSmall-PricePercentageText {
+    font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
+    font-size: 19px;
+    color: var(--bg-main);
 }
