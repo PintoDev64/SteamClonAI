@@ -9,14 +9,15 @@ type AddtoCartProps = {
     discount?: number,
     discountDate?: DatePattern
   },
+  ActiveDate?: boolean,
   text?: string,
 }
-export default function AddtoCart({ mode = "Huge", price, text }: AddtoCartProps) {
+export default function AddtoCart({ mode = "Huge", ActiveDate = true, price, text }: AddtoCartProps) {
   return (
     <div className={`SteamCart${mode}`}>
-      <ProductPrice mode={mode} price={price.value} discount={price.discount} date={price.discountDate} />
+      <ProductPrice ActiveDate={ActiveDate} mode={mode} price={price.value} discount={price.discount} date={price.discountDate} />
       <button className={`SteamCart${mode}-Button`}>
-        <span className={`SteamCart${mode}-ButtonText`}>{text ? text : "Add to Cart"}</span>
+        <span className={`SteamCart${mode}-ButtonText`}>{text ?? "Carrito"}</span>
       </button>
     </div>
   )

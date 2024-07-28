@@ -1,0 +1,38 @@
+.SteamSeparatorContainer {
+    margin: 35px auto;
+}
+
+.SteamSeparatorContainer-Elements {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SteamSeparatorContainer-Elements-Title {
+    font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    width: fit-content;
+    height: 33px;
+    color: var(--text-main);
+}
+
+.SteamSeparatorContainer-Elements-SeeMore {
+    width: 112px;
+    height: 33px;
+    padding: 7px 20px;
+    box-sizing: border-box;
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 16px;
+    color: var(--text-dim);
+    border: 1px solid var(--text-dim);
+    border-radius: 3px;
+    text-decoration: none;
+    display: grid;
+    place-content: center;
+    transition: all .1s ease;
+}
+
+.SteamSeparatorContainer-Elements-SeeMore:hover {
+    color: var(--text-main);
+    border: 1px solid var(--text-main);
+}

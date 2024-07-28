@@ -1,24 +1,24 @@
 import { Monhts } from "../constants";
 import { CalculatePriceDiscount } from "../utils"
 
-type ProductPriceProps = { mode?: "Huge" | "Small", price: number, discount?: number, date?: DatePattern | string }
-export default function ProductPrice({ mode = "Huge", price, discount, date }: ProductPriceProps) {
+type ProductPriceProps = { ActiveDate: boolean ,mode?: "Huge" | "Small", price: number, discount?: number, date?: DatePattern | string }
+export default function ProductPrice({ ActiveDate = true, mode = "Huge", price, discount, date }: ProductPriceProps) {
     if (discount && date) {
         const DateFormated = date.split("-")
         const GetMonth = parseInt(DateFormated[1])
         return (
             <>
-                <span className={`SteamCart${mode}-DiscountDate`}>
+                {ActiveDate && <span className={`SteamCart${mode}-DiscountDate`}>
                     Hasta {DateFormated[0]} {Monhts[GetMonth]}
-                </span>
+                </span>}
                 <div className={`SteamCart${mode}-Price`}>
                     <ProductPercentage mode={mode} price={price} discount={discount} />
                     <div className={`SteamCart${mode}-PriceContainer`}>
                         <span className={`SteamCart${mode}-PriceContainer-Real`}>
-                            $ {discount}
+                            $ {price}
                         </span>
                         <span className={`SteamCart${mode}-PriceContainer-Discount`}>
-                            $ {price}
+                            $ {discount}
                         </span>
                     </div>
                 </div>

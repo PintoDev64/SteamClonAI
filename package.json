@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "web:dev": "npm run dev -w Web",
+    "web:build": "npm run build -w Web",
     "server:dev": "npm run dev -w Server",
     "server:build": "cls && npm run build -w Server",
     "client:dev": "npm run start -w Client"

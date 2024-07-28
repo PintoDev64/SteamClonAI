@@ -1,0 +1,7 @@
+main {
+    padding: 57px 0 0 0;
+    width: 100%;
+    height: fit-content;
+    min-height: calc(100% - 325px);
+    box-sizing: border-box;
+}

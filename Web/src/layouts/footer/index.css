@@ -1,0 +1,81 @@
+#SteamFooter {
+    width: 100%;
+    height: 325px;
+    background-color: var(--bg-highlight);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#SteamFooter-CompanyDeclaration {
+    width: 425px;
+    height: 156px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#SteamFooter-CompanyDeclarationLogos {
+    width: 425px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#SteamFooter-CompanyDeclarationDescription {
+    width: 425px;
+    height: 76px;
+}
+
+#SteamFooter-CompanyDeclarationDescription-Text {
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 16px;
+    color: var(--text-dim);
+}
+
+#SteamFooter-AboutLinks {
+    display: flex;
+    width: 500px;
+    height: 165px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.SteamFooter-AboutLinks-Element {
+    height: 165px;
+    width: 178px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.SteamFooter-AboutLinks-ElementAnchor {
+    text-decoration: none;
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 16px;
+    color: var(--text-main);
+}
+
+.SteamFooter-AboutLinks-ElementAnchor:hover {
+    text-decoration: underline;
+}
+
+#SteamFooter-SocialLinks {
+    width: 178px;
+    height: 156px;
+    display: flex;
+    justify-content: end;
+}
+
+.SteamFooter-SocialLinks-Element {
+    width: 47px;
+    height: 47px;
+    background-color: var(--bg-main-alter);
+    border-radius: 3px;
+    display: grid;
+    place-content: center;
+}
+
+.SteamFooter-SocialLinks-Element:nth-child(odd) {
+    margin: 0 13px;
+}

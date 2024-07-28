@@ -16,6 +16,9 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
     const OtherImages = CardImages.slice(1, CardImages.length)
     const [CardSelector, setCardSelector] = useState(0)
 
+    const priceReal = products[0].price.default > 0 ? "Comprar" : "Jugar"
+    
+
     if (preset === "Small") {
         return (
             <div className="SteamCardGame-Small">
@@ -36,7 +39,7 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
                                 value: products[0].price.default,
                                 discount: products[0].price.discount?.value,
                                 discountDate: products[0].price.discount?.finalDate
-                            }} text="Comprar" />
+                            }} text={priceReal} />
                             <SteamWishlist mode="Square" className="" />
                         </div>
                     </div>
@@ -81,11 +84,11 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
                 </div>
                 <div className="SteamCardGame-Big-DetailsOptions">
                     <SteamWishlist mode="Normal" />
-                    <AddtoCart price={{
+                    <AddtoCart ActiveDate={false} price={{
                         value: products[0].price.default,
                         discount: products[0].price.discount?.value,
                         discountDate: products[0].price.discount?.finalDate
-                    }} text="Comprar" />
+                    }} text={priceReal} />
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 #SteamHeader {
-    /* position: fixed; */
+    position: fixed;
     width: 100%;
     height: 57px;
     background-color: var(--bg-tertiary);
@@ -35,6 +35,7 @@
 
 .SteamHeader-PagesTitles.Active,
 .SteamHeader-PersonalTitles.Active {
+    font-weight: bold;
     background-color: var(--color-secondary);
 }
 

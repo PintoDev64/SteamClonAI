@@ -5,10 +5,9 @@ import './index.css'
 import { LeftArrow, RightArrow } from "../assets"
 
 type SliderProps = { children: ReactNode[] } & ComponentProps<"div">
-export default function SliderHuge({ children }: SliderProps) {
+export default function SliderCategories({ children }: SliderProps) {
 
     const Wrapper = useRef<HTMLDivElement>(null!)
-
     const [ElementSelected, setElementSelected] = useState(1)
 
     enum States {
@@ -22,6 +21,7 @@ export default function SliderHuge({ children }: SliderProps) {
     }
 
     function SlideEvent(goTo: "back" | "next") {
+        
         const childrenCount = children.length;
         const SlideFunction = (value: number) => Wrapper.current.scrollTo({
             behavior: SlideEventVariables.MoveSmooth,
@@ -30,17 +30,17 @@ export default function SliderHuge({ children }: SliderProps) {
 
         if (goTo === "back") {
             if (ElementSelected - 1 < 1) {
-                SlideFunction(SlideEventVariables.MovePoints * childrenCount);
-                return
+                SlideFunction(SlideEventVariables.MovePoints * childrenCount); return
             }
             SlideFunction(parseInt(`${Wrapper.current.scrollLeft}`) - SlideEventVariables.MovePoints)
+            setElementSelected(ElementSelected - 1)
             return
         }
         if (ElementSelected + 1 > childrenCount) {
-            SlideFunction(0);
-            return
+            SlideFunction(0); return
         }
         SlideFunction(parseInt(`${Wrapper.current.scrollLeft}`) + SlideEventVariables.MovePoints)
+        setElementSelected(ElementSelected + 1)
         return
     }
 
@@ -56,28 +56,37 @@ export default function SliderHuge({ children }: SliderProps) {
         return () => {
             ScrollElement.removeEventListener("scrollend", EventScroll)
         }
-    })
+    }, [SlideEventVariables.MovePoints])
 
     return (
-        <div className="SteamSliderHuge">
-            <div className="SteamSliderHuge-Content">
-                <button className="SteamSliderHuge-ContentControls" onClick={() => SlideEvent("back")}>
-                    <div className="SteamSliderHuge-ContentControls-Icon Left" >
+        <div className="SteamSliderCategories">
+            <div className="SteamSliderCategories-Content">
+                <button className="SteamSliderCategories-ContentControls" onClick={() => SlideEvent("back")}>
+                    <div className="SteamSliderCategories-ContentControls-Icon Left" >
                         <LeftArrow />
                     </div>
                 </button>
-                <div className="SteamSliderHuge-ContentElement" ref={Wrapper}>
+                <div className="SteamSliderCategories-ContentElement" ref={Wrapper}>
                     {children}
                 </div>
-                <button className="SteamSliderHuge-ContentControls" onClick={() => SlideEvent("next")}>
-                    <div className="SteamSliderHuge-ContentControls-Icon Right">
+                <button className="SteamSliderCategories-ContentControls" onClick={() => SlideEvent("next")}>
+                    <div className="SteamSliderCategories-ContentControls-Icon Right">
                         <RightArrow />
                     </div>
                 </button>
             </div>
-            <div className="SteamSliderHuge-ElementsCounter">
-                {children.map((_value, _index) => <div key={_index + 1} className={`SteamSliderHuge-ElementsCounter-Element ${ElementSelected === (_index + 1) ? States.Select : States.NonSelect}`} />)}
+            <div className="SteamSliderCategories-ElementsCounter">
+                {children.map((_value, _index) => <div key={_index + 1} className={`SteamSliderCategories-ElementsCounter-Element ${ElementSelected === (_index + 1) ? States.Select : States.NonSelect}`} />)}
             </div>
+        </div>
+    )
+}
+
+type SliderCategoryContainerProps = { children: ReactNode[] }
+export function SliderCategoryContainer({ children }: SliderCategoryContainerProps) {
+    return (
+        <div className="SteamSliderCategories-Container">
+            {children}
         </div>
     )
 }
