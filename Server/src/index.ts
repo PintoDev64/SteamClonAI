@@ -2,6 +2,7 @@ import express from "express";
 import { createServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
 import { join } from "node:path";
+import cors from 'cors'
 
 // Main Router
 import ApplictionRouter from "./modules";
@@ -20,6 +21,10 @@ const httpServer = createServer(SteamServer);
 const io = new SocketIOServer(httpServer);
 
 SteamServer.use(express.json());
+SteamServer.use(cors({
+    origin: "http://localhost:5173",
+    optionsSuccessStatus: 200
+}))
 SteamServer.disable("x-powered-by");
 
 SteamServer.use("/api", ApplictionRouter);

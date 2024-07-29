@@ -8,7 +8,7 @@
     height: 528px;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--bg-main-alter);
+    background-color: var(--bg-main-20);
     scroll-behavior: smooth;
 }
 
@@ -79,7 +79,6 @@
     height: 497px;
     display: flex;
     border-radius: 10px;
-    gap: 20px;
     background-color: var(--bg-hover);
     overflow-x: scroll;
     scroll-snap-type: x mandatory;

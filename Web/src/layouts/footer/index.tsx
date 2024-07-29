@@ -19,13 +19,13 @@ export default function Footer() {
       </div>
       <div id="SteamFooter-AboutLinks">
         <div className="SteamFooter-AboutLinks-Element">
-          {AboutLinks[0].map(({ Text, Url }) =>
-            <a className='SteamFooter-AboutLinks-ElementAnchor' href={Url}>{Text}</a>
+          {AboutLinks[0].map(({ Text, Url }, _index) =>
+            <a key={_index} className='SteamFooter-AboutLinks-ElementAnchor' href={Url}>{Text}</a>
           )}
         </div>
         <div className="SteamFooter-AboutLinks-Element">
-          {AboutLinks[0].map(({ Text, Url }) =>
-            <a className='SteamFooter-AboutLinks-ElementAnchor' href={Url}>{Text}</a>
+          {AboutLinks[0].map(({ Text, Url }, _index) =>
+            <a key={_index} className='SteamFooter-AboutLinks-ElementAnchor' href={Url}>{Text}</a>
           )}
         </div>
       </div>

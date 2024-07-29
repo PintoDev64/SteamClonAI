@@ -87,7 +87,7 @@ export const CounterStrikeShortDetails: GameShortDataType = {
         },
         {
             type: "image",
-            url: "https://staticg.sportskeeda.com/editor/2023/03/1fe12-16795613684422-1920.jpg?w=640"
+            url: "https://staticg.sportskeeda.com/editor/2023/03/1fe12-16795613684422-1920.jpg"
         },
         {
             type: "image",

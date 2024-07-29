@@ -1,0 +1,18 @@
+#GameCoverTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    height: 84px;
+    padding: 15px 25px;
+    background-color: var(--bg-main);
+    border-radius: 5px;
+}
+
+#GameCoverTitleText {
+    font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
+    font-size: 26px;
+    margin: 0;
+    color: var(--text-main);
+}

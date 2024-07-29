@@ -3,8 +3,13 @@ import { ReactNode } from 'react'
 // Style
 import './index.css'
 
-type SeparatorContainerProps = { children: ReactNode, Text: string, SeeMoreLink?: string }
-export function SeparatorContainer({ Text, SeeMoreLink = undefined, children }: SeparatorContainerProps) {
+type SeparatorContainerProps = { Ai?: boolean, children: ReactNode, Text: string, SeeMoreLink?: string }
+export function SeparatorContainer({ Ai = false, Text, SeeMoreLink = undefined, children }: SeparatorContainerProps) {
+    if (Ai) {
+        return (
+            <></>
+        )
+    }
     return (
         <div className="SteamSeparatorContainer">
             <div className="SteamSeparatorContainer-Elements">

@@ -2,7 +2,7 @@ import express from 'express';
 
 // Database Classes
 import { insertGameData, getGameData } from '../../database/MongoModels/GameData';
-import { insertGameReview, createGameReview } from '../../database/MongoModels/GameReviews';
+import { insertGameReview, createGameReview, getGameReviews } from '../../database/MongoModels/GameReviews';
 
 // Utils
 import { HTTPResponses } from '../../utils';
@@ -32,14 +32,17 @@ GameRouter.post(PathService, createIdGame, async (request, response) => {
 /**
  * 
  */
-GameRouter.get(PathService, (request, response) => {
+GameRouter.get(PathService, async (request, response) => {
     const { query } = request
     if (query.idGame) {
-        getGameData({ idGame: query.idGame as UUIDPattern })
-            .then(({ status, data }) => {
-                HTTPResponses[status](response, data)
-            })
-            .catch(err => console.log(err))
+        const GameData = await getGameData({ idGame: query.idGame as UUIDPattern })
+        const GameReviews = await getGameReviews({ idGame: query.idGame as UUIDPattern })
+        console.log(GameReviews.data);
+        
+        response.json({
+            ...GameData.data,
+            reviews: GameReviews.data.data
+        })
     } else {
         response.redirect("https://steam-clon-ai-web.vercel.app/")
     }

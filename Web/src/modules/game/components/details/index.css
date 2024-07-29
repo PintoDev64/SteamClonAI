@@ -1,0 +1,104 @@
+#GameDetails {
+    box-sizing: border-box;
+    padding: 25px;
+    margin: 11px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--bg-main-50);
+}
+
+#GameDetails-Content {
+    display: flex;
+    width: 416px;
+    flex-direction: column;
+}
+
+.GameDetails-ContentClass:nth-child(even) {
+    margin: 23.67px 0;
+}
+
+#GameDetails-Images-Element {
+    width: 1078px;
+    height: 485px;
+    background-color: var(--bg-highlight);
+    border-radius: 3px;
+    overflow: hidden;
+    display: grid;
+    place-content: center;
+}
+
+#GameDetails-Images-ElementVideo,
+#GameDetails-Images-ElementImage {
+    max-width: 1078px;
+    height: 485px;
+    border-radius: 3px;
+}
+
+#GameDetails-ContentCover {
+    width: 416px;
+    height: 234px;
+    aspect-ratio: 16/9;
+    border-radius: 3px;
+}
+
+#GameDetails-ContentDescriptionText,
+#GameDetails-ContentDescription {
+    width: 416px;
+    height: 60px;
+}
+
+#GameDetails-ContentDescriptionText {
+    font-family: "MotivaSansRegular", sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    height: 57px;
+    color: var(--text-main);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.GameDetails-ContentSeparator {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.GameDetails-Content-Span {
+    width: 90px;
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 14px;
+    color: var(--text-dim);
+    margin: 0 20px 0 0;
+}
+
+.GameDetails-Content-Expose,
+.GameDetails-Content-Expose a {
+    color: var(--text-main);
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.GameDetails-Content-Expose {
+    display: flex;
+}
+
+.GameDetails-Content-Expose a:hover {
+    text-decoration: underline;
+}
+
+.GameDetails-Content-ExposeTags {
+    width: auto;
+    height: 30px;
+    box-sizing: border-box;
+    padding: 8px 13px;
+    border-radius: 3px;
+    color: var(--text-dim);
+    background-color: var(--bg-highlight);
+}
+
+.GameDetails-Content-ExposeTags:nth-child(even) {
+    margin: 0 5px;
+}

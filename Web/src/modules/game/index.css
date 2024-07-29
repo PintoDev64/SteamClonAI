@@ -1,0 +1,27 @@
+#GamePage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: top;
+}
+
+#GamePage::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(var(--bg-store-gradient) 0%, var(--bg-game) 30%,  var(--bg-game) 100%);
+}
+
+#GamePageContent {
+    margin: 0 auto;
+    padding: 20px 0 0 0;
+    max-width: 1567px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+}

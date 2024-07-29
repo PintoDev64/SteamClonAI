@@ -1,5 +1,5 @@
 ### Test 1
-GET http://localhost:1234/api/v1/game?idGame=b23b7da0-5b23-430c-a013-3e2c7e951490
+GET http://localhost:1234/api/v1/game?idGame=fe7dab8a-b0fa-483a-b4d7-77414a57ba13
 ###
 GET https://steamclonai.onrender.com/api/v1/game?idGame=b23b7da0-5b23-430c-a013-3e2c7e951490
 ### Test 2
@@ -15,15 +15,29 @@ content-type: application/json
     "shortDescription": "For over two decades, Counter-Strike has offered an elite competitive experience, one shaped by millions of players from across the globe. And now the next chapter in the CS story is about to begin. This is Counter-Strike 2.",
     "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/730/f75dd04fa12445a8ec43be65fa16ff1b8d2bf82e.jpg",
     "images": [{
-        "type": "video",
-        "url": "https://cdn.akamai.steamstatic.com/steam/apps/256972298/movie_max_vp9.webm"
-    }, {
-        "type": "image",
-        "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/ss_796601d9d67faf53486eeb26d0724347cea67ddc.600x338.jpg"
-    }, {
-        "type": "image",
-        "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/ss_18e9ea2715f0407ee05e206073927a648db60d73.600x338.jpg"
-    }],
+            "type": "video",
+            "url": "https://cdn.akamai.steamstatic.com/steam/apps/256972298/movie_max_vp9.webm"
+        },
+        {
+            "type": "image",
+            "url": "https://staticg.sportskeeda.com/editor/2023/03/1fe12-16795613684422-1920.jpg"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/ss_796601d9d67faf53486eeb26d0724347cea67ddc.1920x1080.jpg"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/ss_d830cfd0550fbb64d80e803e93c929c3abb02056.1920x1080.jpg"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/ss_18e9ea2715f0407ee05e206073927a648db60d73.1920x1080.jpg"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/ss_63d2733b9b4ace01a41d5ba8afd653245d05d54a.1920x1080.jpg"
+        }],
     "releaseDate": "21-AGO-2012",
     "developer": {
         "name": "Valve",

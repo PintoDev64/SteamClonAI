@@ -9,7 +9,7 @@ export default function SliderHuge({ children }: SliderProps) {
 
     const Wrapper = useRef<HTMLDivElement>(null!)
 
-    const [ElementSelected, setElementSelected] = useState(1)
+    const [ElementSelected, setElementSelected] = useState(0)
 
     enum States {
         Select = "Select",
@@ -29,15 +29,20 @@ export default function SliderHuge({ children }: SliderProps) {
         })
 
         if (goTo === "back") {
-            if (ElementSelected - 1 < 1) {
+            if (ElementSelected - 1 < 0) {
                 SlideFunction(SlideEventVariables.MovePoints * childrenCount);
+                setElementSelected(childrenCount - 1)
                 return
             }
-            SlideFunction(parseInt(`${Wrapper.current.scrollLeft}`) - SlideEventVariables.MovePoints)
+            SlideFunction(Math.round(
+                parseInt(`${Wrapper.current.scrollLeft}`) - SlideEventVariables.MovePoints
+            ))
             return
         }
-        if (ElementSelected + 1 > childrenCount) {
+        
+        if (ElementSelected + 1 > childrenCount - 1) {
             SlideFunction(0);
+            setElementSelected(0)
             return
         }
         SlideFunction(parseInt(`${Wrapper.current.scrollLeft}`) + SlideEventVariables.MovePoints)
@@ -47,14 +52,16 @@ export default function SliderHuge({ children }: SliderProps) {
     useEffect(() => {
         const ScrollElement = Wrapper.current
         const EventScroll = () => {
-            const ValueResolve = parseInt(`${ScrollElement.scrollLeft}`) / SlideEventVariables.MovePoints
-            setElementSelected(parseInt(`${ValueResolve + 1}`))
+            const ValueResolve = Math.round(
+                parseInt(`${ScrollElement.scrollLeft}`) / SlideEventVariables.MovePoints
+            )
+            setElementSelected(ValueResolve)
         }
 
-        ScrollElement.addEventListener("scrollend", EventScroll)
+        ScrollElement.addEventListener("scroll", EventScroll)
 
         return () => {
-            ScrollElement.removeEventListener("scrollend", EventScroll)
+            ScrollElement.removeEventListener("scroll", EventScroll)
         }
     })
 
@@ -76,7 +83,7 @@ export default function SliderHuge({ children }: SliderProps) {
                 </button>
             </div>
             <div className="SteamSliderHuge-ElementsCounter">
-                {children.map((_value, _index) => <div key={_index + 1} className={`SteamSliderHuge-ElementsCounter-Element ${ElementSelected === (_index + 1) ? States.Select : States.NonSelect}`} />)}
+                {children.map((_value, _index) => <div key={_index} className={`SteamSliderHuge-ElementsCounter-Element ${ElementSelected === (_index) ? States.Select : States.NonSelect}`} />)}
             </div>
         </div>
     )

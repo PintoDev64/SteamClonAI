@@ -2,12 +2,15 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 
 import MainLayout from "@layouts/index";
 
+import GamePage from "@Modules/game";
 import HomePage from "@Modules/home";
+import { GameLoader } from "loaders";
 
 const RouterStructure = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<MainLayout />}>
-            <Route index element={<HomePage bannerEvent="/SteamAutumnSale.webp" TextEvent="Steam Winter Sale" />} />
+            <Route index element={<HomePage bannerEvent="/HomeHeader.png" />} />
+            <Route  path="game/:IdGame" loader={GameLoader} element={<GamePage />}/>
         </Route>
     )
 )
