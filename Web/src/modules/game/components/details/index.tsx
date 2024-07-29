@@ -26,6 +26,7 @@ export default function GameDetails({ images, name, shortDescription, releaseDat
 
     useEffect(() => {
         VideoElement.current.volume = 0.05
+        setImageSelect(0)
     }, [])
 
 
