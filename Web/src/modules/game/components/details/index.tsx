@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function GameDetails({ images, name, shortDescription, releaseDate, reviews, developer, publishers, categories }: ComponentsRequestProps.GameDetails) {
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ImageSelect, setImageSelect] = useState(0)
 
     const VideoElement = useRef<HTMLVideoElement>(null!)
