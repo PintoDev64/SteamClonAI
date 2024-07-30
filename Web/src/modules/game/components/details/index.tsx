@@ -13,8 +13,6 @@ export default function GameDetails({ images, name, shortDescription, releaseDat
 
     const VideoElement = useRef<HTMLVideoElement>(null!)
 
-    console.log(categories.slice(1, 3));
-
     function filterReviews(reviews: RequestAPI.GameReviewsData) {
         const Good = [...reviews].filter(({ type }) => type === "recommended").length
         const Bad = [...reviews].filter(({ type }) => type === "non-recomended").length
@@ -25,8 +23,10 @@ export default function GameDetails({ images, name, shortDescription, releaseDat
     }
 
     useEffect(() => {
-        VideoElement.current.volume = 0.05
+        VideoElement.current.volume = 0.4
+        VideoElement.current.addEventListener("load", () => VideoElement.current.play())
         setImageSelect(0)
+        return () => {}
     }, [])
 
 
@@ -72,16 +72,16 @@ export default function GameDetails({ images, name, shortDescription, releaseDat
                 <div className="GameDetails-ContentSeparator GameDetails-ContentClass">
                     <span className="GameDetails-Content-Span">Distribuidor</span>
                     <div className="GameDetails-Content-Expose">
-                        {publishers.map(({ name, url }) =>
-                            <a href={url} target="_blank" rel="noopener noreferrer">{name}</a>
+                        {publishers.map(({ name, url }, _index) =>
+                            <a key={_index} href={url} target="_blank" rel="noopener noreferrer">{name}</a>
                         )}
                     </div>
                 </div>
                 <div className="GameDetails-ContentSeparator GameDetails-ContentClass">
                     <span className="GameDetails-Content-Span">Categorias</span>
                     <div className="GameDetails-Content-Expose">
-                        {categories.slice(1, 3).map(value =>
-                            <div className="GameDetails-Content-ExposeTags">
+                        {categories.slice(1, 3).map((value, _index) =>
+                            <div key={_index} className="GameDetails-Content-ExposeTags">
                                 {value}
                             </div>
                         )}

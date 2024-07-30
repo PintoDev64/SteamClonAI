@@ -25,6 +25,8 @@
     user-select: none;
     cursor: pointer;
     border-radius: 3px;
+    
+    text-decoration: none;
     transition: all .1s ease;
 }
 
@@ -46,10 +48,11 @@
 
 .SteamHeader-PersonalTitlesText,
 .SteamHeader-PagesTitlesText {
-    font-family: "MotivaSansRegular", sans-serif;
+    font-family: "MotivaSansBold", sans-serif;
     font-size: 16px;
     color: var(--text-main);
     text-align: center;
+    font-weight: bold;
 }
 
 #SteamHeader-Search {

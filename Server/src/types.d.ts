@@ -129,7 +129,7 @@ declare namespace GameReview {
 // |---------> Game Data
 declare namespace GameData {
     type InsertGameDataParam = GameDataType & IdGameType
-    type IdGameType = { idGame: UUIDPattern }
+    type IdGameType = { idGame?: UUIDPattern | UUIDPattern[], name?: string | string[] }
 }
 
 // |---------> Friends

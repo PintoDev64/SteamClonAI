@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 
 declare type DatePattern = `${string}-${string}-${string}`
+type _IdGame = { idGame: `${string}-${string}-${string}-${string}-${string}` }
 type SystemRequeriments = {
     OS: string,
     processor: string,
@@ -92,7 +93,7 @@ declare namespace RequestAPI {
         links: {
             url: string
         },
-        platforms: Record<"Win" | "Mac" | "Lin", {
+        platforms: Record<"Win" | "Mac" | "Lin" | string, {
             OS: string,
             processor: string,
             Memory: string,
@@ -126,7 +127,7 @@ declare namespace RequestAPI {
             }
         }[],
         about: string
-    }
+    } & _IdGame
     type GameReviewsData = {
         type: "recommended" | "non-recomended",
         username: string,
@@ -141,4 +142,9 @@ declare namespace RequestAPI {
             funny: number
         }
     }[]
+    type Home_APIStore = {
+        Featured: GameDataType[],
+        Offers: GameDataType[],
+        SteamAI: GameDataType[]
+    }
 }

@@ -66,20 +66,35 @@
         }
     },
     {
-        "idGame": "${_Id}",
         "name": "Left 4 Dead 2",
         "shortDescription": "Ambientado en el apocalipsis zombi, Left 4 Dead 2 (L4D2) es la esperadísima secuela del galardonado Left 4 Dead, el juego cooperativo número 1 de 2008. Este FPS cooperativo de acción y terror os llevará a ti y a tus amigos por las ciudades, pantanos y cementerios del Sur Profundo",
         "icon": "https://assets-prd.ignimgs.com/2021/12/10/left4dead2-1639126647529.jpg",
-        "images": [{
-            "type": "video",
-            "url": "https://cdn.akamai.steamstatic.com/steam/apps/5952/movie480.webm"
-        }, {
-            "type": "image",
-            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/550/ss_2eae29fbdfe8e5e8999b96d8bb28c5db70507968.600x338.jpg"
-        }, {
-            "type": "image",
-            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/550/ss_b8bcf2ebdb67a32b4a1e7273a4e9eae92243ed64.600x338.jpg"
-        }],
+        "images": [
+            {
+                "type": "video",
+                "url": "https://cdn.akamai.steamstatic.com/steam/apps/5952/movie480.webm"
+            },
+            {
+                "type": "image",
+                "url": "https://steamuserimages-a.akamaihd.net/ugc/112987056949782149/11649FF34FB9804AFC9B408F434F39DB88F4614C/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+            },
+            {
+                "type": "image",
+                "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/550/ss_b8bcf2ebdb67a32b4a1e7273a4e9eae92243ed64.1920x1080.jpg"
+            },
+            {
+                "type": "image",
+                "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/550/ss_ba2ea2eda245f89626277457ae2ab76ba997f46a.1920x1080.jpg"
+            },
+            {
+                "type": "image",
+                "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/550/ss_1d9d6e638c8ad4b04fac0f49ca32947b31396f24.1920x1080.jpg"
+            },
+            {
+                "type": "image",
+                "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/550/ss_6ec4ee04d4924b099e25ce79f3d6571c3b623b3b.1920x1080.jpg"
+            }
+        ],
         "releaseDate": "16-NOV-2009",
         "developer": {
             "name": "Valve",
@@ -120,8 +135,8 @@
         "products": [{
             "name": "Left 4 Dead 2",
             "price": {
-                "default": 26000,
-                "format": "Cop"
+                "default": 5,
+                "format": "Dollar"
             }
         }],
         "downloadableContent": [],
@@ -136,8 +151,7 @@
                 "interface": true,
                 "audio": true,
                 "subtitles": true
-            },
-            "Japanise": "undefined"
+            }
         }
     }
 ]

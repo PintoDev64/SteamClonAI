@@ -1,5 +1,4 @@
-export const GameCategories: ({ imageUrl: string, Text: string }[])[] = [
-    [
+export const GameCategories: { imageUrl: string, Text: string }[] = [
         {
             Text: "Accion",
             imageUrl: "/ActionBack.webp"
@@ -19,9 +18,7 @@ export const GameCategories: ({ imageUrl: string, Text: string }[])[] = [
         {
             Text: "Co-Op",
             imageUrl: "/CoOpBack.webp"
-        }
-    ],
-    [
+        },
         {
             Text: "Novela Visual",
             imageUrl: "/VSBack.webp"
@@ -42,5 +39,4 @@ export const GameCategories: ({ imageUrl: string, Text: string }[])[] = [
             Text: "Mundo Abierto",
             imageUrl: "/FreeWorldBack.webp"
         }
-    ]
 ]

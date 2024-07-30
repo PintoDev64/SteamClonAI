@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export function getDominantColor(imageUrl: string, transparency?: number): Promise<string> {
   return new Promise((resolve, reject) => {
     const imgEl = new Image();
@@ -32,4 +34,14 @@ export function getDominantColor(imageUrl: string, transparency?: number): Promi
 
 export function decodeDate(dateString: DatePattern) {
   return dateString.replace(/-/g, " ")
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function splitArrayComponentsToSubarrays(array: ReactNode[], chunkSize: number) {
+  const result = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+      const chunk = array.slice(i, i + chunkSize);
+      result.push(chunk);
+  }
+  return result;
 }

@@ -1,11 +1,15 @@
 import { config } from "dotenv"
 import { resolve } from 'node:path'
+import { createOpenAI } from '@ai-sdk/openai';
 
 config({
     path: (process.env.NODE_ENV === "development" || process.env.NODE_ENV === undefined) ? resolve(process.cwd(), "vars.development.env") : resolve(process.cwd(), "vars.production.env")
 })
 
 // ENV Variables
+
+// --------------> Main
+const OPENAI_APIKEY = process.env.OPENAI_APIKEY
 
 // --------------> MongoDB
 export const SERVERPORT = process.env.PORT ?? 0
@@ -21,3 +25,9 @@ export const MYSQLDB_PORT = process.env.MYSQLDB_PORT as string
 
 // --------------> MySQL
 export const JWT_SECRET = process.env.JWT_SECRET as string
+
+// OpenAI API -> Vercel AI SDK
+export const GPT4o_mini = createOpenAI({
+    apiKey: OPENAI_APIKEY,
+    compatibility: "strict"
+})

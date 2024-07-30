@@ -1,3 +1,5 @@
+import { useLoaderData } from 'react-router-dom'
+
 // Style
 import './index.css'
 
@@ -7,15 +9,20 @@ import { SeparatorContainer } from '@components/separator'
 // Layouts
 import SliderHuge from '@layouts/slider/huge'
 import GameCard from '@layouts/components/cards'
-import SliderSmall, { SliderContainer } from '@layouts/slider/small'
+import SliderSmall from '@layouts/slider/small'
+import SliderCategories from '@layouts/slider/categories'
+import CategoriesCard from '@layouts/components/categories'
 
 // Examples
-import { GameExamples } from '@examples/game'
+import { GameCategories } from '@layouts/slider/constants'
+
 
 type HomePageProps = { bannerEvent?: string }
 export default function HomePage({ bannerEvent }: HomePageProps) {
-    const SpecialOffers = [GameExamples.filter(({ products }) => products[0].price.discount !== undefined), GameExamples.filter(({ products }) => products[0].price.discount !== undefined)]
-    console.log(SpecialOffers);
+
+    const { Featured, Offers, SteamAI } = useLoaderData() as RequestAPI.Home_APIStore
+
+    console.log({ Featured, Offers, SteamAI });
 
     return (
         <div id="HomePage">
@@ -24,21 +31,31 @@ export default function HomePage({ bannerEvent }: HomePageProps) {
             <div id="HomePageContent">
                 <SeparatorContainer Text='Destacados'>
                     <SliderHuge>
-                        {GameExamples.map(data =>
-                            <GameCard data={data} />
+                        {Featured.map((data, _index) =>
+                            <GameCard key={_index} data={data} />
                         )}
                     </SliderHuge>
                 </SeparatorContainer>
                 <SeparatorContainer Text='Ofertas Especiales'>
                     <SliderSmall>
-                        {SpecialOffers.map(Element => 
-                            <SliderContainer>
-                                {Element.map(data =>
-                                    <GameCard preset='Small' data={data} />
-                                )}
-                            </SliderContainer>
+                        {Offers.map((data, _index) =>
+                            <GameCard key={_index} preset='Small' data={data} />
                         )}
                     </SliderSmall>
+                </SeparatorContainer>
+                <SeparatorContainer Text='SteamAI'>
+                    <SliderSmall>
+                        {SteamAI.map((data, _index) =>
+                            <GameCard key={_index} preset='Small' data={data} />
+                        )}
+                    </SliderSmall>
+                </SeparatorContainer>
+                <SeparatorContainer Text='Categorias'>
+                    <SliderCategories>
+                        {GameCategories.map(({ Text, imageUrl }, _index) =>
+                            <CategoriesCard key={_index} Text={Text} imageUrl={imageUrl} />
+                        )}
+                    </SliderCategories>
                 </SeparatorContainer>
             </div>
         </div>

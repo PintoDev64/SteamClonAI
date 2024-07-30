@@ -16,7 +16,7 @@ export default function Header() {
     <header id="SteamHeader">
       <div id="SteamHeader-Pages">
         {HeaderTitles.map(({ name, url }, _index) =>
-          <Link to={url} key={_index} className={`SteamHeader-PagesTitles ${GetActualPath() ? States.Active : States.Desactive}`}>
+          <Link to={url} key={_index} className={`SteamHeader-PagesTitles ${GetActualPath(url) ? States.Active : States.Desactive}`}>
             <span className='SteamHeader-PagesTitlesText'>{name}</span>
           </Link>
         )}
