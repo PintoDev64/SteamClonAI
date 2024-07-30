@@ -7,7 +7,7 @@ import SteamWishlist from "../../../components/wishlist";
 import { PlatformsIcons } from "./assets";
 import { Link } from "react-router-dom";
 
-type GameCardProps = { preset?: "Big" | "Small", data: GameShortDataType & RequestAPI.GameDataType }
+type GameCardProps = { preset?: "Big" | "Small", data: RequestAPI.GameDataType }
 export default function GameCard({ preset = "Big", data }: GameCardProps) {
 
     const { shortDescription, images, products, categories, platforms, name } = data;
