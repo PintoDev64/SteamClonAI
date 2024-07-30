@@ -1,4 +1,10 @@
 import { ReactNode } from "react";
+import { useLocation } from "react-router-dom"
+
+export function GetActualPath(localPathname: string) {
+  const { pathname } = useLocation()
+  return localPathname === pathname
+}
 
 export function getDominantColor(imageUrl: string, transparency?: number): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -40,8 +46,8 @@ export function decodeDate(dateString: DatePattern) {
 export function splitArrayComponentsToSubarrays(array: ReactNode[], chunkSize: number) {
   const result = [];
   for (let i = 0; i < array.length; i += chunkSize) {
-      const chunk = array.slice(i, i + chunkSize);
-      result.push(chunk);
+    const chunk = array.slice(i, i + chunkSize);
+    result.push(chunk);
   }
   return result;
 }

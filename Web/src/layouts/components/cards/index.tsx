@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 // Styles
 import './index.css'
 import AddtoCart from "../../../components/cart";
 import SteamWishlist from "../../../components/wishlist";
 import { PlatformsIcons } from "./assets";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { ModifyTransition } from "hooks";
+import { PageTransitionContext } from "context";
 
 type GameCardProps = { preset?: "Big" | "Small", data: RequestAPI.GameDataType }
 export default function GameCard({ preset = "Big", data }: GameCardProps) {
+
+    const { pathname } = useLocation()
+
+    const { ModifyPageTransition } = useContext(PageTransitionContext)
 
     const { shortDescription, images, products, categories, platforms, name } = data;
 
@@ -20,17 +26,22 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
 
     const priceReal = products[0].price.default > 0 ? "Comprar" : "Jugar"
 
+    function ClickLink(url: string) {
+        url !== pathname && ModifyTransition(ModifyPageTransition)
+    }
 
     if (preset === "Small") {
         return (
             <div className="SteamCardGame-Small">
                 <div className="SteamCardGame-Small-Image">
-                    <Link to={`/game/${data.idGame}`}>
+                    <Link to={`/game/${data.idGame}`} onClick={() => ClickLink(`/game/${data.idGame}`)}>
                         <img className="SteamCardGame-Small-ImageElement" src={CardImages[CardSelector].url} alt={name} />
                     </Link>
                 </div>
                 <div className="SteamCardGame-Small-Details">
-                    <h2 className="SteamCardGame-Small-DetailsTitle">{name}</h2>
+                    <Link to={`/game/${data.idGame}`} onClick={() => ClickLink(`/game/${data.idGame}`)}>
+                        <h2 className="SteamCardGame-Small-DetailsTitle">{name}</h2>
+                    </Link>
                     <div className="SteamCardGame-Small-DetailsExtra">
                         <div className="SteamCardGame-Small-DetailsExtra-Platforms">
                             {PlatformsKeys.map((value: "Win" | "Mac" | "Lin" | string, _index) => {
@@ -63,12 +74,14 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
     return (
         <div className="SteamCardGame-Big">
             <div className="SteamCardGame-Big-Image">
-                <Link to={`/game/${data.idGame}`}>
+                <Link to={`/game/${data.idGame}`} onClick={() => ClickLink(`/game/${data.idGame}`)}>
                     <img className="SteamCardGame-Big-ImageElement" src={CardImages[CardSelector].url} alt={name} />
                 </Link>
             </div>
             <div className="SteamCardGame-Big-Details">
-                <h2 className="SteamCardGame-Big-DetailsTitle">{name}</h2>
+                <Link to={`/game/${data.idGame}`} onClick={() => ClickLink(`/game/${data.idGame}`)}>
+                    <h2 className="SteamCardGame-Big-DetailsTitle">{name}</h2>
+                </Link>
                 <p className="SteamCardGame-Big-DetailsParagraph">{shortDescription}</p>
                 <div className="SteamCardGame-Big-DetailsImages" onMouseLeave={MouseOff}>
                     {OtherImages.map(({ url }, _index) =>

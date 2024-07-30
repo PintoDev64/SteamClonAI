@@ -6,6 +6,7 @@
   --bg-main-alter: rgba(14, 20, 27, 0.8);
   --bg-main-20: rgba(14, 20, 27, 0.2);
   --bg-main-50: rgba(14, 20, 27, 0.5);
+  --bg-main-80: rgba(14, 20, 27, 0.8);
   --bg-highlight: #1E2329;
   --bg-hover: #313843;
   --bg-secondary: #14344B;
@@ -19,14 +20,31 @@
   --accent-yellow: #C1B15F;
 
   --bg-store: #040011;
-  --bg-store-gradient: #04001150;
+  --bg-store-gradient: #04001199;
   --bg-game: #202B3B;
+}
+
+a {
+  text-decoration: none;
 }
 
 body {
   margin: 0;
   padding: 0;
   background-color: var(--bg-game);
+  scrollbar-gutter: 9px;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  background: var(--bg-store);
+  overflow: visible;
+}
+
+::-webkit-scrollbar-thumb {
+  background-clip: padding-box;
+  background: var(--text-main);
+  border-radius: 10px;
 }
 
 #root {

@@ -1,4 +1,4 @@
-import { URL_API } from "contants";
+import { URL_API } from "@constants";
 import { Params } from "react-router-dom";
 
 type LoaderType = { request: Request, params: Params }

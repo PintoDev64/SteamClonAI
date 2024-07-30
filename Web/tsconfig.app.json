@@ -22,7 +22,8 @@
       "@examples/*": ["./examples/*"],
       "@layouts/*": ["./layouts/*", "./layouts"],
       "@utils": ["./utils"],
-      "@Modules/*": ["./modules/*"]
+      "@Modules/*": ["./modules/*"],
+      "@constants": ["./constants"]
     },
 
     /* Linting */

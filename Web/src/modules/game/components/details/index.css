@@ -21,7 +21,7 @@
 #GameDetails-Images-Element {
     width: 1078px;
     height: 485px;
-    background-color: var(--bg-highlight);
+    background-color: var(--bg-main);
     border-radius: 3px;
     overflow: hidden;
     display: grid;

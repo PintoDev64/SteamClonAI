@@ -11,9 +11,36 @@
     box-sizing: border-box;
 }
 
+#SteamHeaderLoader {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border-radius: 0 0 15px 15px;
+    background: linear-gradient(var(--color-primary) 0%, transparent 100%);
+    height: 10px;
+    transition: all .5s ease;
+}
+
+#SteamHeaderLoader[aria-checked="true"] {
+    background: linear-gradient(var(--color-secondary) 0%, transparent 100%);
+    opacity: 0;
+    animation: SteamHeaderLoader normal 2s ease;
+}
+
+@keyframes SteamHeaderLoader {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
 #SteamHeader-Personal,
 #SteamHeader-Pages {
     display: flex;
+    align-items: center;
 }
 
 .SteamHeader-PersonalTitles,
@@ -25,7 +52,7 @@
     user-select: none;
     cursor: pointer;
     border-radius: 3px;
-    
+
     text-decoration: none;
     transition: all .1s ease;
 }

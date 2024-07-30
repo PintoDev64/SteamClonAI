@@ -1,0 +1,46 @@
+#AccountHeader {
+    width: 216px;
+    height: 39px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 3px;
+    background-color: var(--bg-highlight);
+    cursor: pointer;
+    user-select: none;
+}
+
+#AccountHeaderImage {
+    width: 31px;
+    height: 31px;
+    border-radius: 2px;
+}
+
+#AccountHeaderName,
+#AccountHeaderCurrency {
+    text-align: center;
+    align-content: center;
+    max-width: 84px;
+    height: 17px;
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 14px;
+}
+
+#AccountHeaderName {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 84px;
+    color: var(--text-main);
+}
+
+#AccountHeaderCurrency {
+    width: 40px;
+    color: var(--text-dim);
+}
+
+#AccountHeaderArrow {
+    width: 20px;
+    height: 20px;
+    display: grid;
+    place-items: center;
+}
