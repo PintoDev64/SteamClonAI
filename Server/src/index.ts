@@ -20,11 +20,12 @@ const SteamServer = express();
 const httpServer = createServer(SteamServer);
 const io = new SocketIOServer(httpServer);
 
-const URL_WhiteList = ["http://localhost:5173", "https://steam-clon-ai-web.vercel.app/"]
+const URL_WhiteList = ["http://localhost:5173", "https://steam-clon-ai-web.vercel.app"]
 
 SteamServer.use(express.json());
 SteamServer.use(cors({
     origin(requestOrigin, callback) {
+        console.log(URL_WhiteList.indexOf(requestOrigin as string));
         if (URL_WhiteList.indexOf(requestOrigin as string) !== -1) {
             callback(null, true)
         } else {
