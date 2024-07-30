@@ -20,9 +20,17 @@ const SteamServer = express();
 const httpServer = createServer(SteamServer);
 const io = new SocketIOServer(httpServer);
 
+const URL_WhiteList = ["http://localhost:5173", "https://steam-clon-ai-web.vercel.app/"]
+
 SteamServer.use(express.json());
 SteamServer.use(cors({
-    origin: "http://localhost:5173",
+    origin(requestOrigin, callback) {
+        if (URL_WhiteList.indexOf(requestOrigin as string) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
     optionsSuccessStatus: 200
 }))
 SteamServer.disable("x-powered-by");
