@@ -3,16 +3,10 @@ POST http://localhost:1234/api/v1/profile
 content-type: application/json
 
 {
-    "status": "Offline",
-    "profileName": "Test",
-    "AccountName": "test123",
-    "realName": "test",
-    "vacStatus": 1,
-    "mail": "test123@gmail.com",
-    "theme": 1,
-    "profilePicture": 1,
-    "backgroundImage": 1,
-    "password": "test123"
+    "AccountName": "PintoGamer64",
+    "realName": "Joan Sebastian Cardozo Salinas",
+    "mail": "test1234@gmail.com",
+    "password": "test1234"
 }
 ### 
 POST https://steamclonai.onrender.com/api/v1/profile
@@ -31,10 +25,10 @@ content-type: application/json
     "password": "jose51"
 }
 ### Test 2
-GET http://localhost:1234/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0
+GET http://localhost:1234/api/v1/profile/724b47d2-c6d0-4581-8620-60dc4203806e
 
 ### Test 2.5 Get Public Library
-GET http://localhost:10000/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0/games
+GET http://localhost:1234/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0/games
 
 ### Test 3 - Make a Friend
 POST http://localhost:1234/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0

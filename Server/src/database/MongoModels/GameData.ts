@@ -1,54 +1,54 @@
 import { Document, FindCursor, WithId } from 'mongodb';
 import { createMongoConnection } from '..';
-import { handleFunction } from '../Handlers/Error';
+import ErrorHandler from '../Handlers/Error';
+import MongoHandler from '../Handlers/MongoHandler';
 
 // Constants
 const collectionName = "GameData";
 
 export async function insertGameData(data: GameData.InsertGameDataParam): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
-        const mongo = createMongoConnection
-            ();
-        if (!mongo) return undefined
-        const collection = mongo.collection(collectionName);
-
-        await collection.insertOne(data);
-        return "Operation Complete"
+    return await ErrorHandler.Wrapper(async () => {
+        await MongoHandler.Insert(collectionName, [data])
+        return true
     })
 }
 
 export async function getGameData({ idGame, name }: GameData.IdGameType): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
-        const mongo = createMongoConnection();
-        if (!mongo) return undefined
-        const collection = mongo.collection(collectionName)
+    return await ErrorHandler.Wrapper(async () => {
 
-        let result: WithId<Document>[] | WithId<Document> | null
+        let result: GameDataType | GameDataType[]
 
         if (typeof idGame === 'object' || typeof name === 'object') {
             if (idGame) {
-                result = await collection.find({ idGame: { $in: [...idGame] } }).toArray()
+                result = await MongoHandler.Select<GameDataType[]>(collectionName, { idGame: { $in: [...idGame] } }, true)
+
             } else {
-                result = await collection.find({ name: { $in: [...name!] } }).toArray()
+                result = await MongoHandler.Select<GameDataType[]>(collectionName, { name: { $in: [...name!] } }, true)
+
             }
         } else {
             if (idGame) {
-                result = await collection.findOne({ idGame })
+                result = await MongoHandler.Select<GameDataType>(collectionName, { idGame })
+
             } else {
-                result = await collection.findOne({ name })
+                result = await MongoHandler.Select<GameDataType>(collectionName, { name })
+
             }
         }
 
+        let ModifyResponse: any[] | any
+
         if (result) {
-            let ModifyResponse: any[] | any
             if (typeof idGame === 'object' || typeof name === 'object') {
-                ModifyResponse = []
-                result.map(({ _id, ...rest }: { [x: string]: any }) => ModifyResponse.push({ ...rest }))
+                ModifyResponse = (result as GameDataType[]).map(({ _id, ...rest }: { [x: string]: any }) => { return { ...rest } })
             } else {
                 ModifyResponse = result
             }
 
+            console.log("ModifyResponse: ", ModifyResponse);
+
             return ModifyResponse
+
         }
         return undefined
     })
@@ -56,7 +56,7 @@ export async function getGameData({ idGame, name }: GameData.IdGameType): Databa
 
 type getAllGameFilterProps = { limit: number }
 export async function getAllGamesFilter({ limit }: getAllGameFilterProps) {
-    return await handleFunction(async () => {
+    return await ErrorHandler.Wrapper(async () => {
         const mongo = createMongoConnection();
         if (!mongo) return undefined
         const collection = mongo.collection(collectionName)
@@ -75,22 +75,20 @@ export async function getAllGamesFilter({ limit }: getAllGameFilterProps) {
 }
 
 export async function getAllGameNames(): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
-        const mongo = createMongoConnection();
-        if (!mongo) return undefined
-        const collection = mongo.collection(collectionName)
+    return await ErrorHandler.Wrapper(async () => {
 
-        const result = await collection.find({}).toArray()
+        const result = await MongoHandler.Select<getGameDataType[]>(collectionName, {}, true)
+
         if (result) {
-            const NamesGame = (result as getGameDataType[]).map(({ name }) => name)
-            return NamesGame.join(", ")
+            const NamesGame = result.map(({ name }) => name).join(", ")
+            return NamesGame
         }
         return undefined
     })
 }
 
 export async function getAllGamesOffers() {
-    return await handleFunction(async () => {
+    return await ErrorHandler.Wrapper(async () => {
         const mongo = createMongoConnection();
         if (!mongo) return undefined
         const collection = mongo.collection(collectionName)

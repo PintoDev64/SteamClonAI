@@ -1,13 +1,13 @@
 import { FieldPacket } from "mysql2";
 import { createMongoConnection, createMySQLConnection } from "..";
 import { creteNewDate } from "../../utils";
-import { handleFunction } from "../Handlers/Error";
+import ErrorHandler from "../Handlers/Error";
 
 // Constants
 const collectionName = "ProfileReviews";
 
 export async function createProfileReview(data: GeneralTypes.ProfileReviewsType): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
+    return await ErrorHandler.Wrapper(async () => {
         const mongo = createMongoConnection();
         if (!mongo) return undefined
         const collection = mongo.collection(collectionName);
@@ -18,7 +18,7 @@ export async function createProfileReview(data: GeneralTypes.ProfileReviewsType)
 }
 
 export async function insertProfileReview({ data, publicId }: ProfileReviews.insertProfileReviewType): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
+    return await ErrorHandler.Wrapper(async () => {
         const mysql = await createMySQLConnection()
         const mongo = createMongoConnection();
         if (!mongo || !mysql) return undefined
@@ -54,7 +54,7 @@ export async function insertProfileReview({ data, publicId }: ProfileReviews.ins
 }
 
 export async function getProfileReviews({ publicId }: ProfileReviews.GetProfileReviewDef): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
+    return await ErrorHandler.Wrapper(async () => {
         const mongo = createMongoConnection();
         if (!mongo) return undefined
         const collection = mongo.collection(collectionName);

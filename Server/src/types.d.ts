@@ -91,7 +91,7 @@ declare namespace MySQLSchemas {
 
 // |---------> Operation Database
 declare namespace DatabaseOperation {
-    type MethodReturnStructure = { status: HTTPCodes; data?: any }
+    type MethodReturnStructure = { status: HTTPCodes; data?: any | undefined }
     type GenericClassReturnType = Promise<MethodReturnStructure>
 }
 
@@ -103,7 +103,7 @@ declare namespace Library {
 
 // |---------> User
 declare namespace User {
-    type createUserParams = UserType & PublicIdType & TokenType & PasswordType
+    type createUserParams = GeneralTypes.UserType & PublicIdType & PasswordType
     type getUserParams = { publicId: string }
 }
 
@@ -121,8 +121,8 @@ declare namespace ProfileReviews {
 
 // |---------> Game Review
 declare namespace GameReview {
-    type CreateGameReviewParam = GeneralTypes.GameReviewsType & IdGameType
-    type InsertGameReviewParams = { data: GeneralTypes.GameReviewsType & IdGameType, idGame: string }
+    type CreateGameReviewParam = GeneralTypes.GameReviewsType & GameData.IdGameType
+    type InsertGameReviewParams = { data: GeneralTypes.GameReviewsType & GameData.IdGameType, idGame: string }
     type GetGameReviewsParams = { idGame: string }
 }
 
@@ -156,7 +156,7 @@ type UUIDPattern = `${string}-${string}-${string}-${string}-${string}`
 type DatePattern = `${string}-${string}-${string}`
 
 // |---------> Local
-type HTTPCodes = "200" | "302" | "404" | "500"
+type HTTPCodes = 200 | 302 | 404 | 500 | 400
 
 // |---------> Globals
 declare type getGameDataType = { _id: ObjectId } & GameDataType

@@ -19,11 +19,14 @@ declare namespace User {
     type ProviderJSONExpect = "loader" | "children"
 
     type ProviderProps = { children: ReactNode }
+
     type ProviderVariables = {
-        loader: number,
+        UserId: number,
         [x: string]: number | ReactNode
     } & ProviderProps
+
     type ReducerObject = { action: ProviderJSONExpect, value: number }
+
     type ContextProps = {
         readonly UserId: string
     }

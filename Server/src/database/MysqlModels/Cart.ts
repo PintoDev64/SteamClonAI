@@ -1,87 +1,89 @@
-import { FieldPacket } from "mysql2";
 import { createMongoConnection, createMySQLConnection } from "..";
-import { handleFunction } from "../Handlers/Error";
+import ErrorHandler from "../Handlers/Error";
+import MysqlHandler from "../Handlers/MysqlHandler";
+import MongoHandler from "../Handlers/MongoHandler";
 
 // Constants
 const collectionName = "GameData";
 
 export async function getProducts(userId: number): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
+    return await ErrorHandler.Wrapper(async () => {
         const mysql = await createMySQLConnection()
         if (!mysql) return undefined
-        const [results, _fields]: MySQLSchemas.__QueryArray = await mysql.query(
-            "SELECT `ITEMS` FROM `Cart` WHERE ACCOUNT_ID = ?",
-            [userId]
-        )
-        const { ITEMS } = results[0] as MySQLSchemas.CartTable
-        return ITEMS
+
+        const results = await MysqlHandler.Select("Cart", ["ITEMS"], {
+            Where: {
+                Columns: ["ACCOUNT_ID"],
+                Values: [userId]
+            }
+        })
+
+        return results
     })
 }
 /**
  * 
  */
 export async function setProducts(userId: number, productId: string): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
-        const mongo = createMongoConnection()
-        const mysql = await createMySQLConnection()
-        // -----------> THROW ERROR
-        if (!mongo || !mysql) return undefined
+    return await ErrorHandler.Wrapper(async () => {
+        const { _id, downloadUrl, ...rest } = await MongoHandler.Select<getGameDataType>(collectionName, { idGame: productId })
+        const { ITEMS } = await MysqlHandler.Select("Cart", ["ITEMS"], {
+            Where: {
+                Columns: ["ACCOUNT_ID"],
+                Values: [userId]
+            }
+        })
 
-        const collection = mongo.collection(collectionName)
-        const [results, _fields]: MySQLSchemas.__QueryArray = await mysql.query(
-            "SELECT `ITEMS` FROM `Cart` WHERE ACCOUNT_ID = ?",
-            [userId]
-        )
+        const UpdateCart = [...ITEMS, { ...rest }]
 
-        const { _id, downloadUrl, ...rest } = await collection.findOne({ idGame: productId }) as getGameDataType
-        const { ITEMS } = results[0] as MySQLSchemas.CartTable
-        const UpdateWishlist = [...ITEMS, { ...rest }]
-        const [update, _updateFields]: MySQLSchemas.__QueryArray = await mysql.query(
-            'UPDATE `Cart` SET `ITEMS` = ? WHERE `ACCOUNT_ID` = ? ',
-            [JSON.stringify(UpdateWishlist), userId]
-        )
-        if (update) {
-            return update
-        }
-        // -----------> THROW ERROR
-        return undefined
+        const results = await MysqlHandler.Update("Cart", ["ITEMS"], [JSON.stringify(UpdateCart)], {
+            Where: {
+                Columns: ["ACCOUNT_ID"],
+                Values: [userId]
+            }
+        })
+
+        return results
     })
 }
-export async function deleteProducts(userId: number): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
-        
+export async function deleteProducts(userId: number, IdGame: UUIDPattern): DatabaseOperation.GenericClassReturnType {
+    return await ErrorHandler.Wrapper(async () => {
+        const { ITEMS } = await MysqlHandler.Select("Cart", ["ITEMS"], {
+            Where: {
+                Columns: ["ACCOUNT_ID"],
+                Values: [userId]
+            }
+        })
+
+        const newCartList = ITEMS.filter(({ idGame }) => idGame !== IdGame)
+
+        await MysqlHandler.Update("Cart", ["ITEMS"], [JSON.stringify(newCartList)], {
+            Where: {
+                Columns: ["ACCOUNT_ID"],
+                Values: [userId]
+            }
+        })
+
+        return true
     })
 }
 export async function buyProducts(userId: number): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
-        const mongo = createMongoConnection()
-        const mysql = await createMySQLConnection()
-
-        // -----------> THROW ERROR
-        if (!mongo || !mysql) return undefined
-
-        const [results, _fields]: MySQLSchemas.__QueryArray = await mysql.query(
-            "SELECT `ITEMS` FROM `Cart` WHERE ACCOUNT_ID = ?",
-            [userId]
-        )
-        const { ITEMS } = results[0] as MySQLSchemas.CartTable
-        console.log(ITEMS);
+    return await ErrorHandler.Wrapper(async () => {
+        const { ITEMS } = await MysqlHandler.Select("Cart", ["ITEMS"], {
+            Where: {
+                Columns: ["ACCOUNT_ID"],
+                Values: [userId]
+            }
+        })
 
         // -----------> THROW ERROR
         if (ITEMS.length === 0) return undefined
 
-        const GamesOnLibrary: Array<any> = ITEMS.map(({ idGame }: { idGame: any }) => idGame)
-        console.log(GamesOnLibrary.toString());
+        const GamesOnLibrary = ITEMS.map(({ idGame }) => idGame)
+        const Mongo_Response = await MongoHandler.Select<any[]>(collectionName, { idGame: GamesOnLibrary }, true)
 
-        const collection = mongo.collection(collectionName)
-        let gamesFinded = await collection.find({ idGame: GamesOnLibrary }).toArray()
+        console.log("gamesFinded: ", Mongo_Response);
 
-        console.log("gamesFinded: ", gamesFinded);
-
-        if (gamesFinded.length > 0) {
-            return gamesFinded
-        }
-        // -----------> THROW ERROR
-        return undefined
+        return Mongo_Response
     })
 }

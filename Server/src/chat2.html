@@ -76,7 +76,7 @@
     function renderMessages(messagesData) {
       const item = document.createElement('li');
       const img = document.createElement('img');
-      console.log("cargando elementos");
+      console.log(messagesData);
       // Crear un elemento <li> para cada mensaje en el array
       messagesData.map((msg, _index) => {
         messagesList.innerHTML += `

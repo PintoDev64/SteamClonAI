@@ -1,29 +1,17 @@
-import { createMySQLConnection } from ".."
-
 // Handlers
-import { handleFunction } from "../Handlers/Error";
+import ErrorHandler from "../Handlers/Error"
+import MysqlHandler from "../Handlers/MysqlHandler"
 
 /**
- * Obtiene la libreria publica del usuario
+ * Obtiene la libreria del usuario
  */
-export async function getPublicLibraryUser({ publicId }: Library.getUserParams): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
-        const mysql = await createMySQLConnection()
-        if (!mysql) return undefined
-        const [results, _fields] = await mysql.query("SELECT LIBRARY FROM `User` WHERE PUBLIC_ID = ?", [publicId])
-
-        return results
-    })
-}
-/**
- * Obtiene la libreria privada del usuario
- */
-export async function getPrivateLibraryUser({ accountId }: Library.getPrivateUserParams): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
-        const mysql = await createMySQLConnection()
-        if (!mysql) return undefined
-        const [results, _fields] = await mysql.query("SELECT LIBRARY FROM `User` WHERE PUBLIC_ID = ?", [accountId])
-
-        return results
+export async function getLibraryUser({ publicId }: Library.getUserParams): DatabaseOperation.GenericClassReturnType {
+    return await ErrorHandler.Wrapper(async () => {
+        return await MysqlHandler.Select("User", ["LIBRARY"], {
+            Where: {
+                Columns: ["PUBLIC_ID"],
+                Values: [publicId]
+            }
+        })
     })
 }

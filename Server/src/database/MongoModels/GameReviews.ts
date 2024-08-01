@@ -1,11 +1,12 @@
 import { createMongoConnection } from "..";
-import { handleFunction } from "../Handlers/Error";
+import ErrorHandler from "../Handlers/Error";
+import MongoHandler from "../Handlers/MongoHandler";
 
 // Constants
 const collectionName = "GameReviews";
 
 export async function createGameReview(data: GameReview.CreateGameReviewParam): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
+    return await ErrorHandler.Wrapper(async () => {
         const mongo = createMongoConnection();
         if (!mongo) return undefined
         const collection = mongo.collection(collectionName);
@@ -16,7 +17,7 @@ export async function createGameReview(data: GameReview.CreateGameReviewParam): 
 }
 
 export async function insertGameReview({ data, idGame }: GameReview.InsertGameReviewParams): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
+    return await ErrorHandler.Wrapper(async () => {
         const mongo = createMongoConnection();
         if (!mongo) return undefined
         const collection = mongo.collection(collectionName);
@@ -25,6 +26,8 @@ export async function insertGameReview({ data, idGame }: GameReview.InsertGameRe
 
         if (result) {
             const updatedData = [...result.data, data];
+
+            console.log(updatedData);
 
             // Actualizamos el documento con el array `data` modificado
             await collection.updateOne(
@@ -38,15 +41,12 @@ export async function insertGameReview({ data, idGame }: GameReview.InsertGameRe
 }
 
 export async function getGameReviews({ idGame }: GameReview.GetGameReviewsParams): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
-        const mongo = createMongoConnection();
-        if (!mongo) return undefined
-        const collection = mongo.collection(collectionName);
+    return await ErrorHandler.Wrapper(async () => {
+        const { data } = await MongoHandler.Select<{ data: GameReview.CreateGameReviewParam[] }>(collectionName, { idGame })
 
-        const result = await collection.findOne({ idGame })
-        if (result) {
-            const { _id, ...rest } = result
-            return { ...rest }
+        if (data) {
+            const newData = data.map(value => value)
+            return newData
         }
         return undefined
     })

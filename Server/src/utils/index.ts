@@ -10,18 +10,22 @@ const DEFAULT_500 = {
 }
 
 export const HTTPResponses = {
-    "200": <T>(response: Response, data: any) => {
+    200: <T>(response: Response, data: any) => {
         response.json(data)
     },
-    "302": <T>(response: T) => {
+    302: <T>(response: T) => {
         // @ts-ignore
         response.redirect("https://steam-clon-ai-web.vercel.app/")
     },
-    "404": <T>(response: T) => {
+    404: <T>(response: T) => {
         // @ts-ignore
         response.json(DEFAULT_404)
     },
-    "500": <T>(response: T) => {
+    400: <T>(response: T) => {
+        // @ts-ignore
+        response.json(DEFAULT_404)
+    },
+    500: <T>(response: T) => {
         // @ts-ignore
         response.json(DEFAULT_500)
     }

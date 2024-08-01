@@ -11,6 +11,9 @@ config({
 // --------------> Main
 const OPENAI_APIKEY = process.env.OPENAI_APIKEY
 
+// --------------> Global
+export const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS as string)
+
 // --------------> MongoDB
 export const SERVERPORT = process.env.PORT ?? 0
 export const MONGODB_DBNAME = process.env.MONGODB_DBNAME as string

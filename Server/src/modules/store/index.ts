@@ -12,19 +12,21 @@ const PathService = "/store"
 
 StoreRouter.get(PathService, async (request, response) => {
     const Games = (await getAllGameNames()).data;
-    console.log(Games);
-    
+
     const Response_AI = await StoreRecommendation("Competitivo, Casual, FPS", Games, "PintoGamer")
+
     const FormatedResponse = JSON.parse(Response_AI.replace(/```json|```/g, '').trim()) as string[]
+
     console.log(FormatedResponse);
-    
-    const ResponseValue = (await getGameData({ name: FormatedResponse })).data;
-    const GamesOffers = (await getAllGamesOffers()).data
-    const GamesFeatured = (await getAllGamesFilter({ limit: 10 })).data
+
+    const ResponseValue = await getGameData({ name: FormatedResponse });
+    const GamesOffers = await getAllGamesOffers()
+    const GamesFeatured = await getAllGamesFilter({ limit: 10 })
+
     response.json({
-        Featured: GamesFeatured,
-        Offers: GamesOffers,
-        SteamAI: ResponseValue
+        Featured: GamesFeatured.data,
+        Offers: GamesOffers.data,
+        SteamAI: ResponseValue.data
     })
 })
 

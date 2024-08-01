@@ -1,49 +1,54 @@
 // Class Type Definition
-import { createMongoConnection, createMySQLConnection } from "..";
-import { handleFunction } from "../Handlers/Error";
+import ErrorHandler from "../Handlers/Error";
+import MongoHandler from "../Handlers/MongoHandler";
+import MysqlHandler from "../Handlers/MysqlHandler";
 
 // Constants
 const collectionName = "ProfileReviews"
 
-export async function createUser({ AccountName, backgroundImage, mail, password, profileName, profilePicture, publicId, realName, status, theme, token, vacStatus
-}: User.createUserParams): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
-        const mysql = await createMySQLConnection()
-        const mongo = createMongoConnection()
-
-        if (!mongo || !mysql) return undefined
-
-        const [result] = await mysql.query(
-            "INSERT INTO `User` (`PUBLIC_ID`,`STATUS`,`PROFILE_NAME`,`ACCOUNT_NAME`,`REAL_NAME`,`VAC_STATUS`,`MAIL`,`THEME`,`PROFILE_PICTURE`,`BACKGROUND_IMAGE`,`TOKEN`,`PASSWORD`, `LIBRARY`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);",
-            [publicId, status, profileName, AccountName, realName, vacStatus, mail, theme, profilePicture, backgroundImage, token, password, []])
-
-        const { insertId } = result as MySQLSchemas.__FieldPacket
-
-        await mysql.query(
-            "INSERT INTO `Cart` (`ACCOUNT_ID`, `ITEMS`) VALUES (?, '[]')",
-            [insertId]
+/**
+ * 
+ * @param data 
+ * @returns 
+ */
+export async function createUser(data: User.createUserParams): DatabaseOperation.GenericClassReturnType {
+    const { AccountName, backgroundImage, mail, password, profileName, profilePicture, publicId, realName, status, theme, vacStatus } = data;
+    return await ErrorHandler.Wrapper(async () => {
+        const MysqlInsert_User = await MysqlHandler.Insert(
+            "User",
+            ["PUBLIC_ID", "STATUS", "PROFILE_NAME", "ACCOUNT_NAME", "REAL_NAME", "VAC_STATUS", "MAIL", "THEME", "PROFILE_PICTURE", "BACKGROUND_IMAGE", "PASSWORD", "CURRENCY", "LIBRARY"],
+            [publicId, status, profileName, AccountName, realName, vacStatus, mail, theme, profilePicture, backgroundImage, password, 15, null]
         )
-        const collection = mongo.collection(collectionName)
 
-        await collection.insertOne({
-            publicId: publicId,
+        const { insertId } = MysqlInsert_User as MySQLSchemas.__FieldPacket
+
+        await MysqlHandler.Insert(
+            "Cart",
+            ["ACCOUNT_ID", "ITEMS"],
+            [insertId, null]
+        )
+
+        await MongoHandler.Insert(collectionName, [{
+            publicId,
             data: []
-        })
+        }])
 
-        return result
+        return true
     })
 }
+
 /**
  * Obtiene los datos de un usuario
  */
-export async function getUser({ publicId }: User.getUserParams): DatabaseOperation.GenericClassReturnType {
-    return await handleFunction(async () => {
-        const mysql = await createMySQLConnection()
-        
-        if (!mysql) return undefined
-
-        const [results, _fields] = await mysql.query("SELECT PUBLIC_ID,STATUS,PROFILE_NAME,REAL_NAME,VAC_STATUS,THEME,PROFILE_PICTURE,BACKGROUND_IMAGE FROM `User` WHERE PUBLIC_ID = ?", [publicId])
-
-        return results
+export async function getUser(data: User.getUserParams): DatabaseOperation.GenericClassReturnType {
+    const { publicId } = data;
+    return await ErrorHandler.Wrapper(async () => {
+        const responseData = await MysqlHandler.Select("User", ["ACCOUNT_NAME", "MAIL", "CURRENCY"], {
+            Where: {
+                Columns: ["PUBLIC_ID"],
+                Values: [publicId]
+            }
+        })
+        return responseData
     })
 }

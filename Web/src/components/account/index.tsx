@@ -1,6 +1,8 @@
 // Styles
-import { DownArrow } from './assets'
 import './index.css'
+
+// Assets
+import { DownArrow } from './assets'
 
 export default function AccountHeader() {
     if ( navigator.userAgent === "SteamClient_xyz" ) return

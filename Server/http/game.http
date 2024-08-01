@@ -99,3 +99,32 @@ content-type: application/json
         }
     }
 }
+
+### -------> Sumbit Review
+PUT http://localhost:1234/api/v1/game?idGame=fe7dab8a-b0fa-483a-b4d7-77414a57ba13
+content-type: application/json
+
+{
+    "type": "recommended",
+    "username": "PintoGamer64",
+    "image": 1,
+    "userUrl": "pintogamer64",
+    "content": "El juego tiene un aspecto realista, me encanta",
+    "date": "13-SEP-2020",
+    "hours": 500,
+    "reactions": {
+        "yes": 12,
+        "no": 2,
+        "funny": 50
+    }
+}
+
+### -------> Ai Review Summary
+POST http://localhost:1234/api/v1/game/steamai
+content-type: application/json
+
+{
+    "categories": "Competitivo, Casual, FPS",
+    "username": "PintoGamer64",
+    "idGame": "fe7dab8a-b0fa-483a-b4d7-77414a57ba13"
+}

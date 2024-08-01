@@ -3,7 +3,7 @@ import { createServer } from "http";
 import { Server as SocketIOServer } from "socket.io";
 import { join } from "node:path";
 import cors from 'cors'
-
+import cookieParser from 'cookie-parser'
 // Main Router
 import ApplictionRouter from "./modules";
 
@@ -23,15 +23,17 @@ const io = new SocketIOServer(httpServer);
 const URL_WhiteList = ["http://localhost:5173", "https://steam-clon-ai-web.vercel.app"]
 
 SteamServer.use(express.json());
+SteamServer.use(cookieParser())
 SteamServer.use(cors({
-    origin(requestOrigin, callback) {
+    origin: "*",
+    /* origin(requestOrigin, callback) {
         console.log(URL_WhiteList.indexOf(requestOrigin as string));
         if (URL_WhiteList.indexOf(requestOrigin as string) !== -1) {
             callback(null, true)
         } else {
             callback(new Error('Not allowed by CORS'))
         }
-    },
+    }, */
     optionsSuccessStatus: 200
 }))
 SteamServer.disable("x-powered-by");
