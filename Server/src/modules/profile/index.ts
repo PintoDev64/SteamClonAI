@@ -15,13 +15,15 @@ import { createUser, getUser } from '../../database/MysqlModels/User';
 import { getLibraryUser } from '../../database/MysqlModels/Library';
 import { responseFriendRequest, submitFriendRequest } from '../../database/MysqlModels/Friends';
 import { insertProfileReview } from '../../database/MongoModels/ProfileReviews';
-import { SALT_ROUNDS } from '../../constants';
+import { JWT_SECRET, SALT_ROUNDS } from '../../constants';
+import SessionHandler from '../../database/Handlers/Sessions';
+import { sign, verify } from 'jsonwebtoken';
 
 /**
  * 
  */
 type bodyPOST = GeneralTypes.UserType & PublicIdType & PasswordType
-ProfileRouter.post(PathService, VerifyBodyContent, createPublicId, async (request, response) => {
+ProfileRouter.post(`${PathService}/register`, VerifyBodyContent, createPublicId, async (request, response) => {
     const { body }: { body: bodyPOST } = request
 
     const RequestData: bodyPOST = {
@@ -33,13 +35,40 @@ ProfileRouter.post(PathService, VerifyBodyContent, createPublicId, async (reques
         profileName: body.AccountName,
         status: "Offline",
         vacStatus: 1,
-        backgroundImage: 1, 
+        backgroundImage: 1,
         profilePicture: 1,
         theme: 1,
     }
 
     const userCreated = await createUser(RequestData)
     response.json(userCreated)
+})
+
+ProfileRouter.post(`${PathService}/login`, async (request, response) => {
+    const { mail, password } = request.body
+
+    const data = await SessionHandler.Login({ mail, password })
+    const token = sign(data, JWT_SECRET, { expiresIn: '7d' })
+
+    response
+        .cookie("userUniqueToken", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" })
+        .json(data)
+})
+
+ProfileRouter.post(`${PathService}/verify`, async (request, response) => {
+    try {
+        const token = request.cookies.userUniqueToken
+
+        if (!token) return response.json({ status: 401 })
+
+        const data = verify(token, JWT_SECRET)
+        console.log(data);
+        response.json(data)
+    } catch (err: any) {
+        console.log(err);
+        response.json({ status: 401 })
+    }
+
 })
 
 /**

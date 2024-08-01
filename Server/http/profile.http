@@ -74,3 +74,12 @@ content-type: application/json
     "publicId": "0f14ce24-fff7-42de-a664-1e5d2af3520d"
 }
 
+### Test 3 - Login
+
+POST http://localhost:1234/api/v1/profile/login
+content-type: application/json
+
+{
+    "mail": "test1234@gmail.com", 
+    "password": "test1234"
+}

@@ -45,8 +45,6 @@ export async function getGameData({ idGame, name }: GameData.IdGameType): Databa
                 ModifyResponse = result
             }
 
-            console.log("ModifyResponse: ", ModifyResponse);
-
             return ModifyResponse
 
         }

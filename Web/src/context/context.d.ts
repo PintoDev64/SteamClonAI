@@ -16,18 +16,22 @@ declare namespace PageTransition {
 }
 
 declare namespace User {
-    type ProviderJSONExpect = "loader" | "children"
+    type ProviderJSONExpect = "Currency" | "Name" | "Picture" | "PublicId"
 
     type ProviderProps = { children: ReactNode }
 
     type ProviderVariables = {
-        UserId: number,
-        [x: string]: number | ReactNode
-    } & ProviderProps
+        Name: string
+        Picture: number
+        PublicId: string
+        Currency: number
+        [x: string]: number | string
+    }
 
-    type ReducerObject = { action: ProviderJSONExpect, value: number }
+    type ReducerObject = ProviderVariables
 
     type ContextProps = {
-        readonly UserId: string
+        User: ProviderVariables,
+        EditUser({ User }: ProviderVariables): void
     }
 }

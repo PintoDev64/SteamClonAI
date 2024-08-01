@@ -41,7 +41,7 @@ GameRouter.get(PathService, async (request, response) => {
         
         response.json({
             ...GameData.data,
-            reviews: GameReviews.data.data
+            reviews: GameReviews.data
         })
     } else {
         response.redirect("https://steam-clon-ai-web.vercel.app/")

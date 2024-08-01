@@ -82,8 +82,6 @@ export async function buyProducts(userId: number): DatabaseOperation.GenericClas
         const GamesOnLibrary = ITEMS.map(({ idGame }) => idGame)
         const Mongo_Response = await MongoHandler.Select<any[]>(collectionName, { idGame: GamesOnLibrary }, true)
 
-        console.log("gamesFinded: ", Mongo_Response);
-
         return Mongo_Response
     })
 }

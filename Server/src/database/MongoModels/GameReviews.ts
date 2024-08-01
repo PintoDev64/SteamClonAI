@@ -27,8 +27,6 @@ export async function insertGameReview({ data, idGame }: GameReview.InsertGameRe
         if (result) {
             const updatedData = [...result.data, data];
 
-            console.log(updatedData);
-
             // Actualizamos el documento con el array `data` modificado
             await collection.updateOne(
                 { idGame },

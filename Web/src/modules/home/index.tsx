@@ -14,6 +14,9 @@ export default function HomePage({ bannerEvent }: HomePageProps) {
 
     const RequestData = useLoaderData() as RequestAPI.Home_APIStore
 
+    console.log(RequestData);
+    
+
     const { ModifyPageTransition } = useContext(PageTransitionContext)
 
     useEffect(() => {

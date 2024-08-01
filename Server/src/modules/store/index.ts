@@ -17,8 +17,6 @@ StoreRouter.get(PathService, async (request, response) => {
 
     const FormatedResponse = JSON.parse(Response_AI.replace(/```json|```/g, '').trim()) as string[]
 
-    console.log(FormatedResponse);
-
     const ResponseValue = await getGameData({ name: FormatedResponse });
     const GamesOffers = await getAllGamesOffers()
     const GamesFeatured = await getAllGamesFilter({ limit: 10 })

@@ -156,7 +156,7 @@ declare namespace MysqlOperationsMethods {
             THEME: number
             PROFILE_PICTURE: number
             BACKGROUND_IMAGE: number
-            TOKEN: string
+            CURRENCY: number
             PASSWORD: string,
             LIBRARY: GameData[]
         };
