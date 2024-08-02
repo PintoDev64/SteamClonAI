@@ -48,6 +48,6 @@ Websocket.on("connection", ChatWebsocket);
 // ------------> Socket.IO Config - "/notifications"
 
 // Server Listing
-httpServer.listen(SERVERPORT, () => {
-    console.log(`Steam Server Up on: http://localhost:${SERVERPORT}`);
+httpServer.listen(0, () => {
+    console.log(`Steam Server Up on: http://localhost:${0}`);
 });
