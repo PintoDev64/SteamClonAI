@@ -48,7 +48,7 @@ declare namespace ComponentsRequestProps {
         shortDescription: string,
         releaseDate: DatePattern,
         reviews: GameReviewsData,
-        developer:{
+        developer: {
             name: string,
             url: string
         },
@@ -57,6 +57,23 @@ declare namespace ComponentsRequestProps {
             url: string | undefined
         }[],
         categories: string[]
+    }
+
+    type GameAbout = {
+        name: string,
+        about: string,
+        platforms: GameProducts["platforms"]
+        products: GameProducts["products"]
+    }
+
+    type GameProducts = {
+        products: RequestAPI.GameDataType["products"],
+        platforms: RequestAPI.GameDataType["platforms"]
+    }
+
+    type GameSidebar = {
+        features: RequestAPI.GameDataType["features"],
+        categories: RequestAPI.GameAllData["categories"]
     }
 }
 declare namespace RequestAPI {

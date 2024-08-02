@@ -22,18 +22,11 @@ const io = new SocketIOServer(httpServer);
 
 const URL_WhiteList = ["http://localhost:5173", "https://steam-clon-ai-web.vercel.app"]
 
+SteamServer.use(cookieParser());
 SteamServer.use(express.json());
-SteamServer.use(cookieParser())
 SteamServer.use(cors({
-    origin: "*",
-    /* origin(requestOrigin, callback) {
-        console.log(URL_WhiteList.indexOf(requestOrigin as string));
-        if (URL_WhiteList.indexOf(requestOrigin as string) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    }, */
+    origin: process.env.NODE_ENV === "production" ? "https://steam-clon-ai-web.vercel.app/" : "http://localhost:5173",
+    credentials: true,
     optionsSuccessStatus: 200
 }))
 SteamServer.disable("x-powered-by");

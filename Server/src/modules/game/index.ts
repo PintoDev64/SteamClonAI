@@ -51,6 +51,8 @@ GameRouter.get(PathService, async (request, response) => {
 GameRouter.post(`${PathService}/steamai`, async (request, response) => {
     const { categories, username, idGame } = request.body
 
+    console.log(request.body);
+
     const { data: GameName } = await getGameData({ idGame }) as { data: GameDataType }
     const GameReviews = await getGameReviews({ idGame: idGame as UUIDPattern }) as GeneralTypes.GameReviewsType
 

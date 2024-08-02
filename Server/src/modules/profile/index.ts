@@ -1,5 +1,7 @@
 import express from 'express';
 import { hashSync } from 'bcrypt'
+import { sign, verify } from 'jsonwebtoken';
+import multer from 'multer'
 
 // Router
 const ProfileRouter = express.Router()
@@ -17,7 +19,8 @@ import { responseFriendRequest, submitFriendRequest } from '../../database/Mysql
 import { insertProfileReview } from '../../database/MongoModels/ProfileReviews';
 import { JWT_SECRET, SALT_ROUNDS } from '../../constants';
 import SessionHandler from '../../database/Handlers/Sessions';
-import { sign, verify } from 'jsonwebtoken';
+
+const upload = multer()
 
 /**
  * 
@@ -44,31 +47,24 @@ ProfileRouter.post(`${PathService}/register`, VerifyBodyContent, createPublicId,
     response.json(userCreated)
 })
 
-ProfileRouter.post(`${PathService}/login`, async (request, response) => {
-    const { mail, password } = request.body
-
-    const data = await SessionHandler.Login({ mail, password })
-    const token = sign(data, JWT_SECRET, { expiresIn: '7d' })
-
-    response
-        .cookie("userUniqueToken", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" })
-        .json(data)
-})
-
 ProfileRouter.post(`${PathService}/verify`, async (request, response) => {
+
+    const Token = request.body.Token
+
+    console.log("Token: ", request.body.Token);
+
     try {
-        const token = request.cookies.userUniqueToken
+        if (!Token) return response.json({ status: 401 })
 
-        if (!token) return response.json({ status: 401 })
+        const data = verify(Token, JWT_SECRET)
 
-        const data = verify(token, JWT_SECRET)
         console.log(data);
+
         response.json(data)
     } catch (err: any) {
         console.log(err);
-        response.json({ status: 401 })
+        response.json({ status: 500 })
     }
-
 })
 
 /**
@@ -126,6 +122,31 @@ ProfileRouter.post(`${PathService}/:publicId/confirmation`, async (request, resp
         yourPublicId: publicId
     })
     response.json(FriendRequet)
+})
+
+ProfileRouter.put(`${PathService}/login`, upload.none(), async (request, response) => {
+    try {
+        const { mail, password } = request.body;
+
+        console.log(mail, password);
+
+        const { data } = await SessionHandler.Login({ mail, password });
+        const token = sign(data, JWT_SECRET, { expiresIn: 7 * 24 * 60 * 60 * 1000 });
+
+        console.log(token);
+
+        response
+            .json({
+                userToken: token,
+                Name: data.PROFILE_NAME,
+                Picture: data.PROFILE_PICTURE,
+                Currency: data.CURRENCY,
+                PublicId: data.PUBLIC_ID
+            });
+    } catch (error) {
+        console.error('Error in login route:', error);
+        response.status(500).json({ error: "Internal Server Error" });
+    }
 })
 
 export default ProfileRouter

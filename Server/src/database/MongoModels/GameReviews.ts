@@ -42,6 +42,8 @@ export async function getGameReviews({ idGame }: GameReview.GetGameReviewsParams
     return await ErrorHandler.Wrapper(async () => {
         const { data } = await MongoHandler.Select<{ data: GameReview.CreateGameReviewParam[] }>(collectionName, { idGame })
 
+        console.log(data);
+
         if (data) {
             const newData = data.map(value => value)
             return newData

@@ -12,9 +12,9 @@ import { PageTransitionContext } from "context";
 type GameCardProps = { preset?: "Big" | "Small", data: RequestAPI.GameDataType }
 export default function GameCard({ preset = "Big", data }: GameCardProps) {
 
-    const { pathname } = useLocation()
-
     const { ModifyPageTransition } = useContext(PageTransitionContext)
+    
+    const { pathname } = useLocation()
 
     const { shortDescription, images, products, categories, platforms, name } = data;
 
@@ -22,6 +22,7 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
     const PlatformsKeys = Object.keys(platforms)
     const ShortCategories = categories.slice(0, 4)
     const OtherImages = CardImages.slice(1, CardImages.length)
+
     const [CardSelector, setCardSelector] = useState(0)
 
     const priceReal = products[0].price.default > 0 ? "Comprar" : "Jugar"
@@ -35,7 +36,7 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
             <div className="SteamCardGame-Small">
                 <div className="SteamCardGame-Small-Image">
                     <Link to={`/game/${data.idGame}`} onClick={() => ClickLink(`/game/${data.idGame}`)}>
-                        <img className="SteamCardGame-Small-ImageElement" src={CardImages[CardSelector].url} alt={name} />
+                        <img className="SteamCardGame-Small-ImageElement" src={CardImages[CardSelector].url} alt={name} fetchPriority="high" />
                     </Link>
                 </div>
                 <div className="SteamCardGame-Small-Details">
@@ -75,7 +76,7 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
         <div className="SteamCardGame-Big">
             <div className="SteamCardGame-Big-Image">
                 <Link to={`/game/${data.idGame}`} onClick={() => ClickLink(`/game/${data.idGame}`)}>
-                    <img className="SteamCardGame-Big-ImageElement" src={CardImages[CardSelector].url} alt={name} />
+                    <img className="SteamCardGame-Big-ImageElement" fetchPriority="high" src={CardImages[CardSelector].url} alt={name} />
                 </Link>
             </div>
             <div className="SteamCardGame-Big-Details">
@@ -85,7 +86,7 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
                 <p className="SteamCardGame-Big-DetailsParagraph">{shortDescription}</p>
                 <div className="SteamCardGame-Big-DetailsImages" onMouseLeave={MouseOff}>
                     {OtherImages.map(({ url }, _index) =>
-                        <img key={_index} src={url} alt={name} className="SteamCardGame-Big-DetailsImages-Element" onMouseEnter={() => MouseOn(_index + 1)} />
+                        <img key={_index} src={url} alt={name} className="SteamCardGame-Big-DetailsImages-Element" fetchPriority="high" onMouseEnter={() => MouseOn(_index + 1)} />
                     )}
                 </div>
                 <div className="SteamCardGame-Big-DetailsExtra">

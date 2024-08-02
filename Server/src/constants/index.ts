@@ -34,3 +34,5 @@ export const GPT4o_mini = createOpenAI({
     apiKey: OPENAI_APIKEY,
     compatibility: "strict"
 })
+
+export const REDIRECT_MAIN = process.env.REDIRECT_MAIN as string

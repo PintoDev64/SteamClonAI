@@ -1,11 +1,19 @@
-// Styles
+import { useContext, useEffect } from 'react';
 import { useLoaderData } from 'react-router-dom'
-import './index.css'
+
+// Components
 import GameCover from './components/cover';
 import GameDetails from './components/details';
+import GameMain from './components/main';
+
+// Hooks
 import { CompleteTransition } from 'hooks';
-import { useContext, useEffect } from 'react';
+
+// Context
 import { PageTransitionContext } from 'context';
+
+// Styles
+import './index.css'
 
 export default function GamePage() {
 
@@ -13,13 +21,14 @@ export default function GamePage() {
 
     useEffect(() => CompleteTransition(ModifyPageTransition), [])
 
-    const { images, name, ...rest } = useLoaderData() as RequestAPI.GameAllData;
+    const { images, name, about, categories, features, ...rest } = useLoaderData() as RequestAPI.GameAllData;
 
     return (
         <div id="GamePage" style={{ backgroundImage: `url(${images[1].url})` }}>
             <div id="GamePageContent">
                 <GameCover Title={name} />
-                <GameDetails images={images} name={name} {...rest} />
+                <GameDetails categories={categories} images={images} name={name} {...rest} />
+                <GameMain categories={categories} features={features} products={rest.products} name={name} platforms={rest.platforms} about={about} />
                 <br />
                 <br />
                 <br />

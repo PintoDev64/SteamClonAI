@@ -6,6 +6,7 @@ import { DownArrow } from './assets'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from 'context'
 import { URL_API } from '@constants'
+import { Link } from 'react-router-dom'
 
 export default function AccountHeader() {
 
@@ -17,7 +18,14 @@ export default function AccountHeader() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${URL_API}/api/v1/profile/verify`, { method: "POST" });
+                const Token = localStorage.getItem("Token")
+                const response = await fetch(`${URL_API}/api/v1/profile/verify`, {
+                    method: "post",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify({ Token })
+                });
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -47,14 +55,38 @@ export default function AccountHeader() {
     if (error) return <p>Error: {error}</p>;
 
     if (navigator.userAgent === "SteamClient_xyz") return
-    return (
+
+    if (User.PublicId) return (
         <div id="AccountHeader">
-            <img id='AccountHeaderImage' src={Images[User.Picture]} />
-            <span id='AccountHeaderName'>{User.Name}</span>
-            <span id='AccountHeaderCurrency'>${User.Currency}</span>
+            <img id='AccountHeaderImage' fetchPriority="high" src={Images[User.Picture]} />
+            {User.PublicId
+                ? <>
+                    <span id='AccountHeaderName'>{User.Name}</span>
+                    <span id='AccountHeaderCurrency'>${User.Currency}</span>
+                </>
+                : <span id='AccountHeaderName'>LOGIN</span>
+            }
             <div id="AccountHeaderArrow">
                 <DownArrow />
             </div>
         </div>
+    )
+
+    return (
+        <Link to="/login">
+            <div id="AccountHeader">
+                <img id='AccountHeaderImage' fetchPriority="high" src={Images[User.Picture]} />
+                {User.PublicId
+                    ? <>
+                        <span id='AccountHeaderName'>{User.Name}</span>
+                        <span id='AccountHeaderCurrency'>${User.Currency}</span>
+                    </>
+                    : <span id='AccountHeaderName'>LOGIN</span>
+                }
+                <div id="AccountHeaderArrow">
+                    <DownArrow />
+                </div>
+            </div>
+        </Link>
     )
 }

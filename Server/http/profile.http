@@ -76,10 +76,18 @@ content-type: application/json
 
 ### Test 3 - Login
 
-POST http://localhost:1234/api/v1/profile/login
+PUT http://localhost:1234/api/v1/profile/login
 content-type: application/json
 
 {
-    "mail": "test1234@gmail.com", 
-    "password": "test1234"
+    "mail": "jose51@gmail.com", 
+    "password": "jose51"
+}
+
+### Tes 4 -> Rage
+POST http://localhost:1234/api/v1/profile/verify
+content-type: application/json
+
+{
+    "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOjQwNCwiaWF0IjoxNzIyNTMwOTY2LCJleHAiOjE3MjMxMzU3NjZ9.X1cLEUwqNGUzWMnLJxI9oT8umIarrejcklYRroOt4nQ"
 }

@@ -24,7 +24,7 @@
 #SteamHeaderLoader[aria-checked="true"] {
     background: linear-gradient(var(--color-secondary) 0%, transparent 100%);
     opacity: 0;
-    animation: SteamHeaderLoader normal 2s ease;
+    animation: SteamHeaderLoader normal 1s ease;
 }
 
 @keyframes SteamHeaderLoader {

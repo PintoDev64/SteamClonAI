@@ -11,6 +11,7 @@
 #GameDetails-Content {
     display: flex;
     width: 416px;
+    margin: 0 0 0 10px;
     flex-direction: column;
 }
 
@@ -18,8 +19,16 @@
     margin: 23.67px 0;
 }
 
+#GameDetails-Images {
+    max-width: 1078px;
+    min-width: 862px;
+    width: calc(100% - 416px);
+    margin: 0 10px 0 0;
+}
+
 #GameDetails-Images-Element {
-    width: 1078px;
+    max-width: 1078px;
+    width: 100%;
     height: 485px;
     background-color: var(--bg-main);
     border-radius: 3px;
@@ -30,7 +39,8 @@
 
 #GameDetails-Images-ElementVideo,
 #GameDetails-Images-ElementImage {
-    max-width: 1078px;
+    max-width: 862px;
+    width: 100%;
     height: 485px;
     border-radius: 3px;
 }
@@ -101,4 +111,16 @@
 
 .GameDetails-Content-ExposeTags:nth-child(even) {
     margin: 0 5px;
+}
+
+@media (width <= 1400px) {
+    #GameDetails {
+        justify-content: center;
+    }
+}
+
+@media (width <= 1280px) {
+    #GameDetails-Images {
+        display: none;
+    }
 }

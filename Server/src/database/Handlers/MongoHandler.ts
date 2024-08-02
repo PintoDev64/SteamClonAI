@@ -22,10 +22,14 @@ export default class MongoHandler {
         Query: MongoHandlerMethods.ParamQuery,
         Many: MongoHandlerMethods.ParamMany = false
     ): Promise<T> {
+        console.log(Query);
+        
         const Database = mongo.collection(Collection)
         if (Many) {
+            console.log("Many: ", await Database.find(Query).toArray() as T);
             return await Database.find(Query).toArray() as T
         }
+        console.log("Non-Many:", await Database.findOne(Query) as T);
         return await Database.findOne(Query) as T
     }
 

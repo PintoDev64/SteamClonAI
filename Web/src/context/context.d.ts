@@ -25,7 +25,6 @@ declare namespace User {
         Picture: number
         PublicId: string
         Currency: number
-        [x: string]: number | string
     }
 
     type ReducerObject = ProviderVariables

@@ -50,7 +50,7 @@ export default function GameDetails({ images, name, shortDescription, releaseDat
             <div id="GameDetails-Content">
                 <img className="GameDetails-ContentClass" src={images[1].url} alt={name} id="GameDetails-ContentCover" />
                 <div className="GameDetails-ContentClass" id="GameDetails-ContentDescription">
-                    <p id="GameDetails-ContentDescriptionText">{shortDescription.slice(1, 170)}{shortDescription.length > 170 && "..."}</p>
+                    <p id="GameDetails-ContentDescriptionText">{shortDescription.slice(0, 170)}{shortDescription.length > 170 && "..."}</p>
                 </div>
                 <div className="GameDetails-ContentSeparator GameDetails-ContentClass">
                     <span className="GameDetails-Content-Span">Reseñas</span>
