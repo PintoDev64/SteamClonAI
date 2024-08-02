@@ -54,7 +54,9 @@ jobs:
         run: unzip release.zip
 
       - name: Enter repo
-        run: cd ./Server
+        run: |
+          ls
+          cd ./Server
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
