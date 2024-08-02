@@ -53,10 +53,12 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
+      - name: Enter repo
+        run: cd ./Server
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
-        run: cd ./Server
         with:
           app-name: 'steamclonai'
           slot-name: 'Production'
