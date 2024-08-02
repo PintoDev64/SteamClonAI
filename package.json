@@ -1,7 +1,6 @@
 {
   "name": "steamclonai",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
     "web:dev": "npm run dev -w Web",
     "web:build": "npm run build -w Web",
