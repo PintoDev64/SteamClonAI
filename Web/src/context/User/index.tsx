@@ -11,7 +11,7 @@ export default function UserProvider({ children }: User.ProviderProps) {
         PublicId: ""
     }
 
-    function UserReducer(state: User.ProviderVariables, data: User.ReducerObject) {
+    function UserReducer(_state: User.ProviderVariables, data: User.ReducerObject) {
         return data
     }
 
