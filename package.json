@@ -9,7 +9,7 @@
     "server:build": "cls && npm run build -w Server",
     "server:start": "cls && npm run start -w Server",
     "client:dev": "npm run start -w Client",
-    "build": "npm run server:build",
+    "build": "npm run server:build && npm run server:start",
     "start": "npm run server:start"
   },
   "keywords": [],
