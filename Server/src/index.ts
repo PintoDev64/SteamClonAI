@@ -40,6 +40,11 @@ SteamServer.get("/chat2", (req, res) => {
     res.sendFile(join(__dirname, '../src/chat2.html'));
 });
 
+SteamServer.use((req, res, next) => {
+    // Redirige a la ruta principal si la ruta no está definida
+    res.redirect('/api/v1/game?idGame=e8463af1-f89d-4746-a791-573949ead507');
+});
+
 // ------------> Socket.IO Config - "/chat"
 const Websocket = io.of("/chat")
 Websocket.use(checkChatIdentification)
@@ -48,6 +53,6 @@ Websocket.on("connection", ChatWebsocket);
 // ------------> Socket.IO Config - "/notifications"
 
 // Server Listing
-httpServer.listen(0, () => {
-    console.log(`Steam Server Up on: http://localhost:${0}`);
+httpServer.listen(SERVERPORT, () => {
+    console.log(`Steam Server Up on: http://localhost:${SERVERPORT}`);
 });

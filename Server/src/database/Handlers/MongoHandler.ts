@@ -7,8 +7,9 @@ export default class MongoHandler {
     static async Insert(
         Collection: MongoHandlerMethods.ParamCollection,
         Data: MongoHandlerMethods.ParamData
-    ) {
+    ) {        
         const Database = mongo.collection(Collection)
+        
         if (Data.length === 1) {
             await Database.insertOne(Data[0])
         } else {
