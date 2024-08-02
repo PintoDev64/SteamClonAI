@@ -25,7 +25,7 @@ const URL_WhiteList = ["http://localhost:5173", "https://steam-clon-ai-web.verce
 SteamServer.use(cookieParser());
 SteamServer.use(express.json());
 SteamServer.use(cors({
-    origin: process.env.NODE_ENV === "production" ? "https://steam-clon-ai-web.vercel.app/" : "http://localhost:5173",
+    origin: process.env.NODE_ENV === "production" ? "https://steam-clon-ai-web.vercel.app" : "http://localhost:5173",
     credentials: true,
     optionsSuccessStatus: 200
 }))
