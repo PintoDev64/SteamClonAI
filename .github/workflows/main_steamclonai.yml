@@ -21,8 +21,9 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: npm install, build, and test
+      - name: go to directory, npm install, build, and test
         run: |
+          cd ./Server
           npm install
           npm run build --if-present
           npm run test --if-present
