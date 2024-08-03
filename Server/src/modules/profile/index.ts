@@ -51,16 +51,19 @@ ProfileRouter.post(`${PathService}/verify`, async (request, response) => {
 
     const Token = request.body.Token
 
-    console.log("Token: ", request.body.Token);
-
     try {
         if (!Token) return response.json({ status: 401 })
 
-        const data = verify(Token, JWT_SECRET)
+        const { exp, iat,...rest } = verify(Token, JWT_SECRET) as {
+            exp: number,
+            iat: number,
+            CURRENCY: number,
+            PROFILE_NAME: string,
+            PROFILE_PICTURE: number,
+            PUBLIC_ID: string
+        }
 
-        console.log(data);
-
-        response.json(data)
+        response.json(rest)
     } catch (err: any) {
         console.log(err);
         response.json({ status: 500 })

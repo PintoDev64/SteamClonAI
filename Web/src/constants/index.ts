@@ -1,1 +1,1 @@
-export const URL_API = "https://steamclonai.onrender.com"
+export const URL_API = "https://steamserver.azurewebsites.net"

@@ -1,5 +1,7 @@
 ### Test 1
 GET http://localhost:1234/api/v1/game?idGame=fe7dab8a-b0fa-483a-b4d7-77414a57ba13
+### Test 1.5 -----> Azure Server
+GET https://steamserver.azurewebsites.net/api/v1/game?idGame=fe7dab8a-b0fa-483a-b4d7-77414a57ba13
 ###
 GET https://steamclonai.onrender.com/api/v1/game?idGame=b23b7da0-5b23-430c-a013-3e2c7e951490
 ### Test 2
