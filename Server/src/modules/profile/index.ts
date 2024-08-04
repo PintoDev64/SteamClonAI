@@ -52,7 +52,7 @@ ProfileRouter.post(`${PathService}/register`, VerifyBodyContent, createPublicId,
  */
 ProfileRouter.get(`${PathService}/close`, (request, response) => {
     response
-    .clearCookie("userUniqueToken", { httpOnly: true, secure: process.env.NODE_ENV === "production" })
+    .clearCookie("userUniqueToken", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "none", partitioned: true })
     .status(200)
     .json({ status: 200 })
 })
@@ -154,7 +154,7 @@ ProfileRouter.put(`${PathService}/login`, upload.none(), async (request, respons
         console.log(token);
 
         response
-            .cookie("userUniqueToken", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" })
+            .cookie("userUniqueToken", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "none", partitioned: true })
             .json({
                 Name: data.PROFILE_NAME,
                 Picture: data.PROFILE_PICTURE,
