@@ -20,8 +20,6 @@ import { insertProfileReview } from '../../database/MongoModels/ProfileReviews';
 import { JWT_SECRET, SALT_ROUNDS } from '../../constants';
 import SessionHandler from '../../database/Handlers/Sessions';
 
-const upload = multer()
-
 /**
  * 
  */
@@ -63,8 +61,6 @@ ProfileRouter.get(`${PathService}/close`, (request, response) => {
 ProfileRouter.post(`${PathService}/verify`, async (request, response) => {
 
     const Token = request.cookies.userUniqueToken
-
-    console.log(Token);
 
     try {
         if (!Token) return response.json({ status: 401 })
@@ -142,7 +138,7 @@ ProfileRouter.post(`${PathService}/:publicId/confirmation`, async (request, resp
     response.json(FriendRequet)
 })
 
-ProfileRouter.put(`${PathService}/login`, upload.none(), async (request, response) => {
+ProfileRouter.put(`${PathService}/login`, async (request, response) => {
     try {
         const { mail, password } = request.body;
 

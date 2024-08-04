@@ -51,3 +51,12 @@ export function splitArrayComponentsToSubarrays(array: ReactNode[], chunkSize: n
   }
   return result;
 }
+
+export async function creteFetch(url: string, body: object,method?: "post" | "put" | "delete") {
+  const ResponseFetch = await fetch(url, {
+    method: method ?? "get",
+    credentials: "include",
+    body: JSON.stringify(body)
+  })
+  return await ResponseFetch.json()
+}

@@ -5,14 +5,11 @@ import { redirect } from "react-router-dom";
 type LoaderType = { request: Request, params: Params }
 
 export async function LoginForm() {
-    const UserToken = localStorage.getItem("Token")
-    if (UserToken) {
-        redirect("/")
-    }
+    redirect("/")
     return null
 }
 
-export function ProfileLoader({ params }: LoaderType){
+export function ProfileLoader({ params }: LoaderType) {
     return fetch(`${URL_API}/api/v1/profile/${params.userId}`)
 }
 

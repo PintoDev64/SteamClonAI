@@ -1,6 +1,8 @@
+import { URL_API } from "@constants";
 import { UserContext } from "context"
 import { User } from "context/context"
-import { useReducer } from "react"
+import { useEffect, useReducer } from "react"
+import { io } from "socket.io-client";
 
 export default function UserProvider({ children }: User.ProviderProps) {
 
@@ -16,6 +18,19 @@ export default function UserProvider({ children }: User.ProviderProps) {
     }
 
     const [UserState, dispatch] = useReducer(UserReducer, defaultVariables, undefined)
+
+    useEffect(() => {
+        console.log(UserState.PublicId);
+        
+        if (UserState.PublicId && UserState.PublicId.length > 0) {
+            io(`${URL_API}/status`, {                
+                withCredentials: true,
+                query: {
+                    yourPublicId: UserState.PublicId
+                }
+            })
+        }
+    }, [UserState])
 
     function EditUser(User: User.ProviderVariables) {
         dispatch(User)

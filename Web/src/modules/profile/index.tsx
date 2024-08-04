@@ -2,16 +2,38 @@ import { useLoaderData } from "react-router-dom"
 
 // Styles
 import './index.css'
+import { useContext, useEffect } from "react"
+import { ProfileContext } from "context"
+import Details from "./components/Details"
+import Main from "./components/Main"
 
 export default function ProfilePage() {
 
-    const RequestData = useLoaderData() as RequestAPI.Home_APIStore
+    const { data } = useLoaderData() as RequestAPI.Profile_API
 
-    console.log(RequestData);
+    const { LIBRARY, PROFILE_NAME, PROFILE_PICTURE, REAL_NAME, STATUS, THEME } = data
+
+    const { Profile, EditProfile } = useContext(ProfileContext)
+
+    useEffect(() => {
+        EditProfile({
+            Library: LIBRARY,
+            ProfileName: PROFILE_NAME,
+            ProfilePicure: PROFILE_PICTURE,
+            RealName: REAL_NAME,
+            Status: STATUS,
+            Theme: THEME
+        })
+    }, [])
+
+    console.log(Profile);
 
     return (
         <div id="SteamProfile">
-
+            <div id="SteamProfileContent">
+                <Details />
+                <Main />
+            </div>
         </div>
     )
 }

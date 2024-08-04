@@ -1,0 +1,33 @@
+### Test 1
+POST http://localhost:1234/api/v1/cart
+content-type: application/json
+
+{
+    "accountId": 10
+}
+
+### Test 2
+POST http://localhost:1234/api/v1/cart/payment
+content-type: application/json
+
+{
+    "accountId": 10
+}
+
+### Test -----> Remove Item
+PUT http://localhost:1234/api/v1/cart/remove
+content-type: application/json
+
+{
+    "IdGame": "e8463af1-f89d-4746-a791-573949ead507",
+    "accountId": 10
+}
+
+### Add Game to Cart
+PUT http://localhost:1234/api/v1/cart/add
+content-type: application/json
+
+{
+    "accountId": 10,
+    "productId": "b23b7da0-5b23-430c-a013-3e2c7e951490"
+}

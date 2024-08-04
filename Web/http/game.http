@@ -1,0 +1,132 @@
+### Test 1
+GET http://localhost:1234/api/v1/game?idGame=fe7dab8a-b0fa-483a-b4d7-77414a57ba13
+### Test 1.5 -----> Azure Server
+GET https://steamserver.azurewebsites.net/api/v1/game?idGame=fe7dab8a-b0fa-483a-b4d7-77414a57ba13
+###
+GET https://steamclonai.onrender.com/api/v1/game?idGame=b23b7da0-5b23-430c-a013-3e2c7e951490
+### Test 2
+GET http://localhost:1234/api/v1/game?idGame=e8463af1-f89d-4746-a791-573949ead507
+###
+GET https://steamclonai.onrender.com/api/v1/game?idGame=e8463af1-f89d-4746-a791-573949ead507
+### Add Elements Test
+POST http://localhost:1234/api/v1/game
+content-type: application/json
+
+{
+    "name": "Left 4 Dead 2",
+    "shortDescription": "Ambientado en el apocalipsis zombi, Left 4 Dead 2 (L4D2) es la esperadísima secuela del galardonado Left 4 Dead, el juego cooperativo número 1 de 2008. Este FPS cooperativo de acción y terror os llevará a ti y a tus amigos por las ciudades, pantanos y cementerios del Sur Profundo",
+    "icon": "https://assets-prd.ignimgs.com/2021/12/10/left4dead2-1639126647529.jpg",
+    "images": [
+        {
+            "type": "video",
+            "url": "https://cdn.akamai.steamstatic.com/steam/apps/5952/movie480.webm"
+        },
+        {
+            "type": "image",
+            "url": "https://steamuserimages-a.akamaihd.net/ugc/112987056949782149/11649FF34FB9804AFC9B408F434F39DB88F4614C/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/550/ss_b8bcf2ebdb67a32b4a1e7273a4e9eae92243ed64.1920x1080.jpg"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/550/ss_ba2ea2eda245f89626277457ae2ab76ba997f46a.1920x1080.jpg"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/550/ss_1d9d6e638c8ad4b04fac0f49ca32947b31396f24.1920x1080.jpg"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/550/ss_6ec4ee04d4924b099e25ce79f3d6571c3b623b3b.1920x1080.jpg"
+        }
+    ],
+    "releaseDate": "16-NOV-2009",
+    "developer": {
+        "name": "Valve",
+        "url": "https://store.steampowered.com/publisher/valve"
+    },
+    "publishers": [{
+        "name": "Valve",
+        "url": "https://store.steampowered.com/publisher/valve"
+    }],
+    "downloadUrl": "",
+    "categories": ["Zombies", "Cooperativos", "Multijugador", "FPS"],
+    "features": ["Valve Anti-Cheat", "In-App Purchases", "Cross-Platform Multiplayer", "Captiosn Available", "Steam Cloud", "Single-Player"],
+    "requirements": "undefined",
+    "links": {
+        "url": "https://steam-clon-ai-web.vercel.app/app/${_Id}"
+    },
+    "platforms": {
+        "Win": {
+            "OS": "Windows® 7 32/64-bit / Vista 32/64 / XP",
+            "processor": "Intel core 2 duo 2.4GHz",
+            "Memory": "2 GB de RAM",
+            "Graphics": "Video Card Shader model 3.0. NVidia 7600, ATI X1600 or better",
+            "DirectX": "Versión 9.0c",
+            "Storage": "13 GB de espacio disponible",
+            "SoundCard": "DirectX 9.0c compatible sound card"
+        },
+        "Mac": "undefined",
+        "Lin": {
+            "OS": "Ubuntu 12.04",
+            "processor": "Dual core from Intel or AMD at 2.8 GHz",
+            "Memory": "2 GB de RAM",
+            "Graphics": "nVidia GeForce 8600/9600GT, ATI/AMD Radeon HD2600/3600 (Graphic Drivers: nVidia 310, AMD 12.11), OpenGL 2.1",
+            "DirectX": "",
+            "Storage": "13 GB de espacio disponible",
+            "SoundCard": "OpenAL Compatible Sound Card"
+        }
+    },
+    "products": [{
+        "name": "Left 4 Dead 2",
+        "price": {
+            "default": 5,
+            "format": "Dollar"
+        }
+    }],
+    "downloadableContent": [],
+    "about": "Ambientado en el apocalipsis zombi, Left 4 Dead 2 (L4D2) es la esperadísima secuela del galardonado Left 4 Dead, el juego cooperativo número 1 de 2008.\nEste FPS cooperativo de acción y terror os llevará a ti y a tus amigos por las ciudades, pantanos y cementerios del Sur Profundo, desde Savannah hasta Nueva Orleans, a lo largo de cinco extensas campañas.\nJugarás como uno de los cuatro nuevos supervivientes, armado con un amplio y devastador arsenal de armas clásicas y mejoradas. Además de las armas de fuego, también tendrás la oportunidad de masacrar a los infectados con diversas armas de combate cuerpo a cuerpo, desde motosierras hasta hachas, e incluso una mortífera sartén.\nPondrás a prueba estas armas contra tres espantosos y formidables nuevos infectados especiales (o jugarás como ellos en el modo Enfrentamiento). También te encontrarás con cinco nuevos infectados comunes no comunes, incluyendo a los aterradores embarrados.\nAI Director 2.0 lleva la jugabilidad frenética y repleta de acción de L4D a un nivel superior. Esta versión mejorada de Director tiene la capacidad de modificar por procedimientos la meteorología en la que luchas y las rutas que tomas, además de adaptar la población enemiga, los efectos y los sonidos para ajustarlos a tus acciones. L4D2 promete una experiencia satisfactoria, única y desafiante en cada partida, personalizada de acuerdo con tu estilo de juego.\nAcción cooperativa de nueva generación de la mano de los creadores de Half-Life, Portal, Team Fortress y Counter-Strike.\nMás de 20 nuevas armas y objetos encabezados por más de 10 armas de combate cuerpo a cuerpo (hacha, motosierra, sartén, bate de béisbol...) te permitirán enfrentarte a los zombis desde bien cerca.\nNuevos supervivientes. Nueva historia. Nuevos diálogos.\nCinco extensas campañas para los modos Cooperativo, Enfrentamiento y Supervivencia.\nUn modo multijugador completamente nuevo.\nInfectados comunes no comunes. Cada una de las cinco nuevas campañas contiene al menos un nuevo tipo de zombi común no común exclusivo de esa campaña.\nAI Director 2.0: La avanzada tecnología bautizada como AI Director caracterizó la jugabilidad única de L4D permitiendo ajustar dinámicamente la población enemiga, los efectos y la música a las acciones de los jugadores. L4D2 incorpora el nuevo AI Director 2.0, que amplía la capacidad del Director para personalizar el diseño de los niveles, los objetos del entorno, la meteorología y la iluminación para reflejar los diferentes momentos del día.\nUn sistema de estadísticas, clasificaciones y premios que fomenta el juego cooperativo.",
+    "lenguajes": {
+        "Spanish": {
+            "interface": true,
+            "audio": true,
+            "subtitles": true
+        },
+        "English": {
+            "interface": true,
+            "audio": true,
+            "subtitles": true
+        }
+    }
+}
+
+### -------> Sumbit Review
+PUT http://localhost:1234/api/v1/game?idGame=fe7dab8a-b0fa-483a-b4d7-77414a57ba13
+content-type: application/json
+
+{
+    "type": "non-recomended",
+    "username": "PintoGamer64",
+    "image": 1,
+    "userUrl": "pintogamer64",
+    "content": "BAusuraaaaaaa",
+    "date": "13-SEP-2020",
+    "hours": 500,
+    "reactions": {
+        "yes": 12,
+        "no": 2,
+        "funny": 50
+    }
+}
+
+### -------> Ai Review Summary
+POST http://localhost:1234/api/v1/game/steamai
+content-type: application/json
+
+{
+    "categories": "Competitivo, Casual, FPS",
+    "username": "PintoGamer64",
+    "idGame": "fe7dab8a-b0fa-483a-b4d7-77414a57ba13"
+}

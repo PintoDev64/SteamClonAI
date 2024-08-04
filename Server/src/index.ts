@@ -8,24 +8,30 @@ import cookieParser from 'cookie-parser'
 import ApplictionRouter from "./modules";
 
 // Const
-import { SERVERPORT } from "./constants";
+import { CORS_AUTH, SERVERPORT } from "./constants";
 
 // Websockets
-import ChatWebsocket from "./modules/chats";
+import StatusWebsocket from "./modules/status";
 
 // Websockets Middleware
-import checkChatIdentification from "./modules/chats/middleware";
+import checkIdentification from "./modules/status/middleware";
 
 const SteamServer = express();
 const httpServer = createServer(SteamServer);
-const io = new SocketIOServer(httpServer);
+const io = new SocketIOServer(httpServer, {
+    cors: {
+        origin: CORS_AUTH,
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+});
 
 const URL_WhiteList = ["http://localhost:5173", "https://steam-clon-ai-web.vercel.app"]
 
 SteamServer.use(cookieParser());
 SteamServer.use(express.json());
 SteamServer.use(cors({
-    origin: process.env.NODE_ENV === "production" ? "https://steam-clon-ai-web.vercel.app" : "http://localhost:5173",
+    origin: CORS_AUTH,
     credentials: true,
     optionsSuccessStatus: 200
 }))
@@ -42,13 +48,13 @@ SteamServer.get("/chat2", (req, res) => {
 
 SteamServer.use((req, res, next) => {
     // Redirige a la ruta principal si la ruta no está definida
-    res.redirect('/api/v1/game?idGame=e8463af1-f89d-4746-a791-573949ead507');
+    res.redirect(process.env.NODE_ENV === "production" ? "https://steam-clon-ai-web.vercel.app" : "http://localhost:5173");
 });
 
 // ------------> Socket.IO Config - "/chat"
-const Websocket = io.of("/chat")
-Websocket.use(checkChatIdentification)
-Websocket.on("connection", ChatWebsocket);
+const Websocket = io.of("/status")
+Websocket.use(checkIdentification)
+Websocket.on("connection", StatusWebsocket);
 
 // ------------> Socket.IO Config - "/notifications"
 

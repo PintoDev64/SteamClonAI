@@ -164,7 +164,15 @@ declare namespace RequestAPI {
         Offers: GameDataType[],
         SteamAI: GameDataType[]
     }
-    /* type Profile_API = {
-        
-    } */
+    type Profile_API = {
+        status: number,
+        data: {
+            LIBRARY: null,
+            PROFILE_NAME: "PintoGamer64",
+            PROFILE_PICTURE: 1,
+            THEME: 1,
+            REAL_NAME: "Joan Sebastian Cardozo Salinas",
+            STATUS: "Offline"
+        }
+    }
 }

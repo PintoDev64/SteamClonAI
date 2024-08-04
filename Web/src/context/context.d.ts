@@ -30,7 +30,27 @@ declare namespace User {
     type ReducerObject = ProviderVariables
 
     type ContextProps = {
-        User: ProviderVariables,
+        User: ProviderVariables
         EditUser({ User }: ProviderVariables): void
+    }
+}
+
+declare namespace Profile {
+    type ProviderProps = { children: ReactNode }
+
+    type ProviderVariables = {
+        Library: RequestAPI.GameDataType[] | null
+        ProfileName: string
+        ProfilePicure: number
+        Theme: number
+        RealName: string
+        Status: "Offline" | "Online"
+    }
+
+    type ReducerObject = ProviderVariables
+
+    type ContextProps = {
+        Profile: ProviderVariables,
+        EditProfile({ Profile }: ProviderVariables): void
     }
 }

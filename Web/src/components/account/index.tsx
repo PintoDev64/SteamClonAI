@@ -5,7 +5,7 @@ import './index.css'
 import { DownArrow } from './assets'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { UserContext } from 'context'
-import { URL_API } from '@constants'
+import { Images, URL_API } from '@constants'
 import { Link, useLocation } from 'react-router-dom'
 
 export default function AccountHeader() {
@@ -20,6 +20,7 @@ export default function AccountHeader() {
     const [error, setError] = useState<string | null>(null);
 
     async function CloseSession() {
+        CheckBox.current.click()
         fetch(`${URL_API}/api/v1/profile/close`, { credentials: "include" })
             .then(() => window.location.reload())
             .catch(err => console.log(err.message))
@@ -53,8 +54,6 @@ export default function AccountHeader() {
         fetchData();
     }, [pathname])
 
-    const Images = ["https://avatars.githubusercontent.com/u/84690368?v=4", "https://i.scdn.co/image/ab6775700000ee8515075c507ea1f95ece85a305", "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"]
-
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
@@ -72,7 +71,7 @@ export default function AccountHeader() {
                 </div>
             </div>
             <div id="AccountHeaderOptions">
-                <Link to={`/profile/${User.PublicId}`} className='AccountHeaderOptions-Element'>
+                <Link to={`/profile/${User.PublicId}`} className='AccountHeaderOptions-Element' onClick={() => CheckBox.current.click()}>
                     Ir a tu perfil
                 </Link>
                 <button className="AccountHeaderOptions-Element" onClick={CloseSession}>

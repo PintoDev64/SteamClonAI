@@ -12,6 +12,7 @@ import ProfilePage from "@Modules/profile";
 
 // Loaders
 import { GameLoader, StoreLoader, LoginForm, ProfileLoader } from "loaders";
+import ProfileProvider from "context/Profile";
 
 const RouterStructure = createBrowserRouter(
     createRoutesFromElements(
@@ -19,7 +20,11 @@ const RouterStructure = createBrowserRouter(
             <Route index loader={StoreLoader} element={<HomePage bannerEvent="/HomeHeader.png" />} />
             <Route path="game/:IdGame" loader={GameLoader} element={<GamePage />} />
             <Route path="/login" loader={LoginForm} element={<Login />} />
-            <Route path="/profile/:userId" loader={ProfileLoader} element={<ProfilePage />} />
+            <Route path="/profile/:userId" loader={ProfileLoader} element={
+                <ProfileProvider>
+                    <ProfilePage />
+                </ProfileProvider>
+            } />
             <Route path="*" element={<ErrorPage />} />
         </Route>
     )
