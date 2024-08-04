@@ -1,1 +1,1 @@
-export const URL_API = "steamserver.azurewebsites.net"
+export const URL_API = "https://steamserver.azurewebsites.net"
