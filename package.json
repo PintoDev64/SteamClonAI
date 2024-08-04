@@ -8,7 +8,7 @@
     "server:build": "npm run build -w Server",
     "server:start": "npm run start -w Server",
     "client:dev": "npm run start -w Client",
-    "build": "npm install -w Server --save-dev @types/bcrypt @types/express @types/cookie-parser @types/jsonwebtoken @types/multer && npm run server:build",
+    "build": "npm run server:build",
     "start": "npm run server:start"
   },
   "keywords": [],
