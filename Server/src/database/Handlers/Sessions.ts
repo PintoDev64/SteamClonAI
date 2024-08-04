@@ -5,6 +5,7 @@ import ErrorHandler from "./Error";
 export default class SessionHandler {
     static async Login({ mail, password }: { mail: string, password: string }): Promise<any> {
         return await ErrorHandler.Wrapper(async () => {
+
             Validate.Mail(mail)
             Validate.Password(password)
 

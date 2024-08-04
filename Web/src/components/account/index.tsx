@@ -3,35 +3,39 @@ import './index.css'
 
 // Assets
 import { DownArrow } from './assets'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { UserContext } from 'context'
 import { URL_API } from '@constants'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export default function AccountHeader() {
+
+    const { pathname } = useLocation()
+
+    const CheckBox = useRef<HTMLInputElement>(null!)
 
     const { User, EditUser } = useContext(UserContext)
 
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
+    async function CloseSession() {
+        fetch(`${URL_API}/api/v1/profile/close`, { credentials: "include" })
+            .then(() => window.location.reload())
+            .catch(err => console.log(err.message))
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const Token = localStorage.getItem("Token")
                 const response = await fetch(`${URL_API}/api/v1/profile/verify`, {
                     method: "post",
-                    headers: {
-                        "content-type": "application/json"
-                    },
-                    body: JSON.stringify({ Token })
+                    credentials: "include"
                 });
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const result = await response.json();
-
-                console.log(result);
 
                 EditUser({
                     Name: result.PROFILE_NAME,
@@ -47,7 +51,7 @@ export default function AccountHeader() {
         };
 
         fetchData();
-    }, [])
+    }, [pathname])
 
     const Images = ["https://avatars.githubusercontent.com/u/84690368?v=4", "https://i.scdn.co/image/ab6775700000ee8515075c507ea1f95ece85a305", "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"]
 
@@ -58,16 +62,22 @@ export default function AccountHeader() {
 
     if (User.PublicId) return (
         <div id="AccountHeader">
-            <img id='AccountHeaderImage' fetchPriority="high" src={Images[User.Picture]} />
-            {User.PublicId
-                ? <>
-                    <span id='AccountHeaderName'>{User.Name}</span>
-                    <span id='AccountHeaderCurrency'>${User.Currency}</span>
-                </>
-                : <span id='AccountHeaderName'>LOGIN</span>
-            }
-            <div id="AccountHeaderArrow">
-                <DownArrow />
+            <div id='AccountHeaderGroup' onClick={() => CheckBox.current.click()}>
+                <input type="checkbox" id="AccountHeaderDropdown" hidden ref={CheckBox} />
+                <img id='AccountHeaderImage' fetchPriority="high" src={Images[User.Picture]} />
+                <span id='AccountHeaderName'>{User.Name}</span>
+                <span id='AccountHeaderCurrency'>${User.Currency}</span>
+                <div id="AccountHeaderArrow">
+                    <DownArrow />
+                </div>
+            </div>
+            <div id="AccountHeaderOptions">
+                <Link to={`/profile/${User.PublicId}`} className='AccountHeaderOptions-Element'>
+                    Ir a tu perfil
+                </Link>
+                <button className="AccountHeaderOptions-Element" onClick={CloseSession}>
+                    Cerrar sesion
+                </button>
             </div>
         </div>
     )
@@ -75,17 +85,7 @@ export default function AccountHeader() {
     return (
         <Link to="/login">
             <div id="AccountHeader">
-                <img id='AccountHeaderImage' fetchPriority="high" src={Images[User.Picture]} />
-                {User.PublicId
-                    ? <>
-                        <span id='AccountHeaderName'>{User.Name}</span>
-                        <span id='AccountHeaderCurrency'>${User.Currency}</span>
-                    </>
-                    : <span id='AccountHeaderName'>LOGIN</span>
-                }
-                <div id="AccountHeaderArrow">
-                    <DownArrow />
-                </div>
+                <span id='AccountHeaderName'>LOGIN</span>
             </div>
         </Link>
     )

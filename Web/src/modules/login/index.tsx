@@ -1,11 +1,18 @@
 // Style
 import { SteamLogoIndividual } from '@components/separator/assets'
 import './index.css'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { URL_API } from '@constants'
 import { useNavigate } from 'react-router-dom'
+import { CompleteTransition, ModifyTransition } from 'hooks'
+import { PageTransitionContext } from 'context'
 
 export default function Login() {
+
+    const { ModifyPageTransition } = useContext(PageTransitionContext)
+
+    const RedirectMediumEffect = () => ModifyTransition(ModifyPageTransition)
+    const RedirectEffect = () => CompleteTransition(ModifyPageTransition)
 
     const [Mail, setMail] = useState("")
     const [Password, setPassword] = useState("")
@@ -13,9 +20,11 @@ export default function Login() {
     const navigate = useNavigate();
 
     const RequestData = async () => {
+        RedirectMediumEffect()
         try {
             const response = await fetch(`${URL_API}/api/v1/profile/login`, {
                 method: "PUT",
+                credentials: 'include',
                 body: JSON.stringify({
                     mail: Mail,
                     password: Password
@@ -26,22 +35,23 @@ export default function Login() {
             });
 
             if (!response.ok) {
+                RedirectEffect()
                 throw new Error('Error en la solicitud');
             }
 
             const data = await response.json();
-
-            // Asegúrate de que el token se devuelve en la respuesta
-            if (data.userToken) {
-                localStorage.setItem("Token", data.userToken);
-                navigate("/"); // Redirecciona a la página principal
-            } else {
-                console.error('Token no encontrado en la respuesta');
-            }
+            if (data.status === 404) return
+            localStorage.setItem("UserData", JSON.stringify(data))
+            navigate("/"); // Redirecciona a la página principal
         } catch (error) {
+            RedirectEffect()
             console.error('Error al realizar la solicitud:', error);
         }
     }
+
+    useEffect(() => {
+        document.title = `Inicar sesion - Steam AI`
+    }, [])
 
     return (
         <div id="SteamLogin">

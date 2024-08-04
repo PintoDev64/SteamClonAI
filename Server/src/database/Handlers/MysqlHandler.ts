@@ -55,20 +55,20 @@ export default class MysqlHandler {
     ): MysqlOperationsMethods.SelectReturnType<T> {
         const Database = await createMySQLConnection()
 
-        const ColumnsJoin = Columns.map(value => value).join(", ")
+        const ColumnsJoin = Columns.map(value => `\`${value}\``).join(", ")
         const SubQuerysJoin = SubQuery?.Where?.Columns.map((Value) =>
-            `${Value} = ?`
+            `\`${Value}\` = ?`
         ).join(" AND ")
 
         let Query: string
 
         if (SubQuerysJoin) {
-            Query = `SELECT ${ColumnsJoin} FROM ${Table} WHERE ${SubQuerysJoin}`
+            Query = `SELECT ${ColumnsJoin} FROM \`${Table}\` WHERE ${SubQuerysJoin};`
         } else {
-            Query = `SELECT ${ColumnsJoin} FROM ${Table}`
+            Query = `SELECT ${ColumnsJoin} FROM \`${Table}\`;`
         }
 
-        const [results, _fields] = await Database?.query(
+        const [results, _fields] = await Database.query(
             Query,
             SubQuery?.Where?.Values ?? []
         ) as MysqlOperationsMethods.__MysqlQuery
@@ -137,11 +137,11 @@ export default class MysqlHandler {
 declare namespace MysqlOperationsMethods {
     // Local
     interface Tables {
-        User: "PUBLIC_ID" | "STATUS" | "PROFILE_NAME" | "ACCOUNT_NAME" | "REAL_NAME" | "VAC_STATUS" | "MAIL" | "THEME" | "PROFILE_PICTURE" | "BACKGROUND_IMAGE" | "PASSWORD" | "CURRENCY" | "LIBRARY";
-        Wishlist: "ACCOUNT_ID" | "ITEMS";
-        Notifications: "ACCOUNT_ID" | "NOTIFICATIONS";
-        Friends: "STATUS" | "FRIEND_ONE_ID" | "FRIEND_TWO_ID";
-        Cart: "ACCOUNT_ID" | "ITEMS";
+        User: "PUBLIC_ID" | "STATUS" | "PROFILE_NAME" | "ACCOUNT_NAME" | "REAL_NAME" | "VAC_STATUS" | "MAIL" | "THEME" | "PROFILE_PICTURE" | "BACKGROUND_IMAGE" | "PASSWORD" | "CURRENCY" | "LIBRARY" | "*";
+        Wishlist: "ACCOUNT_ID" | "ITEMS" | "*";
+        Notifications: "ACCOUNT_ID" | "NOTIFICATIONS" | "*";
+        Friends: "STATUS" | "FRIEND_ONE_ID" | "FRIEND_TWO_ID" | "*";
+        Cart: "ACCOUNT_ID" | "ITEMS" | "*";
     }
 
     interface TablesColumns {

@@ -164,4 +164,7 @@ declare namespace RequestAPI {
         Offers: GameDataType[],
         SteamAI: GameDataType[]
     }
+    /* type Profile_API = {
+        
+    } */
 }

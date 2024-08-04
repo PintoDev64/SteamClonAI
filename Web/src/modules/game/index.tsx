@@ -23,6 +23,11 @@ export default function GamePage() {
 
     const { images, name, about, categories, features, ...rest } = useLoaderData() as RequestAPI.GameAllData;
 
+    useEffect(() => {
+        document.title = `${name} - Steam AI`
+    }, [name])
+
+
     return (
         <div id="GamePage" style={{ backgroundImage: `url(${images[1].url})` }}>
             <div id="GamePageContent">

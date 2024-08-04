@@ -25,7 +25,7 @@ content-type: application/json
     "password": "jose51"
 }
 ### Test 2
-GET http://localhost:1234/api/v1/profile/724b47d2-c6d0-4581-8620-60dc4203806e
+GET http://localhost:1234/api/v1/profile/db3615a1-812a-4583-9d86-ed9e1d67b557
 
 ### Test 2.5 Get Public Library
 GET http://localhost:1234/api/v1/profile/bf1f7936-c98f-4714-bb53-50dbb6d52fe0/games
@@ -80,8 +80,8 @@ PUT http://localhost:1234/api/v1/profile/login
 content-type: application/json
 
 {
-    "mail": "jose51@gmail.com", 
-    "password": "jose51"
+    "mail": "test1234@gmail.com", 
+    "password": "test1234"
 }
 
 ### Tes 4 -> Rage

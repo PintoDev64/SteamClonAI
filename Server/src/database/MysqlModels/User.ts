@@ -40,15 +40,15 @@ export async function createUser(data: User.createUserParams): DatabaseOperation
 /**
  * Obtiene los datos de un usuario
  */
-export async function getUser(data: User.getUserParams): DatabaseOperation.GenericClassReturnType {
-    const { publicId } = data;
+export async function getUser({ limited = true, publicId }: User.getUserParams): DatabaseOperation.GenericClassReturnType {
     return await ErrorHandler.Wrapper(async () => {
-        const responseData = await MysqlHandler.Select("User", ["ACCOUNT_NAME", "MAIL", "CURRENCY"], {
+        const responseData = await MysqlHandler.Select("User", limited ? ["LIBRARY", "PROFILE_NAME", "PROFILE_PICTURE", "THEME", "REAL_NAME", "STATUS"] : ["*"], {
             Where: {
                 Columns: ["PUBLIC_ID"],
                 Values: [publicId]
             }
         })
+
         return responseData
     })
 }

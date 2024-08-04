@@ -44,17 +44,32 @@ ProfileRouter.post(`${PathService}/register`, VerifyBodyContent, createPublicId,
     }
 
     const userCreated = await createUser(RequestData)
-    response.json(userCreated)
+    response.json({ userCreated })
 })
 
+/**
+ * 
+ */
+ProfileRouter.get(`${PathService}/close`, (request, response) => {
+    response
+    .clearCookie("userUniqueToken", { httpOnly: true, secure: process.env.NODE_ENV === "production" })
+    .status(200)
+    .json({ status: 200 })
+})
+
+/**
+ * 
+ */
 ProfileRouter.post(`${PathService}/verify`, async (request, response) => {
 
-    const Token = request.body.Token
+    const Token = request.cookies.userUniqueToken
+
+    console.log(Token);
 
     try {
         if (!Token) return response.json({ status: 401 })
 
-        const { exp, iat,...rest } = verify(Token, JWT_SECRET) as {
+        const { exp, iat, ...rest } = verify(Token, JWT_SECRET) as {
             exp: number,
             iat: number,
             CURRENCY: number,
@@ -131,16 +146,16 @@ ProfileRouter.put(`${PathService}/login`, upload.none(), async (request, respons
     try {
         const { mail, password } = request.body;
 
-        console.log(mail, password);
-
         const { data } = await SessionHandler.Login({ mail, password });
         const token = sign(data, JWT_SECRET, { expiresIn: 7 * 24 * 60 * 60 * 1000 });
+
+        console.log(data);
 
         console.log(token);
 
         response
+            .cookie("userUniqueToken", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" })
             .json({
-                userToken: token,
                 Name: data.PROFILE_NAME,
                 Picture: data.PROFILE_PICTURE,
                 Currency: data.CURRENCY,

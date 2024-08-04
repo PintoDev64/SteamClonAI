@@ -23,6 +23,10 @@ export default function HomePage({ bannerEvent }: HomePageProps) {
         CompleteTransition(ModifyPageTransition)
     }, [])
 
+    useEffect(() => {
+        document.title = `Tienda - Steam AI`
+    }, [])
+
     return (
         <div id="HomePage">
             <Suspense fallback={<>Cargando</>}>

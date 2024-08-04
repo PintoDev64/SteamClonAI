@@ -40,7 +40,7 @@ export default function GameDetails({ images, name, shortDescription, releaseDat
                     {
                         images[ImageSelect].type === "video"
                             ? <video id="GameDetails-Images-ElementVideo" controls src={images[ImageSelect].url} ref={VideoElement}></video>
-                            : <img id="GameDetails-Images-ElementImage" src={images[ImageSelect].url} alt={name} />
+                            : <img id="GameDetails-Images-ElementImage" fetchPriority="high" src={images[ImageSelect].url} alt={name} />
                     }
                 </div>
                 <div id="GameDetails-Images-Slider">
@@ -48,7 +48,7 @@ export default function GameDetails({ images, name, shortDescription, releaseDat
                 </div>
             </div>
             <div id="GameDetails-Content">
-                <img className="GameDetails-ContentClass" src={images[1].url} alt={name} id="GameDetails-ContentCover" />
+                <img className="GameDetails-ContentClass" fetchPriority="high" src={images[1].url} alt={name} id="GameDetails-ContentCover" />
                 <div className="GameDetails-ContentClass" id="GameDetails-ContentDescription">
                     <p id="GameDetails-ContentDescriptionText">{shortDescription.slice(0, 170)}{shortDescription.length > 170 && "..."}</p>
                 </div>

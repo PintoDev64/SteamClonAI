@@ -1,13 +1,22 @@
 #AccountHeader {
     width: 216px;
     height: 39px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+    position: relative;
     border-radius: 3px;
     background-color: var(--bg-highlight);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     user-select: none;
+}
+
+#AccountHeaderGroup {
+    width: 216px;
+    height: 39px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 #AccountHeaderImage {
@@ -43,4 +52,40 @@
     height: 20px;
     display: grid;
     place-items: center;
+}
+
+/* --------- Sesion Dropdown --------- */
+
+#AccountHeaderDropdown {}
+
+#AccountHeaderOptions {
+    position: absolute;
+    right: 0;
+    width: 100%;
+    height: fit-content;
+    bottom: -125%;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: var(--bg-highlight);
+    border-radius: 3px 3px 0 0;
+    box-sizing: border-box;
+    display: none;
+}
+
+#AccountHeader:has(#AccountHeaderDropdown:checked) #AccountHeaderOptions {
+    display: flex;
+}
+
+.AccountHeaderOptions-Element {
+    width: 100%;
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 14px;
+    border: none;
+    margin: 0;
+    background-color: transparent;
+    margin: 5px 0 5px 10px;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
 }

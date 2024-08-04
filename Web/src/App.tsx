@@ -1,10 +1,15 @@
-// Router
+import { Analytics } from "@vercel/analytics/react"
 import { RouterProvider } from "react-router-dom";
+
+// Router
 import RouterStructure from "router";
 
 export default function App() {
 
   return (
-    <RouterProvider router={RouterStructure} />
+    <>
+      <Analytics />
+      <RouterProvider router={RouterStructure} />
+    </>
   )
 }

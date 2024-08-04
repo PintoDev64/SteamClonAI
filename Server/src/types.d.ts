@@ -104,7 +104,7 @@ declare namespace Library {
 // |---------> User
 declare namespace User {
     type createUserParams = GeneralTypes.UserType & PublicIdType & PasswordType
-    type getUserParams = { publicId: string }
+    type getUserParams = { publicId: string, limited?: boolean }
 }
 
 // |---------> Cart
