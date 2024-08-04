@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node --watch .",
     "start": "node .",
-    "build": "npm install --save-dev @types/bcrypt @types/express @types/cookie-parser @types/jsonwebtoken @types/multer && tsc"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
