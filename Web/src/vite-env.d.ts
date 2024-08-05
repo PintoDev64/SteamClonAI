@@ -64,11 +64,15 @@ declare namespace ComponentsRequestProps {
         about: string,
         platforms: GameProducts["platforms"]
         products: GameProducts["products"]
+        InLibrary: boolean,
+        idGame: string
     }
 
     type GameProducts = {
         products: RequestAPI.GameDataType["products"],
         platforms: RequestAPI.GameDataType["platforms"]
+        InLibrary: boolean
+        idGame: string
     }
 
     type GameSidebar = {
@@ -77,7 +81,10 @@ declare namespace ComponentsRequestProps {
     }
 }
 declare namespace RequestAPI {
-    type GameAllData = GameDataType & { reviews: GameReviewsData }
+    type GameAllData = GameDataType & { 
+        reviews: GameReviewsData, 
+        InLibrary: boolean
+    }
     type GameDataType = {
         name: string,
         shortDescription: string,

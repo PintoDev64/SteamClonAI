@@ -137,13 +137,14 @@ export default class MysqlHandler {
 declare namespace MysqlOperationsMethods {
     // Local
     interface Tables {
-        User: "PUBLIC_ID" | "STATUS" | "PROFILE_NAME" | "ACCOUNT_NAME" | "REAL_NAME" | "VAC_STATUS" | "MAIL" | "THEME" | "PROFILE_PICTURE" | "BACKGROUND_IMAGE" | "PASSWORD" | "CURRENCY" | "LIBRARY" | "*";
+        User: "PUBLIC_ID" | "STATUS" | "PROFILE_NAME" | "ACCOUNT_NAME" | "REAL_NAME" | "VAC_STATUS" | "MAIL" | "THEME" | "PROFILE_PICTURE" | "BACKGROUND_IMAGE" | "PASSWORD" | "CURRENCY" | "LIBRARY" | "ACCOUNT_ID" | "*";
         Wishlist: "PUBLIC_ID" | "ITEMS" | "*";
         Cart: "ACCOUNT_ID" | "ITEMS" | "*";
     }
 
     interface TablesColumns {
         User: {
+            ACCOUNT_ID: number
             PUBLIC_ID: string
             STATUS: string
             PROFILE_NAME: string
@@ -179,7 +180,7 @@ declare namespace MysqlOperationsMethods {
     type ParamCustomQuery = string;
     type ParamTable<T extends InterfaceTablesType> = T;
     type ParamColumns<T extends InterfaceTablesType> = Array<Tables[T]>;
-    type ParamData = (string | number | boolean | null)[]
+    type ParamData = (string | number | boolean | null | object)[]
     type ParamSubQuery<T extends InterfaceTablesType> = {
         Where: {
             Columns: Array<Tables[T]>,

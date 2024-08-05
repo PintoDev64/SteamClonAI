@@ -23,7 +23,7 @@ export default function Login() {
         RedirectMediumEffect()
         try {
             const response = await fetch(`${URL_API}/api/v1/profile/login`, {
-                method: "PUT",
+                method: "post",
                 credentials: 'include',
                 body: JSON.stringify({
                     mail: Mail,

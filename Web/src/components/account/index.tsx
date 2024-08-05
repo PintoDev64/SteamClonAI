@@ -5,7 +5,7 @@ import './index.css'
 import { DownArrow } from './assets'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { UserContext } from 'context'
-import { Images, URL_API } from '@constants'
+import { URL_API } from '@constants'
 import { Link, useLocation } from 'react-router-dom'
 
 export default function AccountHeader() {
@@ -42,7 +42,8 @@ export default function AccountHeader() {
                     Name: result.PROFILE_NAME,
                     Picture: result.PROFILE_PICTURE,
                     Currency: result.CURRENCY,
-                    PublicId: result.PUBLIC_ID
+                    PublicId: result.PUBLIC_ID,
+                    Library: result.LIBRARY
                 });
             } catch (error) {
                 setError((error as Error).message);
@@ -63,7 +64,7 @@ export default function AccountHeader() {
         <div id="AccountHeader">
             <div id='AccountHeaderGroup' onClick={() => CheckBox.current.click()}>
                 <input type="checkbox" id="AccountHeaderDropdown" hidden ref={CheckBox} />
-                <img id='AccountHeaderImage' fetchPriority="high" src={Images[User.Picture]} />
+                <img id='AccountHeaderImage' fetchPriority="high" src={User.Picture} />
                 <span id='AccountHeaderName'>{User.Name}</span>
                 <span id='AccountHeaderCurrency'>${User.Currency}</span>
                 <div id="AccountHeaderArrow">

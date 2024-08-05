@@ -4,6 +4,7 @@
   "scripts": {
     "web:dev": "npm run dev -w Web",
     "web:build": "npm run build -w Web",
+    "web:preview": "npm run preview -w Web",
     "server:dev": "npm run dev -w Server",
     "server:build": "npm run build -w Server",
     "server:start": "npm run start -w Server",

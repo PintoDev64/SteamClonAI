@@ -1,4 +1,3 @@
-import { Images } from "@constants"
 import { ProfileContext } from "context"
 import { useContext } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
@@ -16,7 +15,7 @@ export default function Details() {
     return (
         <div id="SteamProfileContent-Details">
             <div id="SteamProfileContent-DetailsMain">
-                <img src={Images[Profile.ProfilePicure]} alt={Profile.ProfileName} id="SteamProfileContent-DetailsMain-Image" fetchPriority="high"/>
+                <img src={Profile.ProfilePicure ?? "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"} alt={Profile.ProfileName} id="SteamProfileContent-DetailsMain-Image" fetchPriority="high"/>
                 <div id="SteamProfileContent-DetailsMain-Content">
                     <h1>{Profile.ProfileName}</h1>
                     <p>{Profile.RealName}</p>

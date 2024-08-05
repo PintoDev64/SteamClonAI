@@ -65,8 +65,8 @@ PUT http://localhost:1234/api/v1/profile/login
 content-type: application/json
 
 {
-    "mail": "test123@gmail.com", 
-    "password": "test123"
+    "mail": "midudev@gmail.com", 
+    "password": "Midudev1234"
 }
 
 ### Tes 4 -> Rage

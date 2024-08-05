@@ -1,10 +1,32 @@
 // Layouts
 import AddtoCart from "@components/cart";
+import { URL_API } from "@constants";
 import { PlatformsIcons } from "@layouts/components/cards/assets";
+import { craeteFetch } from "@utils";
+import { PageTransitionContext } from "context";
+import { ModifyTransition } from "hooks";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function GameProducts({ products, platforms }: ComponentsRequestProps.GameProducts) {
+export default function GameProducts({ products, platforms, InLibrary, idGame }: ComponentsRequestProps.GameProducts) {
+
+    const { ModifyPageTransition } = useContext(PageTransitionContext)
 
     const PlatformsKeys = Object.keys(platforms)
+
+    const navigate = useNavigate()
+
+    const BuyGame = async () => {
+        ModifyTransition(ModifyPageTransition)
+        const response = await craeteFetch(`${URL_API}/api/v1/cart/add`, {
+            productId: idGame
+        }, "put")
+        if (response.status === 500 || response.status === 401) {
+            navigate("/login")
+        } else {
+            console.log(response);
+        }
+    }
 
     return (
         <>
@@ -29,7 +51,11 @@ export default function GameProducts({ products, platforms }: ComponentsRequestP
                             }}
                             ActiveDate={false}
                             mode="Huge"
-                            text={price.default === 0 ? "Jugar" : "Comprar"} />
+                            InLibrary={InLibrary}
+                            text={price.default === 0 ? "Jugar" : "Comprar"} 
+                            ButtonProps={{
+                                onClick: BuyGame
+                            }}/>
                     </div>
                 </div>
             )}

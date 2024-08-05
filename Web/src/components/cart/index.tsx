@@ -1,4 +1,5 @@
 // Styles
+import { ComponentProps } from 'react'
 import ProductPrice from './components/price'
 import './index.css'
 
@@ -11,13 +12,15 @@ type AddtoCartProps = {
   },
   ActiveDate?: boolean,
   text?: string,
+  InLibrary?: boolean,
+  ButtonProps?: ComponentProps<"button">
 }
-export default function AddtoCart({ mode = "Huge", ActiveDate = true, price, text }: AddtoCartProps) {
+export default function AddtoCart({ mode = "Huge", ActiveDate = true, price, text, InLibrary = false, ButtonProps }: AddtoCartProps) {
   return (
     <div className={`SteamCart${mode}`}>
       <ProductPrice ActiveDate={ActiveDate} mode={mode} price={price.value} discount={price.discount} date={price.discountDate} />
-      <button className={`SteamCart${mode}-Button`}>
-        <span className={`SteamCart${mode}-ButtonText`}>{text ?? "Carrito"}</span>
+      <button {...ButtonProps} className={`SteamCart${mode}-Button`} disabled={InLibrary}>
+        <span className={`SteamCart${mode}-ButtonText ${InLibrary && "InLibrary"}`}>{InLibrary ? "En tu libreria" : text ?? "Carrito"}</span>
       </button>
     </div>
   )

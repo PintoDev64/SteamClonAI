@@ -20,3 +20,7 @@ export function GameLoader({ params }: LoaderType) {
 export function StoreLoader() {
     return fetch(`${URL_API}/api/v1/store`)
 }
+
+export function CartLoader() {
+    return fetch(`${URL_API}/api/v1`)
+}

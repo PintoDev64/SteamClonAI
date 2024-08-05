@@ -27,9 +27,9 @@ export default function Main() {
                 <Outlet />
             </div>
             <div id="SteamProfileContent-MainSide">
-                <div className="SteamProfileContent-MainSideElement">
-                    <span>Estado</span>
-                    <span>{Profile.Status}</span>
+                <div className={`SteamProfileContent-MainSideElement ${Profile.Status}`}>
+                    <span className="SteamProfileContent-MainSideElement-Span">Estado</span>
+                    <span className="SteamProfileContent-MainSideElement-Span">{Profile.Status}</span>
                 </div>
                 <div className="SteamProfileContent-MainSideCollumn">
                     <span>Insignias</span>
@@ -42,8 +42,8 @@ export default function Main() {
                 {SideElements.map(({ name, url, value }, _index) =>
                     <div key={_index} className={`SteamProfileContent-MainSideElement ${pathname.includes(url) && "Active"}`}>
                         <Link to={url}>
-                            <span>{name}</span>
-                            <span>{value}</span>
+                            <span className="SteamProfileContent-MainSideElement-Span">{name}</span>
+                            <span className="SteamProfileContent-MainSideElement-Span">{value}</span>
                         </Link>
                     </div>
                 )}

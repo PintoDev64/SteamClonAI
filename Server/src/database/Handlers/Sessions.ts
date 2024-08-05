@@ -9,7 +9,7 @@ export default class SessionHandler {
             Validate.Mail(mail)
             Validate.Password(password)
 
-            const { MAIL, PASSWORD, CURRENCY, PROFILE_NAME, PROFILE_PICTURE, PUBLIC_ID } = await MysqlHandler.Select("User", ["MAIL", "PASSWORD", "REAL_NAME", "PROFILE_NAME", "PROFILE_PICTURE", "PUBLIC_ID", "CURRENCY"], {
+            const { MAIL, PASSWORD, CURRENCY, PROFILE_NAME, PROFILE_PICTURE, PUBLIC_ID, ACCOUNT_ID } = await MysqlHandler.Select("User", ["MAIL", "PASSWORD", "REAL_NAME", "PROFILE_NAME", "PROFILE_PICTURE", "PUBLIC_ID", "CURRENCY", "ACCOUNT_ID"], {
                 Where: {
                     Columns: ["MAIL"],
                     Values: [mail]
@@ -21,7 +21,7 @@ export default class SessionHandler {
             const HashPassword = await compare(password, PASSWORD)
             if (!HashPassword) return { status: 404 }
 
-            return { PROFILE_NAME, PROFILE_PICTURE, PUBLIC_ID, CURRENCY }
+            return { PROFILE_NAME, PROFILE_PICTURE, PUBLIC_ID, CURRENCY, ACCOUNT_ID }
         })
     }
 }

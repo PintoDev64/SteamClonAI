@@ -22,9 +22,10 @@ declare namespace User {
 
     type ProviderVariables = {
         Name: string
-        Picture: number
+        Picture: string
         PublicId: string
-        Currency: number
+        Currency: number,
+        Library: RequestAPI.GameDataType[] | null
     }
 
     type ReducerObject = ProviderVariables
@@ -41,7 +42,7 @@ declare namespace Profile {
     type ProviderVariables = {
         Library: RequestAPI.GameDataType[] | null
         ProfileName: string
-        ProfilePicure: number
+        ProfilePicure: string
         Theme: number
         RealName: string
         Status: "Offline" | "Online"

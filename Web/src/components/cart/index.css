@@ -114,6 +114,10 @@
     color: var(--text-main);
 }
 
+.SteamCartHuge-Button.InLibrary {
+    background-color: var(--accent-green);
+}
+
 /* Small Mode ===> Changes */
 .SteamCartSmall-Button,
 .SteamCartSmall-Button * {

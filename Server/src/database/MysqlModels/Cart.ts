@@ -8,9 +8,6 @@ const collectionName = "GameData";
 
 export async function getProducts(userId: number): DatabaseOperation.GenericClassReturnType {
     return await ErrorHandler.Wrapper(async () => {
-        const mysql = await createMySQLConnection()
-        if (!mysql) return undefined
-
         const results = await MysqlHandler.Select("Cart", ["ITEMS"], {
             Where: {
                 Columns: ["ACCOUNT_ID"],
@@ -27,23 +24,30 @@ export async function getProducts(userId: number): DatabaseOperation.GenericClas
 export async function setProducts(userId: number, productId: string): DatabaseOperation.GenericClassReturnType {
     return await ErrorHandler.Wrapper(async () => {
         const { _id, downloadUrl, ...rest } = await MongoHandler.Select<getGameDataType>(collectionName, { idGame: productId })
-        const { ITEMS } = await MysqlHandler.Select("Cart", ["ITEMS"], {
+
+        const { ITEMS: PatsProducts } = await MysqlHandler.Select("Cart", ["ITEMS"], {
             Where: {
                 Columns: ["ACCOUNT_ID"],
                 Values: [userId]
             }
         })
 
-        const UpdateCart = [...ITEMS, { ...rest }]
+        const FilterPatsProducts = PatsProducts.some(({ idGame }) => idGame === productId)
 
-        const results = await MysqlHandler.Update("Cart", ["ITEMS"], [JSON.stringify(UpdateCart)], {
+        if (FilterPatsProducts) {
+            return PatsProducts
+        }
+
+        const UpdateCart = [...PatsProducts, { ...rest }]
+
+        await MysqlHandler.Update("Cart", ["ITEMS"], [JSON.stringify(UpdateCart)], {
             Where: {
                 Columns: ["ACCOUNT_ID"],
                 Values: [userId]
             }
         })
 
-        return results
+        return UpdateCart
     })
 }
 export async function deleteProducts(userId: number, IdGame: UUIDPattern): DatabaseOperation.GenericClassReturnType {
@@ -76,12 +80,48 @@ export async function buyProducts(userId: number): DatabaseOperation.GenericClas
             }
         })
 
+        const { CURRENCY } = await MysqlHandler.Select("User", ["CURRENCY"], {
+            Where: {
+                Columns: ["ACCOUNT_ID"],
+                Values: [userId]
+            }
+        })
+
         // -----------> THROW ERROR
-        if (ITEMS.length === 0) return undefined
+        if (!ITEMS || ITEMS.length === 0) return {
+            buyState: false,
+            message: "No tienes suficiente fondos para esta transaccion"
+        }
 
-        const GamesOnLibrary = ITEMS.map(({ idGame }) => idGame)
-        const Mongo_Response = await MongoHandler.Select<any[]>(collectionName, { idGame: GamesOnLibrary }, true)
+        const GamesCartPrice = ITEMS.map(({ products }) => products[0].price.default).reduce((a, b) => a + b, 0)
 
-        return Mongo_Response
+        if (CURRENCY < GamesCartPrice) {
+            return {
+                buyState: false,
+                message: "No tienes suficiente fondos para esta transaccion"
+            }
+        } else {
+            const { LIBRARY } = await MysqlHandler.Select("User", ["LIBRARY"], {
+                Where: {
+                    Columns: ["ACCOUNT_ID"],
+                    Values: [userId]
+                }
+            })
+
+            const UpdateCart = [...LIBRARY, { ...ITEMS }]
+
+            await MysqlHandler.Update("User", ["LIBRARY"], [JSON.stringify(UpdateCart)], {
+                Where: {
+                    Columns: ["ACCOUNT_ID"],
+                    Values: [userId]
+                }
+            })
+
+            ITEMS.map(({ idGame }) => deleteProducts(userId, idGame))
+            return {
+                buyState: true,
+                message: "Transaccion Exitosa"
+            }
+        }
     })
 }

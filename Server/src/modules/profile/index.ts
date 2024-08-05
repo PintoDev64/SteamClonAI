@@ -18,6 +18,7 @@ import { getLibraryUser } from '../../database/MysqlModels/Library';
 import { insertProfileReview } from '../../database/MongoModels/ProfileReviews';
 import { JWT_SECRET, SALT_ROUNDS } from '../../constants';
 import SessionHandler from '../../database/Handlers/Sessions';
+import MysqlHandler from '../../database/Handlers/MysqlHandler';
 
 /**
  * 
@@ -36,13 +37,13 @@ ProfileRouter.post(`${PathService}/register`, VerifyBodyContent, createPublicId,
         status: "Offline",
         vacStatus: 1,
         backgroundImage: 1,
-        profilePicture: 1,
+        profilePicture: body.profilePicture,
         theme: 1,
     }
 
     const userCreated = await createUser(RequestData)
     console.log("User Craeted: ", userCreated);
-    
+
     response.json({ userCreated })
 })
 
@@ -51,9 +52,9 @@ ProfileRouter.post(`${PathService}/register`, VerifyBodyContent, createPublicId,
  */
 ProfileRouter.get(`${PathService}/close`, (request, response) => {
     response
-    .clearCookie("userUniqueToken", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "none", partitioned: true })
-    .status(200)
-    .json({ status: 200 })
+        .clearCookie("userUniqueToken", { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "none", partitioned: true })
+        .status(200)
+        .json({ status: 200 })
 })
 
 /**
@@ -69,13 +70,24 @@ ProfileRouter.post(`${PathService}/verify`, async (request, response) => {
         const { exp, iat, ...rest } = verify(Token, JWT_SECRET) as {
             exp: number,
             iat: number,
-            CURRENCY: number,
             PROFILE_NAME: string,
             PROFILE_PICTURE: number,
+            ACCOUNT_ID: number,
             PUBLIC_ID: string
         }
 
-        response.json(rest)
+        const { CURRENCY, LIBRARY } = await MysqlHandler.Select("User", ["CURRENCY", "LIBRARY"], {
+            Where: {
+                Columns: ["ACCOUNT_ID"],
+                Values: [rest.ACCOUNT_ID]
+            }
+        })
+
+        response.json({
+            ...rest,
+            CURRENCY,
+            LIBRARY
+        })
     } catch (err: any) {
         console.log(err);
         response.json({ status: 500 })
@@ -111,12 +123,17 @@ ProfileRouter.post(`${PathService}/:publicId/comment`, async (request, response)
     response.json(comment)
 })
 
-ProfileRouter.put(`${PathService}/login`, async (request, response) => {
+ProfileRouter.post(`${PathService}/login`, async (request, response) => {
     try {
         const { mail, password } = request.body;
 
         const { data } = await SessionHandler.Login({ mail, password });
-        const token = sign(data, JWT_SECRET, { expiresIn: 7 * 24 * 60 * 60 * 1000 });
+        const token = sign({
+            PROFILE_NAME: data.PROFILE_NAME,
+            PROFILE_PICTURE: data.PROFILE_PICTURE,
+            PUBLIC_ID: data.PUBLIC_ID,
+            ACCOUNT_ID: data.ACCOUNT_ID
+        }, JWT_SECRET, { expiresIn: 7 * 24 * 60 * 60 * 1000 });
 
         console.log(data);
 

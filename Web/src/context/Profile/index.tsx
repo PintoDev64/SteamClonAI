@@ -7,7 +7,7 @@ export default function ProfileProvider({ children }: Profile.ProviderProps) {
     const defaultVariables: Profile.ProviderVariables = {
         Library: null,
         ProfileName: "",
-        ProfilePicure: 1,
+        ProfilePicure: "",
         Theme: 1,
         RealName: "",
         Status: "Offline",

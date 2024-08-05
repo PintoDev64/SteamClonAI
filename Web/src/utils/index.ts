@@ -3,12 +3,6 @@ import { useLocation } from "react-router-dom"
 
 export function GetActualPath(localPathname: string) {
   const { pathname } = useLocation()
-  console.log({
-    localPathname,
-    pathname,
-    result: localPathname === pathname
-  });
-  
   return localPathname === pathname
 }
 
@@ -58,7 +52,7 @@ export function splitArrayComponentsToSubarrays(array: ReactNode[], chunkSize: n
   return result;
 }
 
-export async function creteFetch(url: string, body: object,method?: "post" | "put" | "delete") {
+export async function craeteFetch(url: string, body: object,method?: "post" | "put" | "delete") {
   const ResponseFetch = await fetch(url, {
     method: method ?? "get",
     credentials: "include",

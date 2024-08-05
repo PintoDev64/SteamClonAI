@@ -25,7 +25,7 @@ declare namespace GeneralTypes {
         vacStatus: number,
         mail: string,
         theme: number,
-        profilePicture: number,
+        profilePicture: string,
         backgroundImage: number
     }
     type FriendChatType = {

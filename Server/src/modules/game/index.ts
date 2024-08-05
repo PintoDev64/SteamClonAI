@@ -16,6 +16,9 @@ const PathService = "/game"
 // Middleware
 import { createIdGame } from './middleware';
 import { GameReviewsAI } from '../../library/OpenAI';
+import { JWT_SECRET } from '../../constants';
+import { verify } from 'jsonwebtoken';
+import MysqlHandler from '../../database/Handlers/MysqlHandler';
 
 /**
  * Crea un juego
@@ -34,14 +37,39 @@ GameRouter.post(PathService, createIdGame, async (request, response) => {
  * 
  */
 GameRouter.get(PathService, async (request, response) => {
+    const Token = request.cookies.userUniqueToken
     const { idGame } = request.query
+    
+    let InLibrary: boolean = false
+
+    if (Token) {
+        const { exp, iat, ...rest } = verify(Token, JWT_SECRET) as {
+            exp: number,
+            iat: number,
+            PROFILE_NAME: string,
+            PROFILE_PICTURE: number,
+            ACCOUNT_ID: number,
+            PUBLIC_ID: string
+        }
+
+        const { LIBRARY } = await MysqlHandler.Select("User", ["LIBRARY"], {
+            Where: {
+                Columns: ["ACCOUNT_ID"],
+                Values: [rest.ACCOUNT_ID]
+            }
+        })
+
+        InLibrary = LIBRARY.some(({ idGame: GameId }) => GameId === idGame)
+    }
+
     if (idGame) {
         const GameData = await getGameData({ idGame: idGame as UUIDPattern })
         const GameReviews = await getGameReviews({ idGame: idGame as UUIDPattern })
-        
+
         response.json({
             ...GameData.data,
-            reviews: GameReviews.data
+            reviews: GameReviews.data,
+            InLibrary
         })
     } else {
         response.redirect("https://steam-clon-ai-web.vercel.app/")

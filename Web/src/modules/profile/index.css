@@ -194,6 +194,20 @@
     background-color: var(--bg-main);
 }
 
+.SteamProfileContent-MainSideElement.Online {
+    background: linear-gradient(45deg, var(--color-primary) 0%, var(--color-secondary) 60% 100%);
+}
+
+.SteamProfileContent-MainSideElement.Online .SteamProfileContent-MainSideElement-Span:first-child {
+    color: var(--bg-main) !important;
+}
+
+.SteamProfileContent-MainSideElement-Span {
+    font-family: "MotivaSansBold", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 .SteamProfileContent-MainSideElement.Active {
     background-color: var(--bg-hover);
 }

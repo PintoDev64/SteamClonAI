@@ -8,8 +8,9 @@ export default function UserProvider({ children }: User.ProviderProps) {
 
     const defaultVariables: User.ProviderVariables = {
         Currency: 0,
+        Library: null,
         Name: "",
-        Picture: 2,
+        Picture: "",
         PublicId: ""
     }
 

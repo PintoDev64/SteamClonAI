@@ -19,10 +19,10 @@ export default function ProfileGames() {
             {
                 Library
                     ?
-                    Library.map(({ images, name, releaseDate, idGame, icon }) => {
+                    Library.map(({ images, name, releaseDate, idGame, icon }, _index) => {
                         const ImagesFilter = images.filter(({ type }) => type === "image")
                         return (
-                            <div className="SteamProfileContent-GamesPageElements">
+                            <div key={_index} className="SteamProfileContent-GamesPageElements">
                                 <img className="SteamProfileContent-GamesPageElements-Image" src={ImagesFilter[0].url} alt={name} width={216} height={101} />
                                 <div className="SteamProfile-GamesPageElements-Container">
                                     <div className="SteamProfileContent-GamesPageElements-Data">

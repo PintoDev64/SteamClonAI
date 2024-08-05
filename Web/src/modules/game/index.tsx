@@ -21,7 +21,7 @@ export default function GamePage() {
 
     useEffect(() => CompleteTransition(ModifyPageTransition), [])
 
-    const { images, name, about, categories, features, ...rest } = useLoaderData() as RequestAPI.GameAllData;
+    const { images, name, about, categories, features, idGame, ...rest } = useLoaderData() as RequestAPI.GameAllData;
 
     useEffect(() => {
         document.title = `${name} - Steam AI`
@@ -33,7 +33,7 @@ export default function GamePage() {
             <div id="GamePageContent">
                 <GameCover Title={name} />
                 <GameDetails categories={categories} images={images} name={name} {...rest} />
-                <GameMain categories={categories} features={features} products={rest.products} name={name} platforms={rest.platforms} about={about} />
+                <GameMain idGame={idGame} InLibrary={rest.InLibrary} categories={categories} features={features} products={rest.products} name={name} platforms={rest.platforms} about={about}/>
                 <br />
                 <br />
                 <br />
