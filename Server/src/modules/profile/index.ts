@@ -65,7 +65,10 @@ ProfileRouter.post(`${PathService}/verify`, async (request, response) => {
     const Token = request.cookies.userUniqueToken
 
     try {
-        if (!Token) return response.json({ status: 401 })
+        if (!Token) {
+            response.json({ status: 401 })
+            return
+        }
 
         const { exp, iat, ...rest } = verify(Token, JWT_SECRET) as {
             exp: number,
