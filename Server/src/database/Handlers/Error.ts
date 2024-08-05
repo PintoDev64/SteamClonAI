@@ -7,6 +7,7 @@ export default class ErrorHandler {
                 data
             }
         } catch (err: any) {
+            console.log(err);
             return {
                 status: 500
             }

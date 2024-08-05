@@ -11,9 +11,9 @@ export default function ProfilePage() {
 
     const { data } = useLoaderData() as RequestAPI.Profile_API
 
-    const { LIBRARY, PROFILE_NAME, PROFILE_PICTURE, REAL_NAME, STATUS, THEME } = data
+    const { LIBRARY, PROFILE_NAME, PROFILE_PICTURE, REAL_NAME, STATUS, THEME, ITEMS } = data
 
-    const { Profile, EditProfile } = useContext(ProfileContext)
+    const { EditProfile } = useContext(ProfileContext)
 
     useEffect(() => {
         EditProfile({
@@ -22,11 +22,10 @@ export default function ProfilePage() {
             ProfilePicure: PROFILE_PICTURE,
             RealName: REAL_NAME,
             Status: STATUS,
-            Theme: THEME
+            Theme: THEME,
+            Items: ITEMS
         })
     }, [])
-
-    console.log(Profile);
 
     return (
         <div id="SteamProfile">

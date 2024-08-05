@@ -167,7 +167,8 @@ declare namespace RequestAPI {
     type Profile_API = {
         status: number,
         data: {
-            LIBRARY: null,
+            LIBRARY: GameDataType[] | null,
+            ITEMS: GameDataType[] | null,
             PROFILE_NAME: "PintoGamer64",
             PROFILE_PICTURE: 1,
             THEME: 1,

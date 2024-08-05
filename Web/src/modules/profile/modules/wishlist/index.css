@@ -1,0 +1,100 @@
+#SteamProfileContent-GamesPage {
+    width: 100%;
+    height: fit-content;
+    border-radius: 3px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: var(--bg-main-20);
+}
+
+#SteamProfileContent-GamesPageTitle {
+    width: 100%;
+    height: 49px;
+    border-radius: 5px;
+    background-color: var(--bg-main);
+    display: grid;
+    place-items: center;
+    margin: 0 0 10px 0;
+}
+
+#SteamProfileContent-GamesPageTitle h2 {
+    font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    color: var(--text-main);
+}
+
+.SteamProfileContent-GamesPageElements {
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    height: 131px;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-main-50);
+}
+
+.SteamProfileContent-GamesPageElements:nth-child(even) {
+    margin: 10px 0;
+}
+
+.SteamProfileContent-GamesPageElements-Image {
+    width: 216px;
+    height: 101px;
+    border-radius: 3px;
+}
+
+.SteamProfile-GamesPageElements-Container {
+    width: calc(100% - 216px);
+    height: 101px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 0 0 13px;
+    box-sizing: border-box;
+}
+
+.SteamProfileContent-GamesPageElements-Data {
+    display: flex;
+    align-items: center;
+    height: 39px;
+    justify-content: space-between;
+    color: var(--text-main);
+    padding: 0 5px;
+    box-sizing: border-box;
+}
+
+.SteamProfileContent-GamesPageElements-Data span {
+    font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.SteamProfileContent-GamesPageElements-DataImage {
+    width: 30px;
+    height: 30px;
+    border-radius: 2px;
+    padding: 0 20px 0 0;
+}
+
+.SteamProfileContent-GamesPageElements-Store {
+    font-family: "MotivaSansRegular", sans-serif;
+    width: 100%;
+    height: 60px;
+    border-radius: 3px;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+#SteamProfileContent-GamesPageElements-Null {
+    font-family: "MotivaSansRegular", sans-serif;
+    color: var(--text-main);
+    font-size: 30px;
+}

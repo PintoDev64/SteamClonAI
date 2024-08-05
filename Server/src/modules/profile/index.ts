@@ -15,7 +15,6 @@ import { createPublicId, VerifyBodyContent } from './middleware';
 // Database Operations
 import { createUser, getUser } from '../../database/MysqlModels/User';
 import { getLibraryUser } from '../../database/MysqlModels/Library';
-import { responseFriendRequest, submitFriendRequest } from '../../database/MysqlModels/Friends';
 import { insertProfileReview } from '../../database/MongoModels/ProfileReviews';
 import { JWT_SECRET, SALT_ROUNDS } from '../../constants';
 import SessionHandler from '../../database/Handlers/Sessions';
@@ -42,6 +41,8 @@ ProfileRouter.post(`${PathService}/register`, VerifyBodyContent, createPublicId,
     }
 
     const userCreated = await createUser(RequestData)
+    console.log("User Craeted: ", userCreated);
+    
     response.json({ userCreated })
 })
 
@@ -87,6 +88,7 @@ ProfileRouter.post(`${PathService}/verify`, async (request, response) => {
 ProfileRouter.get(`${PathService}/:publicId`, async (request, response) => {
     const { params } = request
     const users = await getUser({ publicId: params.publicId })
+    console.log(users);
     response.json(users)
 })
 
@@ -94,19 +96,6 @@ ProfileRouter.get(`${PathService}/:publicId/games`, async (request, response) =>
     const { params } = request
     const libraryDetails = await getLibraryUser({ publicId: params.publicId })
     response.json(libraryDetails)
-})
-
-/**
- * 
- */
-type friendRequestType = { From: string }
-ProfileRouter.post(`${PathService}/:publicId`, async (request, response) => {
-    const { body, params }: { body: friendRequestType, params: { publicId: string } } = request
-    const relation = await submitFriendRequest({
-        friendOne: body.From,
-        friendTwo: params.publicId
-    })
-    response.json(relation)
 })
 
 /**
@@ -120,22 +109,6 @@ ProfileRouter.post(`${PathService}/:publicId/comment`, async (request, response)
         publicId: params.publicId
     })
     response.json(comment)
-})
-
-/**
- * 
- */
-type Confirmation = { responseFriend: boolean, publicId: string }
-ProfileRouter.post(`${PathService}/:publicId/confirmation`, async (request, response) => {
-    const { body, params } = request;
-    const { publicId, responseFriend }: Confirmation = body;
-
-    const FriendRequet = await responseFriendRequest({
-        response: responseFriend,
-        requestFriend: params.publicId,
-        yourPublicId: publicId
-    })
-    response.json(FriendRequet)
 })
 
 ProfileRouter.put(`${PathService}/login`, async (request, response) => {

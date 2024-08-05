@@ -51,6 +51,7 @@ export default function Login() {
 
     useEffect(() => {
         document.title = `Inicar sesion - Steam AI`
+        CompleteTransition(ModifyPageTransition)
     }, [])
 
     return (

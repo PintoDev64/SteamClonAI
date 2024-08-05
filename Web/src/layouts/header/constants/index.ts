@@ -1,22 +1,30 @@
-export const HeaderTitles = [
-    {
-        name: "Inicio",
-        url: "/"
-    }, {
-        name: "Buscar",
-        url: "/browse"
-    }, {
-        name: "Descubrir",
-        url: "/discover"
-    }
-]
+import { UserContext } from "context"
+import { useContext } from "react"
 
-export const HeaderPersonal = [
-    {
-        name: "Deseados",
-        url: "/wishlist"
-    }, {
-        name: "Carrito",
-        url: "/cart"
+
+export default function Constans() {
+    const { User } = useContext(UserContext)
+
+    const HeaderTitles = [
+        {
+            name: "Inicio",
+            url: "/"
+        },
+        {
+            name: "Deseados",
+            url: User.PublicId && `/profile/${User.PublicId}/wishlist`
+        },
+    ]
+
+    const HeaderPersonal = [
+        {
+            name: "Carrito",
+            url: "/cart"
+        }
+    ]
+
+    return {
+        HeaderTitles,
+        HeaderPersonal
     }
-]
+}

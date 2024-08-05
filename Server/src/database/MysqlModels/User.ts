@@ -28,6 +28,12 @@ export async function createUser(data: User.createUserParams): DatabaseOperation
             [insertId, null]
         )
 
+        await MysqlHandler.Insert(
+            "Wishlist",
+            ["PUBLIC_ID", "ITEMS"],
+            [publicId, null]
+        )
+
         await MongoHandler.Insert(collectionName, [{
             publicId,
             data: []
@@ -49,6 +55,17 @@ export async function getUser({ limited = true, publicId }: User.getUserParams):
             }
         })
 
-        return responseData
+        const responseWhislist = await MysqlHandler.Select("Wishlist", ["ITEMS"], {
+            Where: {
+                Columns: ["PUBLIC_ID"],
+                Values: [publicId]
+            }
+        })
+        
+
+        return {
+            ...responseData,
+            ...responseWhislist
+        }
     })
 }

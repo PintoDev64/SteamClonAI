@@ -3,6 +3,12 @@ import { useLocation } from "react-router-dom"
 
 export function GetActualPath(localPathname: string) {
   const { pathname } = useLocation()
+  console.log({
+    localPathname,
+    pathname,
+    result: localPathname === pathname
+  });
+  
   return localPathname === pathname
 }
 

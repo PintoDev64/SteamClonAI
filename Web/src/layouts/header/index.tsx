@@ -1,7 +1,7 @@
 // Styles
 import { Link, useLocation } from 'react-router-dom'
 import { SearchIcon } from './assets'
-import { HeaderPersonal, HeaderTitles } from './constants'
+import Constans from './constants'
 import './index.css'
 import { GetActualPath } from '@utils'
 import { useContext } from 'react'
@@ -10,6 +10,8 @@ import { ModifyTransition } from 'hooks'
 import AccountHeader from '@components/account'
 
 export default function Header() {
+
+  const { HeaderPersonal, HeaderTitles } = Constans()
 
   const { pathname } = useLocation()
 
@@ -28,7 +30,7 @@ export default function Header() {
     <header id="SteamHeader">
       <div id="SteamHeader-Pages">
         {HeaderTitles.map(({ name, url }, _index) =>
-          <Link to={url} key={_index} className={`SteamHeader-PagesTitles ${GetActualPath(url) ? States.Active : States.Desactive}`} onClick={() => ClickLink(url)}>
+          <Link to={url ?? "/login"} key={_index} className={`SteamHeader-PagesTitles ${GetActualPath(url) ? States.Active : States.Desactive}`} onClick={() => ClickLink(url)}>
             <span className='SteamHeader-PagesTitlesText'>{name}</span>
           </Link>
         )}

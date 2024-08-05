@@ -13,6 +13,9 @@ import ProfilePage from "@Modules/profile";
 // Loaders
 import { GameLoader, StoreLoader, LoginForm, ProfileLoader } from "loaders";
 import ProfileProvider from "context/Profile";
+import ProfileGames from "@Modules/profile/modules/games";
+import ProfileWishlist from "@Modules/profile/modules/wishlist";
+import ProfileMain from "@Modules/profile/modules/main";
 
 const RouterStructure = createBrowserRouter(
     createRoutesFromElements(
@@ -24,7 +27,11 @@ const RouterStructure = createBrowserRouter(
                 <ProfileProvider>
                     <ProfilePage />
                 </ProfileProvider>
-            } />
+            } >
+                <Route path="games" element={<ProfileGames />} />
+                <Route path="wishlist" element={<ProfileWishlist />} />
+                <Route index element={<ProfileMain />} />
+            </Route>
             <Route path="*" element={<ErrorPage />} />
         </Route>
     )

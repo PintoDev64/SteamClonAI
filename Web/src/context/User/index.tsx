@@ -20,8 +20,6 @@ export default function UserProvider({ children }: User.ProviderProps) {
     const [UserState, dispatch] = useReducer(UserReducer, defaultVariables, undefined)
 
     useEffect(() => {
-        console.log(UserState.PublicId);
-        
         if (UserState.PublicId && UserState.PublicId.length > 0) {
             io(`${URL_API}/status`, {                
                 withCredentials: true,

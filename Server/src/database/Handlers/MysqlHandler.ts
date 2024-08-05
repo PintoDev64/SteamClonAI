@@ -138,9 +138,7 @@ declare namespace MysqlOperationsMethods {
     // Local
     interface Tables {
         User: "PUBLIC_ID" | "STATUS" | "PROFILE_NAME" | "ACCOUNT_NAME" | "REAL_NAME" | "VAC_STATUS" | "MAIL" | "THEME" | "PROFILE_PICTURE" | "BACKGROUND_IMAGE" | "PASSWORD" | "CURRENCY" | "LIBRARY" | "*";
-        Wishlist: "ACCOUNT_ID" | "ITEMS" | "*";
-        Notifications: "ACCOUNT_ID" | "NOTIFICATIONS" | "*";
-        Friends: "STATUS" | "FRIEND_ONE_ID" | "FRIEND_TWO_ID" | "*";
+        Wishlist: "PUBLIC_ID" | "ITEMS" | "*";
         Cart: "ACCOUNT_ID" | "ITEMS" | "*";
     }
 
@@ -163,16 +161,6 @@ declare namespace MysqlOperationsMethods {
         Wishlist: {
             PUBLIC_ID: string;
             ITEMS: GameData[];
-        };
-        Notifications: {
-            ACCOUNT_ID: number;
-            NOTIFICATIONS: {};
-        };
-        Friends: {
-            RELATION_ID: number,
-            STATUS: boolean,
-            FRIEND_ONE_ID: string
-            FRIEND_TWO_ID: string
         };
         Cart: {
             ACCOUNT_ID: number,

@@ -14,16 +14,16 @@ export function VerifyBodyContent(request: Request, response: Response, next: Ne
         })
 
         if (realName.length < 12) throw new Error("realName is not valid")
-        if (AccountName.length < 8) throw new Error("AccountName is not valid")
+        if (AccountName.length < 6) throw new Error("AccountName is not valid")
         if (!mail.includes("@")) throw new Error("mail is not valid")
         if (password.length < 8) throw new Error("password is not valid")
 
         next()
     } catch (err: any) {
-        console.log(err.message);
+        console.log(err);
         response.status(404).json({
             status: 500,
-            message: err.message
+            message: err
         })
     }
 }

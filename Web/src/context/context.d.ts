@@ -45,6 +45,7 @@ declare namespace Profile {
         Theme: number
         RealName: string
         Status: "Offline" | "Online"
+        Items: RequestAPI.GameDataType[] | null
     }
 
     type ReducerObject = ProviderVariables

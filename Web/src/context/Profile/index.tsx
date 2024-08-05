@@ -10,7 +10,8 @@ export default function ProfileProvider({ children }: Profile.ProviderProps) {
         ProfilePicure: 1,
         Theme: 1,
         RealName: "",
-        Status: "Offline"
+        Status: "Offline",
+        Items: null
     }
 
     function ProfileReducer(_state: Profile.ProviderVariables, data: Profile.ReducerObject) {

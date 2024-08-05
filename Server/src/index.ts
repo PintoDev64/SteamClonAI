@@ -39,13 +39,6 @@ SteamServer.disable("x-powered-by");
 
 SteamServer.use("/api", ApplictionRouter);
 
-SteamServer.get("/chat1", (req, res) => {
-    res.sendFile(join(__dirname, '../src/chat1.html'));
-});
-SteamServer.get("/chat2", (req, res) => {
-    res.sendFile(join(__dirname, '../src/chat2.html'));
-});
-
 SteamServer.use((req, res, next) => {
     // Redirige a la ruta principal si la ruta no está definida
     res.redirect(process.env.NODE_ENV === "production" ? "https://steam-clon-ai-web.vercel.app" : "http://localhost:5173");

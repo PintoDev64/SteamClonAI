@@ -4,6 +4,7 @@
     height: calc(100% - 382px);
     padding: 51px 0;
     box-sizing: border-box;
+    background: radial-gradient(#212B45 3%, #111822 73%, #0F151E 87%, #0E141B 100%);
 }
 
 #SteamProfileContent {
@@ -28,6 +29,7 @@
 
 #SteamProfileContent-DetailsMain-Content {
     display: flex;
+    flex-direction: column;
     align-items: top;
 }
 
@@ -44,11 +46,18 @@
     font-size: 36px;
 }
 
+#SteamProfileContent-DetailsMain-Content p {
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 16px;
+    color: var(--text-dim);
+    margin: 10px 0 0 0;
+}
+
 #SteamProfileContent-DetailsMain-Image {
     width: 221px;
     height: 221px;
     border-radius: 2px;
-    outline: 4px solid var(--text-dim);
+    border: 4px solid var(--text-dim);
 }
 
 #SteamProfileContent-DetailsSide {
@@ -67,7 +76,7 @@
     justify-content: flex-end;
 }
 
-#SteamProfileContent-DetailsSide-EditProfile-Button {
+.SteamProfileContent-DetailsSide-EditProfile-Button {
     width: fit-content;
     font-family: "MotivaSansRegular", sans-serif;
     font-size: 16px;
@@ -83,9 +92,12 @@
 #SteamProfileContent-DetailsSide-Feature {
     box-sizing: border-box;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 64px);
     padding: 10px 15px;
     background-color: var(--bg-main-20);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
 .SteamProfileContent-DetailsSide-FeatureElement {
@@ -104,6 +116,10 @@
     border: 2px solid #7054c3;
     display: grid;
     place-items: center;
+}
+
+.SteamProfileContent-DetailsSide-FeatureElement-Level:has(img) {
+    border: none;
 }
 
 .SteamProfileContent-DetailsSide-FeatureElement-Level span {
@@ -176,6 +192,44 @@
     width: 100%;
     height: 39px;
     background-color: var(--bg-main);
+}
+
+.SteamProfileContent-MainSideElement.Active {
+    background-color: var(--bg-hover);
+}
+
+.SteamProfileContent-MainSideElement a {
+    width: 100%;
+    height: 39px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.SteamProfileContent-MainSideCollumn {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    width: 100%;
+    height: 39px;
+    background-color: var(--bg-main);
+    flex-direction: column;
+    height: 98px;
+}
+
+.SteamProfileContent-MainSideElement-Image {
+    margin: 5px 0 0 0;
+    width: 45px;
+    height: 45px;
+}
+
+.SteamProfileContent-MainSideElement-Image:first-child {
+    padding: 0 0 0 2px;
+}
+
+.SteamProfileContent-MainSideElement-Image:nth-child(even) {
+    margin: 5px 10px 0;
 }
 
 .SteamProfileContent-MainSideElement:nth-child(odd) {

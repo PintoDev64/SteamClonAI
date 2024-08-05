@@ -1,29 +1,34 @@
 import { Images } from "@constants"
 import { ProfileContext } from "context"
 import { useContext } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
 
 export default function Details() {
 
     const { userId } = useParams()
 
+    const { pathname } = useLocation()
+
     const { Profile } = useContext(ProfileContext)
 
-    const { PublicId } = JSON.parse(localStorage.getItem("UserData")!)
-
-    const EvalEditProfile = PublicId === userId
+    const comprobacion = pathname.includes(`/profile/${userId}/games`) || pathname.includes(`/profile/${userId}/wishlist`)
 
     return (
         <div id="SteamProfileContent-Details">
             <div id="SteamProfileContent-DetailsMain">
-                <img src={Images[Profile.ProfilePicure]} alt={Profile.ProfileName} id="SteamProfileContent-DetailsMain-Image" />
+                <img src={Images[Profile.ProfilePicure]} alt={Profile.ProfileName} id="SteamProfileContent-DetailsMain-Image" fetchPriority="high"/>
                 <div id="SteamProfileContent-DetailsMain-Content">
                     <h1>{Profile.ProfileName}</h1>
+                    <p>{Profile.RealName}</p>
                 </div>
             </div>
             <div id="SteamProfileContent-DetailsSide">
                 <div id="SteamProfileContent-DetailsSide-EditProfile">
-                    {EvalEditProfile && <button id="SteamProfileContent-DetailsSide-EditProfile-Button">Editar Perfil</button>}
+                    {comprobacion &&
+                        <Link to={`/profile/${userId}`} className="SteamProfileContent-DetailsSide-EditProfile-Button">
+                            Volver al perfil
+                        </Link>}
+                    {/* {UserData && <button className="SteamProfileContent-DetailsSide-EditProfile-Button">Editar Perfil</button>} */}
                 </div>
                 <div id="SteamProfileContent-DetailsSide-Feature">
                     <div className="SteamProfileContent-DetailsSide-FeatureElement">
@@ -33,6 +38,15 @@ export default function Details() {
                         <div className="SteamProfileContent-DetailsSide-FeatureElement-Details">
                             <span>Level</span>
                             <span>1,000 XP</span>
+                        </div>
+                    </div>
+                    <div className="SteamProfileContent-DetailsSide-FeatureElement">
+                        <div className="SteamProfileContent-DetailsSide-FeatureElement-Level">
+                            <img src="/6YearofService.png" alt="Steam 6 Years" width={49} height={49} />
+                        </div>
+                        <div className="SteamProfileContent-DetailsSide-FeatureElement-Details">
+                            <span>6 Años de servicio</span>
+                            <span>300 XP</span>
                         </div>
                     </div>
                 </div>
