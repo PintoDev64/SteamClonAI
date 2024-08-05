@@ -41,7 +41,7 @@ SteamServer.use("/api", ApplictionRouter);
 
 SteamServer.use((req, res, next) => {
     // Redirige a la ruta principal si la ruta no está definida
-    res.redirect(process.env.NODE_ENV === "production" ? "https://steam-clon-ai-web.vercel.app" : "http://localhost:5173");
+    res.redirect(process.env.NODE_ENV === "production" ? "https://steam-clon-ai-web.vercel.app/" : "http://localhost:5173");
 });
 
 // ------------> Socket.IO Config - "/chat"
