@@ -31,7 +31,7 @@ export async function createUser(data: User.createUserParams): DatabaseOperation
         const MysqlInsert_User = await MysqlHandler.Insert(
             "User",
             ["PUBLIC_ID", "STATUS", "PROFILE_NAME", "ACCOUNT_NAME", "REAL_NAME", "VAC_STATUS", "MAIL", "THEME", "PROFILE_PICTURE", "BACKGROUND_IMAGE", "PASSWORD", "CURRENCY", "LIBRARY"],
-            [publicId, status, profileName, AccountName, realName, vacStatus, mail, theme, profilePicture, backgroundImage, password, 15, null]
+            [publicId, status, profileName, AccountName, realName, vacStatus, mail, theme, profilePicture, backgroundImage, password, 15, JSON.stringify([])]
         )
 
         const { insertId } = MysqlInsert_User as MySQLSchemas.__FieldPacket
