@@ -1,11 +1,14 @@
-import { ProfileContext } from "context"
+import { PageTransitionContext, ProfileContext } from "context"
 import { useContext, useEffect } from "react"
 
 // Styles
 import './index.css'
 import { Link } from "react-router-dom";
+import { CompleteTransition } from "hooks";
 
 export default function ProfileGames() {
+
+    const { ModifyPageTransition } = useContext(PageTransitionContext)
 
     const { Profile } = useContext(ProfileContext);
     const { ProfileName, Library } = Profile
@@ -13,6 +16,8 @@ export default function ProfileGames() {
     useEffect(() => {
         document.title = `Juegos de ${ProfileName} - Steam AI`
     }, [ProfileName])
+
+    useEffect(() => CompleteTransition(ModifyPageTransition), [])
 
     return (
         <div id="SteamProfileContent-GamesPage">

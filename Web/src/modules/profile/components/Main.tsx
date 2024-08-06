@@ -1,8 +1,11 @@
-import { ProfileContext } from "context"
+import { PageTransitionContext, ProfileContext } from "context"
+import { ModifyTransition } from "hooks";
 import { useContext } from "react"
 import { Link, Outlet, useLocation } from "react-router-dom";
 
 export default function Main() {
+
+    const { ModifyPageTransition } = useContext(PageTransitionContext)
 
     const { Profile } = useContext(ProfileContext);
 
@@ -20,6 +23,10 @@ export default function Main() {
             value: Profile.Wishlist?.length ?? 0,
         }
     ]
+
+    function CreateTransition() {
+        ModifyTransition(ModifyPageTransition)
+    }
 
     return (
         <div id="SteamProfileContent-Main">
@@ -41,7 +48,7 @@ export default function Main() {
                 </div>
                 {SideElements.map(({ name, url, value }, _index) =>
                     <div key={_index} className={`SteamProfileContent-MainSideElement ${pathname.includes(url) && "Active"}`}>
-                        <Link to={url}>
+                        <Link to={url} onClick={CreateTransition}>
                             <span className="SteamProfileContent-MainSideElement-Span">{name}</span>
                             <span className="SteamProfileContent-MainSideElement-Span">{value}</span>
                         </Link>

@@ -1,9 +1,12 @@
 // Styles
 import { useContext, useEffect } from 'react'
 import './index.css'
-import { ProfileContext } from 'context';
+import { PageTransitionContext, ProfileContext } from 'context';
+import { CompleteTransition } from 'hooks';
 
 export default function ProfileMain() {
+
+    const { ModifyPageTransition } = useContext(PageTransitionContext)
 
     const { Profile } = useContext(ProfileContext);
     const { ProfileName } = Profile
@@ -11,6 +14,8 @@ export default function ProfileMain() {
     useEffect(() => {
         document.title = `${ProfileName} - Steam AI`
     }, [ProfileName])
+
+    useEffect(() => CompleteTransition(ModifyPageTransition), [])
 
     return (
         <div id='SteamProfileContent-HomePage'>

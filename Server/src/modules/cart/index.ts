@@ -67,7 +67,7 @@ CartRouter.post(`${PathService}/payment`, async (request, response) => {
         PUBLIC_ID: string
     }
 
-    const data = await buyProducts(rest.ACCOUNT_ID)
+    const data = await buyProducts(rest.ACCOUNT_ID, rest.PUBLIC_ID)
     response.json(data)
 })
 

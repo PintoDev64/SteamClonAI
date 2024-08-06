@@ -92,24 +92,34 @@ export default function AccountHeader() {
                 </div>
             </div>
             <div id="AccountHeaderOptions">
+                <Link to="/cart" className='AccountHeaderOptions-Element' onClick={() => CheckBox.current.click()}>
+                    ● Carrito
+                </Link>
                 <Link to={`/profile/${User.PublicId}`} className='AccountHeaderOptions-Element' onClick={() => CheckBox.current.click()}>
-                    Ir a tu perfil
+                    ● Ir a tu perfil
                 </Link>
                 <button className="AccountHeaderOptions-Element" onClick={MoreCurrency}>
-                    añadir 10 usd
+                    ● añadir 10 usd
                 </button>
                 <button className="AccountHeaderOptions-Element" onClick={CloseSession}>
-                    Cerrar sesion
+                    ● Cerrar sesion
                 </button>
             </div>
         </div>
     )
 
     return (
-        <Link to="/login">
-            <div id="AccountHeader">
-                <span id='AccountHeaderName'>LOGIN</span>
+        <div id="AccountHeader">
+            <input type="checkbox" id="AccountHeaderDropdown" aria-hidden hidden ref={CheckBox} />
+            <span id='AccountHeaderName' onClick={() => CheckBox.current.click()}>LOGIN</span>
+            <div id="AccountHeaderOptions">
+                <Link to={`/register`} className='AccountHeaderOptions-Element' onClick={() => CheckBox.current.click()}>
+                    ● Registrarse
+                </Link>
+                <Link to={`/login`} className='AccountHeaderOptions-Element' onClick={() => CheckBox.current.click()}>
+                    ● Iniciar Sesion
+                </Link>
             </div>
-        </Link>
+        </div>
     )
 }

@@ -17,6 +17,7 @@ import ProfileGames from "@Modules/profile/modules/games";
 import ProfileWishlist from "@Modules/profile/modules/wishlist";
 import ProfileMain from "@Modules/profile/modules/main";
 import CartPage from "@Modules/cart";
+import RegisterPage from "@Modules/register";
 
 const RouterStructure = createBrowserRouter(
     createRoutesFromElements(
@@ -24,6 +25,7 @@ const RouterStructure = createBrowserRouter(
             <Route index loader={StoreLoader} element={<HomePage bannerEvent="/HomeHeader.png" />} />
             <Route path="game/:IdGame" loader={GameLoader} element={<GamePage />} />
             <Route path="/login" loader={LoginForm} element={<Login />} />
+            <Route path="/register" loader={LoginForm} element={<RegisterPage />} />
             <Route
                 path="/profile/:userId"
                 loader={ProfileLoader}

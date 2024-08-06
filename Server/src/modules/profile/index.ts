@@ -44,7 +44,7 @@ ProfileRouter.post(`${PathService}/register`, VerifyBodyContent, createPublicId,
 
     const userCreated = await createUser(RequestData)
 
-    response.json({ userCreated })
+    response.json({ ...userCreated })
 })
 
 /**

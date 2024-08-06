@@ -1,4 +1,5 @@
-import { ProfileContext } from "context"
+import { PageTransitionContext, ProfileContext } from "context"
+import { ModifyTransition } from "hooks"
 import { useContext } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 
@@ -8,14 +9,20 @@ export default function Details() {
 
     const { pathname } = useLocation()
 
+    const { ModifyPageTransition } = useContext(PageTransitionContext)
+
     const { Profile } = useContext(ProfileContext)
 
     const comprobacion = pathname.includes(`/profile/${userId}/games`) || pathname.includes(`/profile/${userId}/wishlist`)
 
+    function CreateTransition() {
+        ModifyTransition(ModifyPageTransition)
+    }
+
     return (
         <div id="SteamProfileContent-Details">
             <div id="SteamProfileContent-DetailsMain">
-                <img src={Profile.ProfilePicure ?? "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"} alt={Profile.ProfileName} id="SteamProfileContent-DetailsMain-Image" fetchPriority="high"/>
+                <img src={Profile.ProfilePicure ?? "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"} alt={Profile.ProfileName} id="SteamProfileContent-DetailsMain-Image" fetchPriority="high" />
                 <div id="SteamProfileContent-DetailsMain-Content">
                     <h1>{Profile.ProfileName}</h1>
                     <p>{Profile.RealName}</p>
@@ -24,7 +31,7 @@ export default function Details() {
             <div id="SteamProfileContent-DetailsSide">
                 <div id="SteamProfileContent-DetailsSide-EditProfile">
                     {comprobacion &&
-                        <Link to={`/profile/${userId}`} className="SteamProfileContent-DetailsSide-EditProfile-Button">
+                        <Link to={`/profile/${userId}`} className="SteamProfileContent-DetailsSide-EditProfile-Button" onClick={CreateTransition}>
                             Volver al perfil
                         </Link>}
                     {/* {UserData && <button className="SteamProfileContent-DetailsSide-EditProfile-Button">Editar Perfil</button>} */}

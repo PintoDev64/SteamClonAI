@@ -56,21 +56,27 @@ export default class MysqlHandler {
         const Database = await createMySQLConnection()
 
         const ColumnsJoin = Columns.map(value => `\`${value}\``).join(", ")
-        const SubQuerysJoin = SubQuery?.Where?.Columns.map((Value) =>
-            `\`${Value}\` = ?`
-        ).join(" AND ")
+        
+        const SubQuerysJoin = SubQuery?.Where
+            ? SubQuery?.Where?.Columns.map((Value) => `${Value} = ?`).join(" AND ")
+            : ""
 
-        let Query: string
+        const SubQueryJoinLike = SubQuery?.Like
+            ? SubQuery?.Like.Columns.map(value => `${value} LIKE ?`).join(" AND ")
+            : ""
 
-        if (SubQuerysJoin) {
-            Query = `SELECT ${ColumnsJoin} FROM \`${Table}\` WHERE ${SubQuerysJoin};`
-        } else {
-            Query = `SELECT ${ColumnsJoin} FROM \`${Table}\`;`
-        }
+        let Query = `SELECT ${ColumnsJoin} FROM \`${Table}\` WHERE ${SubQuerysJoin}${SubQueryJoinLike}`
+
+        console.log(Query);
+
+        const newArrayData = []
+
+        SubQuery?.Where?.Values && newArrayData.push(...SubQuery?.Where?.Values)
+        SubQuery?.Like?.Values && newArrayData.push(...SubQuery?.Like?.Values)
 
         const [results, _fields] = await Database.query(
             Query,
-            SubQuery?.Where?.Values ?? []
+            newArrayData
         ) as MysqlOperationsMethods.__MysqlQuery
 
         return results[0]
@@ -93,15 +99,24 @@ export default class MysqlHandler {
         const Database = await createMySQLConnection()
 
         const SetsJoin = Columns.map(value => `${value} = ?`).join(", ")
-        const SubQuerysJoin = SubQuery?.Where?.Columns.map((Value) =>
-            `${Value} = ?`
-        ).join(" AND ")
+        const SubQuerysJoin = SubQuery?.Where
+            ? SubQuery?.Where?.Columns.map((Value) => `${Value} = ?`).join(" AND ")
+            : ""
 
-        let Query = `UPDATE ${Table} SET ${SetsJoin} WHERE ${SubQuerysJoin}`
+        const SubQueryJoinLike = SubQuery?.Like
+            ? SubQuery?.Like.Columns.map(value => `${value} LIKE ?`).join(" AND ")
+            : ""
+
+        let Query = `UPDATE ${Table} SET ${SetsJoin} WHERE ${SubQuerysJoin} ${SubQueryJoinLike}`
+
+        const newArrayData = [...Data]
+
+        SubQuery?.Where?.Values && newArrayData.push(...SubQuery?.Where?.Values)
+        SubQuery?.Like?.Values && newArrayData.push(...SubQuery?.Like?.Values)
 
         const [results, _fields] = await Database?.query(
             Query,
-            [...Data, ...SubQuery?.Where?.Values]
+            newArrayData
         ) as MysqlOperationsMethods.__MysqlQuery
 
         return true
@@ -119,15 +134,24 @@ export default class MysqlHandler {
     ) {
         const Database = await createMySQLConnection()
 
-        const SubQuerysJoin = SubQuery?.Where?.Columns.map((Value) =>
-            `${Value} = ?`
-        ).join(" AND ")
+        const SubQuerysJoin = SubQuery?.Where
+            ? SubQuery?.Where?.Columns.map((Value) => `${Value} = ?`).join(" AND ")
+            : ""
 
-        let Query = `DELETE FROM ${Table} WHERE ${SubQuerysJoin}`
+        const SubQueryJoinLike = SubQuery?.Like
+            ? SubQuery?.Like.Columns.map(value => `${value} LIKE ?`).join(" AND ")
+            : ""
+
+        let Query = `DELETE FROM ${Table} WHERE ${SubQuerysJoin} ${SubQueryJoinLike}`
+
+        const newArrayData = []
+
+        SubQuery?.Where?.Values && newArrayData.push(...SubQuery?.Where?.Values)
+        SubQuery?.Like?.Values && newArrayData.push(...SubQuery?.Like?.Values)
 
         const [results, _fields] = await Database?.query(
             Query,
-            [...SubQuery?.Where?.Values]
+            newArrayData
         ) as MysqlOperationsMethods.__MysqlQuery
 
         return true
@@ -167,7 +191,7 @@ declare namespace MysqlOperationsMethods {
             ACCOUNT_ID: number,
             ITEMS: GameData[]
         }
-    ;
+        ;
     }
 
     // Response Query
@@ -182,17 +206,21 @@ declare namespace MysqlOperationsMethods {
     type ParamColumns<T extends InterfaceTablesType> = Array<Tables[T]>;
     type ParamData = (string | number | boolean | null | object)[]
     type ParamSubQuery<T extends InterfaceTablesType> = {
-        Where: {
+        Where?: {
             Columns: Array<Tables[T]>,
             Values: (string | number | boolean)[]
         },
+        Like?: {
+            Columns: Array<Tables[T]>,
+            Values: (string | number | boolean)[]
+        }
     }
 
     //----------------------------------------------------------------->
     //
     // Select Method Return Types
     type SelectReturnType<T extends keyof TablesColumns> = Promise<TablesColumns[T]>
-    
+
 
     interface GameData {
         idGame: UUIDPattern,

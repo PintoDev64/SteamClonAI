@@ -1,6 +1,7 @@
 import ErrorHandler from "../Handlers/Error";
 import MysqlHandler from "../Handlers/MysqlHandler";
 import MongoHandler from "../Handlers/MongoHandler";
+import { deleteWishlist } from "./Wishlist";
 
 // Constants
 const collectionName = "GameData";
@@ -71,9 +72,17 @@ export async function deleteProducts(userId: number, IdGame: UUIDPattern): Datab
         return true
     })
 }
-export async function buyProducts(userId: number): DatabaseOperation.GenericClassReturnType {
+export async function buyProducts(userId: number, publicId: string): DatabaseOperation.GenericClassReturnType {
     return await ErrorHandler.Wrapper(async () => {
-        const { ITEMS } = await MysqlHandler.Select("Cart", ["ITEMS"], {
+
+        const { ITEMS: WishlistItems } = await MysqlHandler.Select("Wishlist", ["ITEMS"], {
+            Where: {
+                Columns: ["PUBLIC_ID"],
+                Values: [publicId]
+            }
+        })
+
+        const { ITEMS: CartItems } = await MysqlHandler.Select("Cart", ["ITEMS"], {
             Where: {
                 Columns: ["ACCOUNT_ID"],
                 Values: [userId]
@@ -88,14 +97,14 @@ export async function buyProducts(userId: number): DatabaseOperation.GenericClas
         })
 
         // -----------> THROW ERROR
-        if (!ITEMS || ITEMS.length === 0) return {
+        if (!CartItems || CartItems.length === 0) return {
             buyState: false,
             message: "No tienes suficiente fondos para esta transaccion"
         }
 
-        const ProductsWithDiscount = ITEMS.filter(({ products }) => products[0].price.discount !== undefined).map(({ products }) => products[0].price.discount?.value)
+        const ProductsWithDiscount = CartItems.filter(({ products }) => products[0].price.discount !== undefined).map(({ products }) => products[0].price.discount?.value)
 
-        const ProductsNormal = ITEMS.filter(({ products }) => products[0].price.discount === undefined).map(({ products }) => products[0].price.default)
+        const ProductsNormal = CartItems.filter(({ products }) => products[0].price.discount === undefined).map(({ products }) => products[0].price.default)
 
         const TotalPrice = [...ProductsWithDiscount, ...ProductsNormal].filter((n): n is number => n !== null && n !== undefined) // Filtra los valores no válidos
             .reduce((accumulator: number, currentValue: number) => {
@@ -107,6 +116,11 @@ export async function buyProducts(userId: number): DatabaseOperation.GenericClas
                 buyState: false,
                 message: "No tienes suficiente fondos para esta transaccion"
             }
+        } else if (TotalPrice === 0 && CartItems.length === 0) {
+            return {
+                buyState: false,
+                message: "No contienes ningun articulo para finalizar tu compra"
+            }
         } else {
             const { LIBRARY } = await MysqlHandler.Select("User", ["LIBRARY"], {
                 Where: {
@@ -115,7 +129,9 @@ export async function buyProducts(userId: number): DatabaseOperation.GenericClas
                 }
             })
 
-            const UpdateCart = LIBRARY !== null ? [...LIBRARY, ...ITEMS] : [...ITEMS]
+            const UpdateCart = LIBRARY !== null ? [...LIBRARY, ...CartItems] : [...CartItems]
+
+            WishlistItems.map(({ idGame }) => deleteWishlist(publicId, idGame))
 
             await MysqlHandler.Update("User", ["LIBRARY", "CURRENCY"], [JSON.stringify(UpdateCart), CURRENCY - TotalPrice], {
                 Where: {
@@ -124,7 +140,8 @@ export async function buyProducts(userId: number): DatabaseOperation.GenericClas
                 }
             })
 
-            ITEMS.map(({ idGame }) => deleteProducts(userId, idGame))
+            CartItems.map(({ idGame }) => deleteProducts(userId, idGame))
+
             return {
                 buyState: true,
                 message: "Transaccion Exitosa"

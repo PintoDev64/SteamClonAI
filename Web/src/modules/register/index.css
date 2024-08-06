@@ -1,4 +1,4 @@
-#SteamLogin {
+#SteamRegister {
     min-width: 100%;
     min-height: calc(100vh - 382px);
     height: fit-content;
@@ -8,11 +8,11 @@
     box-sizing: border-box;
 }
 
-#SteamLogin * {
+#SteamRegister * {
     font-family: "MotivaSansBold", sans-serif;
 }
 
-#SteamLogin-Form {
+#SteamRegister-Form {
     border-radius: 5px;
     padding: 24px 32px;
     max-width: 450px;
@@ -23,13 +23,13 @@
     grid-template-columns: 1fr;
 }
 
-#SteamLogin-FormElement {
+#SteamRegister-FormElement {
     display: grid;
     gap: 12px;
     grid-template-columns: 1fr;
 }
 
-.SteamLogin-FormElement-Inputs {
+.SteamRegister-FormElement-Inputs {
     display: grid;
     grid-template-areas:
         "label hint"
@@ -38,13 +38,34 @@
     gap: 2px;
 }
 
-.SteamLogin-FormElement-InputsTitle {
+#SteamRegister-Image{
+    display: flex;
+    align-items: center;
+}
+
+#SteamRegister-ImageElement {
+    background-color: var(--text-main);
+    border-radius: 3px;
+}
+
+#SteamRegister-Image-Form {
+    width: calc(100% - 100px);
+    padding: 0 0 0 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.SteamRegister-Image-Form-InputsTitle,
+.SteamRegister-FormElement-InputsTitle {
     color: var(--color-primary);
     font-weight: bold;
     font-weight: 500;
+    margin: 5px 0;
+    font-size: 18px;
 }
 
-#SteamLogin-FormElement-Title {
+#SteamRegister-FormElement-Title {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,15 +73,16 @@
     font-weight: 500;
 }
 
-#SteamLogin-FormElement-Title svg {
+#SteamRegister-FormElement-Title svg {
     padding: 0 20px;
 }
 
-#SteamLogin-FormElement-Title h1 {
+#SteamRegister-FormElement-Title h1 {
     margin: 0;
 }
 
-.SteamLogin-FormElement-InputsElements {
+.SteamRegister-Image-Form-InputsElements,
+.SteamRegister-FormElement-InputsElements {
     border-radius: 2px;
     color: #fff;
     padding: 10px;
@@ -71,18 +93,18 @@
     border: 1px solid #32353c;
 }
 
-.SteamLogin-FormElement-InputsTitle {
-    margin: 5px 0;
-    font-size: 18px;
+.SteamRegister-Image-Form-InputsElements:focus,
+.SteamRegister-FormElement-InputsElements:focus {
+    background-color: var(--bg-main-alter);
 }
 
-#SteamLogin-FormSubmit {
+#SteamRegister-FormSubmit {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#SteamLogin-FormSubmit-Button {
+#SteamRegister-FormSubmit-Button {
     position: relative;
     background: linear-gradient(90deg, #06BFFF 0%, #2D73FF 20% 80%, #06BFFF 100%);
     border-radius: 2px;
@@ -95,4 +117,12 @@
     font-family: inherit;
     text-align: center;
     cursor: pointer;
+}
+
+#SteamRegister-FormError {
+    font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
+    text-align: center;
+    margin: 5px 0;
+    color: var(--accent-red);
 }

@@ -76,6 +76,7 @@
 .SteamHeader-PersonalTitlesText,
 .SteamHeader-PagesTitlesText {
     font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
     font-size: 16px;
     color: var(--text-main);
     text-align: center;
@@ -156,4 +157,21 @@
     font-size: 18px;
     margin: 0 0 0 15px;
     color: var(--text-main);
+}
+
+@media (width <=900px) {
+
+    .SteamHeader-PersonalTitles {
+        display: none;
+        width: 0;
+    }
+
+    .SteamHeader-PagesTitles:last-child {
+        display: none;
+    }
+
+    #SteamHeader-Search {
+        max-width: 200px;
+        min-width: 100px;
+    }
 }

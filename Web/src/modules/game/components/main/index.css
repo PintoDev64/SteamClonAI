@@ -112,6 +112,7 @@
     }
 
     #GamePageContent-About {
+        margin: 10px 0 0 0;
         max-width: 100%;
         width: 100%;
     }
@@ -291,10 +292,6 @@
 }
 
 @media (width <=1400px) {
-
-    #GamePageContent-About {
-        margin: 0;
-    }
 
     #GamePageContent-Sidebar {
         padding: 0;

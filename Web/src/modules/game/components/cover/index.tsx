@@ -3,7 +3,7 @@ import SteamWishlist from "@components/wishlist"
 import "./index.css";
 import { useContext } from "react";
 import { UserContext } from "context";
-import { AddRemove_Wishlist } from "@Modules/game/utils";
+import { AddRemove_Wishlist } from "@utils";
 
 type GameCoverProps = { Title: string, InLibrary: boolean, GameId: string }
 export default function GameCover({ Title, InLibrary, GameId }: GameCoverProps) {

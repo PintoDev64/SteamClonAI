@@ -8,8 +8,7 @@ import { PlatformsIcons } from "./assets";
 import { Link, useLocation } from "react-router-dom";
 import { ModifyTransition } from "hooks";
 import { PageTransitionContext, UserContext } from "context";
-import { AddRemove_Wishlist } from "@Modules/game/utils";
-
+import { AddRemove_Wishlist } from "@utils";
 type GameCardProps = { preset?: "Big" | "Small", data: RequestAPI.GameDataType }
 export default function GameCard({ preset = "Big", data }: GameCardProps) {
 

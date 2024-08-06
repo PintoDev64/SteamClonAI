@@ -5,7 +5,10 @@ import { redirect } from "react-router-dom";
 type LoaderType = { request: Request, params: Params }
 
 export async function LoginForm() {
-    redirect("/")
+    const UserData = localStorage.getItem("UserData")
+    if (UserData !== undefined) {
+        return redirect("/")
+    }
     return null
 }
 
@@ -14,7 +17,7 @@ export function ProfileLoader({ params }: LoaderType) {
 }
 
 export function GameLoader({ params }: LoaderType) {
-    return fetch(`${URL_API}/api/v1/game?idGame=${params.IdGame}`,{
+    return fetch(`${URL_API}/api/v1/game?idGame=${params.IdGame}`, {
         credentials: "include",
     })
 }

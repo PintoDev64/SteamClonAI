@@ -1,11 +1,14 @@
-import { ProfileContext } from "context"
+import { PageTransitionContext, ProfileContext } from "context"
 import { useContext, useEffect } from "react"
 
 // Styles
 import './index.css'
 import { Link } from "react-router-dom";
+import { CompleteTransition } from "hooks";
 
 export default function ProfileWishlist() {
+
+    const { ModifyPageTransition } = useContext(PageTransitionContext)
 
     const { Profile } = useContext(ProfileContext);
     const { ProfileName, Wishlist } = Profile
@@ -13,6 +16,8 @@ export default function ProfileWishlist() {
     useEffect(() => {
         document.title = `Deseados por ${ProfileName} - Steam AI`
     }, [ProfileName])
+
+    useEffect(() => CompleteTransition(ModifyPageTransition), [])
 
     return (
         <div id="SteamProfileContent-GamesPage">

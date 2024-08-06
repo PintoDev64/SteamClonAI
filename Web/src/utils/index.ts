@@ -1,3 +1,4 @@
+import { URL_API } from "@constants";
 import { ReactNode } from "react";
 import { useLocation } from "react-router-dom"
 
@@ -62,4 +63,16 @@ export async function craeteFetch(url: string, body?: object, method?: "post" | 
     }
   })
   return await ResponseFetch.json()
+}
+
+export function AddRemove_Wishlist(state: boolean, IdGame: string) {
+  if (state) {
+      craeteFetch(`${URL_API}/api/v1/wishlist/add`, {
+          productId: IdGame
+      }, "put")
+      return
+  }
+  craeteFetch(`${URL_API}/api/v1/remove`, {
+      IdGame
+  }, "put")
 }

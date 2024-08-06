@@ -32,7 +32,8 @@
     align-content: center;
     max-width: 84px;
     height: 17px;
-    font-family: "MotivaSansRegular", sans-serif;
+    font-family: "MotivaSansBold", sans-serif;
+    font-weight: bold;
     font-size: 14px;
 }
 
@@ -53,6 +54,7 @@
     height: 20px;
     display: grid;
     place-items: center;
+    transition: all .1s ease;
 }
 
 /* --------- Sesion Dropdown --------- */
@@ -62,13 +64,18 @@
     right: 0;
     width: 100%;
     height: fit-content;
-    top: 100%;
-    align-items: flex-start;
-    flex-direction: column;
     background-color: var(--bg-highlight);
+    top: 115%;
+    align-items: flex-start;
+    padding: 0;
+    flex-direction: column;
     border-radius: 3px 3px 0 0;
     box-sizing: border-box;
     display: none;
+}
+
+#AccountHeader:has(#AccountHeaderDropdown:checked) #AccountHeaderArrow {
+    transform: rotateX(180deg);
 }
 
 #AccountHeader:has(#AccountHeaderDropdown:checked) #AccountHeaderOptions {
@@ -77,14 +84,63 @@
 
 .AccountHeaderOptions-Element {
     width: 100%;
+    height: 40px;
     text-decoration: none;
     color: var(--text-main);
     font-size: 14px;
     border: none;
-    margin: 0;
     background-color: transparent;
-    margin: 5px 0 5px 10px;
-    padding: 0;
+    margin: 5px 0 5px;
+    padding: 0 0 0 10px;
+    align-content: center;
+    box-sizing: border-box;
     text-align: left;
     cursor: pointer;
+}
+
+.AccountHeaderOptions-Element:hover {
+    background-color: var(--text-dim);
+}
+
+.AccountHeaderOptions-Element:first-child {
+    display: none;
+}
+
+@media (width <= 900px) {
+    .AccountHeaderOptions-Element:first-child {
+        display: block;
+    }
+}
+
+@media (width <=700px) {
+    #AccountHeader,
+    #AccountHeaderGroup{
+        width: fit-content;
+        padding: 3px 5px;
+    }
+
+    #AccountHeaderName {
+        display: none;
+    }
+
+    #AccountHeaderCurrency {
+        display: none;
+    }
+
+    #AccountHeaderOptions {
+        right: -1vw;
+        top: 130%;
+        width: 100vw;
+        padding: 0 30px;
+        box-sizing: border-box;
+    }
+
+    #AccountHeaderOptions,
+    .AccountHeaderOptions-Element {
+        text-align: center;
+        font-family: "MotivaSansBold", sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        background-color: var(--bg-highlight);
+    }
 }
