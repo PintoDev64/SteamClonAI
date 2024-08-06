@@ -39,13 +39,13 @@ export async function createUser(data: User.createUserParams): DatabaseOperation
         await MysqlHandler.Insert(
             "Cart",
             ["ACCOUNT_ID", "ITEMS"],
-            [insertId, null]
+            [insertId, JSON.stringify([])]
         )
 
         await MysqlHandler.Insert(
             "Wishlist",
             ["PUBLIC_ID", "ITEMS"],
-            [publicId, null]
+            [publicId, JSON.stringify([])]
         )
 
         await MongoHandler.Insert(collectionName, [{
