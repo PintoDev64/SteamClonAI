@@ -102,12 +102,12 @@
     background-color: var(--text-dim);
 }
 
-.AccountHeaderOptions-Element:first-child {
+#AccountHeaderOptionsCart.AccountHeaderOptions-Element {
     display: none;
 }
 
 @media (width <= 900px) {
-    .AccountHeaderOptions-Element:first-child {
+    #AccountHeaderOptionsCart.AccountHeaderOptions-Element {
         display: block;
     }
 }

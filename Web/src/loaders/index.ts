@@ -1,14 +1,9 @@
 import { URL_API } from "@constants";
 import { Params } from "react-router-dom";
-import { redirect } from "react-router-dom";
 
 type LoaderType = { request: Request, params: Params }
 
 export async function LoginForm() {
-    const UserData = localStorage.getItem("UserData")
-    if (UserData !== undefined) {
-        return redirect("/")
-    }
     return null
 }
 

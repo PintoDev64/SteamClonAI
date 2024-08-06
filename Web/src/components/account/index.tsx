@@ -92,7 +92,7 @@ export default function AccountHeader() {
                 </div>
             </div>
             <div id="AccountHeaderOptions">
-                <Link to="/cart" className='AccountHeaderOptions-Element' onClick={() => CheckBox.current.click()}>
+                <Link to="/cart" className='AccountHeaderOptions-Element' id='AccountHeaderOptionsCart' onClick={() => CheckBox.current.click()}>
                     ● Carrito
                 </Link>
                 <Link to={`/profile/${User.PublicId}`} className='AccountHeaderOptions-Element' onClick={() => CheckBox.current.click()}>
