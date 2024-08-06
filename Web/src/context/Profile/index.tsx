@@ -11,7 +11,8 @@ export default function ProfileProvider({ children }: Profile.ProviderProps) {
         Theme: 1,
         RealName: "",
         Status: "Offline",
-        Items: null
+        Items: null,
+        Wishlist: null
     }
 
     function ProfileReducer(_state: Profile.ProviderVariables, data: Profile.ReducerObject) {
