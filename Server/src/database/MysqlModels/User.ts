@@ -15,14 +15,16 @@ export async function createUser(data: User.createUserParams): DatabaseOperation
     const { AccountName, backgroundImage, mail, password, profileName, profilePicture, publicId, realName, status, theme, vacStatus } = data;
     return await ErrorHandler.Wrapper(async () => {
 
-        const { MAIL, ACCOUNT_NAME } = await MysqlHandler.Select("User", ["MAIL", "ACCOUNT_NAME"], {
+        const databaseExtractor = await MysqlHandler.Select("User", ["MAIL", "ACCOUNT_NAME"], {
             Like: {
                 Columns: ["MAIL", "ACCOUNT_NAME"],
                 Values: [mail, AccountName]
             }
         })
 
-        if (MAIL || ACCOUNT_NAME) {
+        console.log(databaseExtractor);
+
+        if (databaseExtractor) {
             throw new Error("Usuario existente")
         }
 
