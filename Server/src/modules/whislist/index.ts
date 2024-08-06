@@ -27,7 +27,7 @@ WishlistRouter.get(PathService, async (request, response) => {
     response.json(data)
 })
 
-WishlistRouter.put(`${PathService}/add`, async (request, response) => {
+WishlistRouter.post(`${PathService}/add`, async (request, response) => {
     const Token = request.cookies.userUniqueToken
     const { body } = request
 

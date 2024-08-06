@@ -8,19 +8,25 @@ import Footer from "./footer";
 import './index.css'
 
 // Context
-import PageTransitionProvider from "context/PageTransition";
 import UserProvider from "context/User";
+import ModalElement from "./components/Modal";
+import { useContext } from "react";
+import { ModalContext } from "context";
 
 export default function MainLayout() {
+
+    const { Active } = useContext(ModalContext)
+
     return (
-        <UserProvider>
-            <PageTransitionProvider>
+        <>
+            <UserProvider>
                 <Header />
                 <main>
                     <Outlet />
                 </main>
                 <Footer />
-            </PageTransitionProvider>
-        </UserProvider>
+            </UserProvider>
+            {Active && <ModalElement />}
+        </>
     )
 }

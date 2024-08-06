@@ -69,10 +69,10 @@ export function AddRemove_Wishlist(state: boolean, IdGame: string) {
   if (state) {
       craeteFetch(`${URL_API}/api/v1/wishlist/add`, {
           productId: IdGame
-      }, "put")
+      }, "post")
       return
   }
-  craeteFetch(`${URL_API}/api/v1/remove`, {
+  craeteFetch(`${URL_API}/api/v1/wishlist/remove`, {
       IdGame
   }, "put")
 }

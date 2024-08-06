@@ -116,7 +116,7 @@ export async function buyProducts(userId: number, publicId: string): DatabaseOpe
                 buyState: false,
                 message: "No tienes suficiente fondos para esta transaccion"
             }
-        } else if (TotalPrice === 0 && CartItems.length === 0) {
+        } else if (CartItems.length === 0) {
             return {
                 buyState: false,
                 message: "No contienes ningun articulo para finalizar tu compra"

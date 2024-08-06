@@ -48,8 +48,25 @@ CartRouter.put(`${PathService}/add`, async (request, response) => {
 })
 
 CartRouter.put(`${PathService}/remove`, async (request, response) => {
-    const { accountId, IdGame } = request.body
-    const data = await deleteProducts(accountId, IdGame)
+    const Token = request.cookies.userUniqueToken
+
+    if (!Token) return response.json({ status: 401 })
+
+    const { exp, iat, ...rest } = verify(Token, JWT_SECRET) as {
+        exp: number,
+        iat: number,
+        PROFILE_NAME: string,
+        PROFILE_PICTURE: number,
+        ACCOUNT_ID: number,
+        PUBLIC_ID: string
+    }
+
+    const { IdGame } = request.body
+
+    const data = await deleteProducts(rest.ACCOUNT_ID, IdGame)
+
+    console.log(data);
+
     response.json(data)
 })
 

@@ -67,8 +67,6 @@ export default class MysqlHandler {
 
         let Query = `SELECT ${ColumnsJoin} FROM \`${Table}\` WHERE ${SubQuerysJoin}${SubQueryJoinLike}`
 
-        console.log(Query);
-
         const newArrayData = []
 
         SubQuery?.Where?.Values && newArrayData.push(...SubQuery?.Where?.Values)

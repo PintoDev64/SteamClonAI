@@ -5,8 +5,7 @@ import { useReducer } from 'react'
 export default function PageTransitionProvider({ children }: PageTransition.ProviderProps) {
 
     const defineVariables: PageTransition.ProviderVariables = {
-        loader: 0,
-        children
+        loader: 0
     }
     
     function PageTransitionReducer(state: PageTransition.ProviderVariables, { action, value }: PageTransition.ReducerObject) {

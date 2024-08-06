@@ -3,7 +3,7 @@ import AddtoCart from "@components/cart";
 import { URL_API } from "@constants";
 import { PlatformsIcons } from "@layouts/components/cards/assets";
 import { craeteFetch, decodeDate } from "@utils";
-import { PageTransitionContext } from "context";
+import { ModalContext, PageTransitionContext } from "context";
 import { ModifyTransition } from "hooks";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 export default function GameProducts({ products, platforms, InLibrary, idGame }: ComponentsRequestProps.GameProducts) {
 
     const { ModifyPageTransition } = useContext(PageTransitionContext)
+
+    const { EditModal } = useContext(ModalContext)
 
     const PlatformsKeys = Object.keys(platforms)
 
@@ -24,7 +26,7 @@ export default function GameProducts({ products, platforms, InLibrary, idGame }:
         if (response.status === 500 || response.status === 401) {
             navigate("/login")
         } else {
-            console.log(response);
+            EditModal({ Active: true })
         }
     }
 

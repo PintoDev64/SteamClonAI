@@ -1,13 +1,14 @@
 import { URL_API } from "@constants";
 import { craeteFetch } from "@utils";
-import { PageTransitionContext } from "context";
-import { ModifyTransition } from "hooks";
-import { useContext } from "react";
 
-export async function CompletePay() {
-    const { ModifyPageTransition } = useContext(PageTransitionContext)
-    ModifyTransition(ModifyPageTransition)
+export async function CompletePay(execute: () => void) {
+    execute()
     const ResponseCart = await craeteFetch(`${URL_API}/api/v1/cart/payment`, {}, "post")
-    const ResponseJSON = await ResponseCart.json()
-    console.log(ResponseJSON);
+    console.log(ResponseCart);
+}
+
+export async function DeletePay(execute: (ResponseData: unknown) => void, IdGame: string) {
+    const ResponseCart = await craeteFetch(`${URL_API}/api/v1/cart/remove`, { IdGame: IdGame }, "put")
+    execute(ResponseCart.data)
+    console.log(ResponseCart);
 }

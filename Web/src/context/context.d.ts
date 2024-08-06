@@ -1,13 +1,13 @@
 import { ReactNode } from "react"
 
 declare namespace PageTransition {
-    type ProviderJSONExpect = "loader" | "children"
+    type ProviderJSONExpect = "loader"
 
     type ProviderProps = { children: ReactNode }
     type ProviderVariables = {
         loader: number,
         [x: string]: number | ReactNode
-    } & ProviderProps
+    }
     type ReducerObject = { action: ProviderJSONExpect, value: number }
     type ContextProps = {
         loader: number,
@@ -56,5 +56,20 @@ declare namespace Profile {
     type ContextProps = {
         Profile: ProviderVariables,
         EditProfile({ Profile }: ProviderVariables): void
+    }
+}
+
+declare namespace Modal {
+    type ProviderProps = { children: ReactNode }
+
+    type ProviderVariables = {
+        Active: boolean
+    }
+
+    type ReducerObject = ProviderVariables
+
+    type ContextProps = {
+        Active: boolean,
+        EditModal({ Active }: ProviderVariables): void
     }
 }
