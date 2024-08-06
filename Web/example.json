@@ -1,0 +1,100 @@
+{
+    "_id": {
+        "$oid": "66a699034ff974caf8bf5b6b"
+    },
+    "name": "Counter-Strike 2",
+    "shortDescription": "For over two decades, Counter-Strike has offered an elite competitive experience, one shaped by millions of players from across the globe. And now the next chapter in the CS story is about to begin. This is Counter-Strike 2.",
+    "icon": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/apps/730/f75dd04fa12445a8ec43be65fa16ff1b8d2bf82e.jpg",
+    "images": [
+        {
+            "type": "video",
+            "url": "https://cdn.akamai.steamstatic.com/steam/apps/256972298/movie_max_vp9.webm"
+        },
+        {
+            "type": "image",
+            "url": "https://staticg.sportskeeda.com/editor/2023/03/1fe12-16795613684422-1920.jpg"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/ss_796601d9d67faf53486eeb26d0724347cea67ddc.1920x1080.jpg"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/ss_d830cfd0550fbb64d80e803e93c929c3abb02056.1920x1080.jpg"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/ss_18e9ea2715f0407ee05e206073927a648db60d73.1920x1080.jpg"
+        },
+        {
+            "type": "image",
+            "url": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/ss_63d2733b9b4ace01a41d5ba8afd653245d05d54a.1920x1080.jpg"
+        }
+    ],
+    "releaseDate": "21-AGO-2012",
+    "developer": {
+        "name": "Valve",
+        "url": "https://store.steampowered.com/publisher/valve"
+    },
+    "publishers": [
+        {
+            "name": "Valve",
+            "url": "https://store.steampowered.com/publisher/valve"
+        }
+    ],
+    "downloadUrl": "",
+    "categories": [
+        "FPS",
+        "Disparos",
+        "Multijugador",
+        "Competitivo"
+    ],
+    "features": [
+        "Valve Anti-Cheat",
+        "In-App Purchases",
+        "Cross-Platform Multiplayer"
+    ],
+    "requirements": "undefined",
+    "links": {
+        "url": "https://steam-clon-ai-web.vercel.app/app/${_Id}"
+    },
+    "platforms": {
+        "Win": {
+            "OS": "Windows® 10.",
+            "processor": "CPU de 4 subprocesos - Intel® Core™ i5 750 o superior.",
+            "Memory": " 8 GB de RAM",
+            "Graphics": "La tarjeta gráfica de ser de al menos 1 GB y debe ser compatible con DirectX 11 y Shader Model 5.0.",
+            "DirectX": "Versión 11",
+            "Storage": "85 GB de espacio disponible"
+        },
+        "Mac": "undefined",
+        "Lin": "undefined"
+    },
+    "products": [
+        {
+            "name": "Counter-Strike 2",
+            "price": {
+                "default": {
+                    "$numberInt": "0"
+                },
+                "format": "Dollar"
+            }
+        }
+    ],
+    "downloadableContent": [],
+    "about": "Durante las dos últimas décadas, Counter‑Strike ha proporcionado una experiencia competitiva de primer nivel para los millones de jugadores de todo el mundo que contribuyeron a darle forma. Ahora el próximo capítulo en la historia de CS está a punto de comenzar. Hablamos de Counter‑Strike 2.\nSiendo una actualización gratuita de CS:GO, Counter‑Strike 2 es el avance técnico más importante en la historia de esta franquicia.\nDesarrollado con el motor Source 2, Counter‑Strike 2 se ha modernizado con representación basada en la física (PBR, por sus siglas en inglés), conexión a la red de última generación y herramientas actualizadas del Workshop de la comunidad.\nAdemás del clásico estilo de juego centrado en objetivos del que Counter‑Strike fue pionero en 1999, esta nueva entrega cuenta con las siguientes características:\n\nCalificaciones de CS completamente nuevas dentro del modo actualizado Premier.\nClasificaciones globales y regionales.\nMapas actualizados y renovados.\nGranadas de humo dinámicas y revolucionarias.\nJugabilidad independiente de la frecuencia de tics.\nEfectos de audio y sonido rediseñados.\n\nTodos los objetos de CS:GO presentes en CS2.",
+    "lenguajes": {
+        "Spanish": {
+            "interface": true,
+            "audio": false,
+            "subtitles": false
+        },
+        "English": {
+            "interface": true,
+            "audio": true,
+            "subtitles": false
+        },
+        "Japanise": "undefined"
+    },
+    "idGame": "fe7dab8a-b0fa-483a-b4d7-77414a57ba13"
+}
