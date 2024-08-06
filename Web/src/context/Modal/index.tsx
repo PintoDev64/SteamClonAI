@@ -7,6 +7,8 @@ export default function ModalProvider({ children }: Modal.ProviderProps) {
         Active: false
     }
 
+    // State
+
     function PageTransitionReducer(_state: Modal.ProviderVariables, { Active }: Modal.ReducerObject) {
         return {
             Active
