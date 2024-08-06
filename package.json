@@ -10,7 +10,7 @@
     "server:start": "npm run start -w Server",
     "client:dev": "npm run start -w Client",
     "build": "npm run server:build",
-    "start": "npm run ./dist"
+    "start": "npm run server:start"
   },
   "keywords": [],
   "author": "",
