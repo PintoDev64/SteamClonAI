@@ -84,7 +84,7 @@ export default function AccountHeader() {
         <div id="AccountHeader">
             <div id='AccountHeaderGroup' onClick={() => CheckBox.current.click()}>
                 <input type="checkbox" id="AccountHeaderDropdown" aria-hidden hidden ref={CheckBox} />
-                <img id='AccountHeaderImage' fetchPriority="high" src={User.Picture} />
+                <img id='AccountHeaderImage' fetchPriority="high" src={User.Picture ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWHZlfUDpDSFnYNALdSGwMCLVp1jy3XMXFbA&s"} />
                 <span id='AccountHeaderName'>{User.Name}</span>
                 <span id='AccountHeaderCurrency'>${User.Currency}</span>
                 <div id="AccountHeaderArrow">

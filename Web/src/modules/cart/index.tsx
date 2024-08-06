@@ -2,7 +2,7 @@ import { ModalContext, PageTransitionContext, UserContext } from "context"
 import { CompleteTransition, ModifyTransition } from "hooks"
 import { useContext, useEffect } from "react"
 
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import { PlatformsIcons } from "@layouts/components/cards/assets"
 
 // Styles
@@ -12,18 +12,25 @@ import { CompletePay, DeletePay } from "./utils"
 
 export default function CartPage() {
 
+    const navigate = useNavigate()
+
     const { data } = useLoaderData() as RequestAPI.Cart_API
     const { ITEMS } = data
+
+    console.log(ITEMS);
 
     const { ModifyPageTransition } = useContext(PageTransitionContext)
     const { User } = useContext(UserContext)
     const { EditModal } = useContext(ModalContext)
 
     const TransitionStart = () => {
+        navigate("/cart")
+        if (!ITEMS || ITEMS.length === 0) return
         EditModal({ Active: true })
         ModifyTransition(ModifyPageTransition)
     }
     const TransitionDelete = (ResponseData: unknown) => {
+        navigate("/cart")
         ResponseData && EditModal({ Active: true })
         ModifyTransition(ModifyPageTransition)
     }
@@ -42,13 +49,13 @@ export default function CartPage() {
     return (
         <div id="SteamCart">
             <h1 id="SteamCartTitle">Carrito de {User.Name}</h1>
-            {ITEMS.map(({ platforms, images, name, products, idGame }, _index) => {
+            {ITEMS && ITEMS.map(({ platforms, images, name, products, idGame }, _index) => {
                 const PlatformsKeys = Object.keys(platforms)
                 const ImagesFilter = images.filter(({ type }) => type === "image")
                 return (
                     <div key={_index} className="SteamCartElement SteamCartElementDividor">
                         <div className="SteamCartElement-Left">
-                            <img src={ImagesFilter[0].url} alt={name} className="SteamCartElement-Image" width={161} height={75} />
+                            <img src={ImagesFilter[0].url ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5a8QX_UjwuoW3QNrnYytjMakvOY67vObepA&s"} alt={name} className="SteamCartElement-Image" width={161} height={75} />
                             <h2 className="SteamCartElement-GameTitle">{name}</h2>
                             {PlatformsKeys.map((value: "Win" | "Mac" | "Lin" | string, _index) => {
                                 if (platforms[value] === undefined) return

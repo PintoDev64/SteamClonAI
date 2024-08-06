@@ -1,8 +1,8 @@
 #SteamCart {
     min-width: 100%;
     width: 1090px;
-    min-height: calc(100vh - 382px);
-    height: calc(100% - 382px);
+    min-height: calc(100vh - 302px);
+    height: 100%;
     padding: 51px 0;
     box-sizing: border-box;
     background: linear-gradient(45deg, #0E141B 0%, #14344B 100%);

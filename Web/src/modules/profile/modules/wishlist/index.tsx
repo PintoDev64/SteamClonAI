@@ -31,14 +31,14 @@ export default function ProfileWishlist() {
                         const ImagesFilter = images.filter(({ type }) => type === "image")
                         return (
                             <div key={_index} className="SteamProfileContent-GamesPageElements">
-                                <img className="SteamProfileContent-GamesPageElements-Image" src={ImagesFilter[0].url} alt={name} width={216} height={101} />
+                                <img className="SteamProfileContent-GamesPageElements-Image" src={ImagesFilter[0].url ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5a8QX_UjwuoW3QNrnYytjMakvOY67vObepA&s"} alt={name} width={216} height={101} />
                                 <div className="SteamProfile-GamesPageElements-Container">
                                     <div className="SteamProfileContent-GamesPageElements-Data">
                                         <span className="SteamProfileContent-GamesPageElements-DataTitle">{name}</span>
                                         <span className="SteamProfileContent-GamesPageElements-ReleaseDate">{releaseDate.replace(/-/g, " ")}</span>
                                     </div>
                                     <Link className="SteamProfileContent-GamesPageElements-Store" to={`/game/${idGame}`}>
-                                        <img className="SteamProfileContent-GamesPageElements-DataImage" src={icon} alt={name} width={30} height={30} />
+                                        <img className="SteamProfileContent-GamesPageElements-DataImage" src={icon ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWHZlfUDpDSFnYNALdSGwMCLVp1jy3XMXFbA&s"} alt={name} width={30} height={30} />
                                         Ver en la tienda
                                     </Link>
                                 </div>
