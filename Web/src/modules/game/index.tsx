@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, useLocation } from 'react-router-dom'
 
 // Components
 import GameCover from './components/cover';
@@ -17,9 +17,9 @@ import './index.css'
 
 export default function GamePage() {
 
-    const { ModifyPageTransition } = useContext(PageTransitionContext)
+    const { pathname } = useLocation()
 
-    useEffect(() => CompleteTransition(ModifyPageTransition), [])
+    const { ModifyPageTransition } = useContext(PageTransitionContext)
 
     const { images, name, about, categories, features, idGame, ...rest } = useLoaderData() as RequestAPI.GameAllData;
 
@@ -27,80 +27,14 @@ export default function GamePage() {
         document.title = `${name} - Steam AI`
     }, [name])
 
+    useEffect(() => CompleteTransition(ModifyPageTransition), [pathname])
 
     return (
         <div id="GamePage" style={{ backgroundImage: `url(${images[1].url})` }}>
             <div id="GamePageContent">
-                <GameCover Title={name} />
+                <GameCover InLibrary={rest.InLibrary} Title={name} GameId={idGame} />
                 <GameDetails categories={categories} images={images} name={name} {...rest} />
                 <GameMain idGame={idGame} InLibrary={rest.InLibrary} categories={categories} features={features} products={rest.products} name={name} platforms={rest.platforms} about={about}/>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
             </div>
         </div>
     )

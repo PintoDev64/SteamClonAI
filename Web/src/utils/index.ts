@@ -52,11 +52,14 @@ export function splitArrayComponentsToSubarrays(array: ReactNode[], chunkSize: n
   return result;
 }
 
-export async function craeteFetch(url: string, body: object,method?: "post" | "put" | "delete") {
+export async function craeteFetch(url: string, body?: object, method?: "post" | "put" | "delete") {
   const ResponseFetch = await fetch(url, {
     method: method ?? "get",
     credentials: "include",
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    }
   })
   return await ResponseFetch.json()
 }

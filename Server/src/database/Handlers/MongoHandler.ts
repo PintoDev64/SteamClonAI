@@ -21,10 +21,14 @@ export default class MongoHandler {
     static async Select<T>(
         Collection: MongoHandlerMethods.ParamCollection,
         Query: MongoHandlerMethods.ParamQuery,
-        Many: MongoHandlerMethods.ParamMany = false
+        Many: MongoHandlerMethods.ParamMany = false,
+        Limit: number = 0
     ): Promise<T> {
         const Database = mongo.collection(Collection)
         if (Many) {
+            if (Limit > 0) {
+                return await Database.find(Query).limit(Limit).toArray() as T
+            }
             return await Database.find(Query).toArray() as T
         }
         return await Database.findOne(Query) as T

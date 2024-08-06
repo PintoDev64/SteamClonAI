@@ -176,11 +176,17 @@ declare namespace RequestAPI {
         data: {
             LIBRARY: GameDataType[] | null,
             ITEMS: GameDataType[] | null,
-            PROFILE_NAME: "PintoGamer64",
-            PROFILE_PICTURE: 1,
-            THEME: 1,
-            REAL_NAME: "Joan Sebastian Cardozo Salinas",
-            STATUS: "Offline"
+            PROFILE_NAME: string,
+            PROFILE_PICTURE: string,
+            THEME: number,
+            REAL_NAME: string,
+            STATUS: "Offline" | "Online"
+            WISHLIST: GameDataType[] | null
+        }
+    }
+    type Cart_API = {
+        data: {
+            ITEMS: GameDataType[]
         }
     }
 }

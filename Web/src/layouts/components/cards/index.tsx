@@ -7,13 +7,16 @@ import SteamWishlist from "../../../components/wishlist";
 import { PlatformsIcons } from "./assets";
 import { Link, useLocation } from "react-router-dom";
 import { ModifyTransition } from "hooks";
-import { PageTransitionContext } from "context";
+import { PageTransitionContext, UserContext } from "context";
+import { AddRemove_Wishlist } from "@Modules/game/utils";
 
 type GameCardProps = { preset?: "Big" | "Small", data: RequestAPI.GameDataType }
 export default function GameCard({ preset = "Big", data }: GameCardProps) {
 
+    const { User } = useContext(UserContext)
+
     const { ModifyPageTransition } = useContext(PageTransitionContext)
-    
+
     const { pathname } = useLocation()
 
     const { shortDescription, images, products, categories, platforms, name } = data;
@@ -29,6 +32,10 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
 
     function ClickLink(url: string) {
         url !== pathname && ModifyTransition(ModifyPageTransition)
+    }
+
+    const WishlistButton = (state: boolean) => {
+        AddRemove_Wishlist(state, data.idGame)
     }
 
     if (preset === "Small") {
@@ -56,7 +63,7 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
                                 discount: products[0].price.discount?.value,
                                 discountDate: products[0].price.discount?.finalDate
                             }} text={priceReal} />
-                            <SteamWishlist mode="Square" className="" />
+                            {!User.Library?.some(({ idGame }) => idGame === data.idGame) && <SteamWishlist wishlistFunction={WishlistButton} mode="Square" state={User.Wishlist?.some(({ idGame }) => idGame === data.idGame)} />}
                         </div>
                     </div>
                 </div>
@@ -103,12 +110,12 @@ export default function GameCard({ preset = "Big", data }: GameCardProps) {
                     </div>
                 </div>
                 <div className="SteamCardGame-Big-DetailsOptions">
-                    <SteamWishlist mode="Normal" />
                     <AddtoCart ActiveDate={false} price={{
                         value: products[0].price.default,
                         discount: products[0].price.discount?.value,
                         discountDate: products[0].price.discount?.finalDate
-                    }} text={priceReal} />
+                    }} text={priceReal} InLibrary={User.Library?.some(({ idGame }) => idGame === data.idGame)}/>
+                    {!User.Library?.some(({ idGame }) => idGame === data.idGame) && <SteamWishlist wishlistFunction={WishlistButton} mode="Normal" state={User.Wishlist?.some(({ idGame }) => idGame === data.idGame)} />}
                 </div>
             </div>
         </div>

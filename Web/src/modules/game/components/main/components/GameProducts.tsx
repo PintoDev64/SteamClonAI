@@ -2,7 +2,7 @@
 import AddtoCart from "@components/cart";
 import { URL_API } from "@constants";
 import { PlatformsIcons } from "@layouts/components/cards/assets";
-import { craeteFetch } from "@utils";
+import { craeteFetch, decodeDate } from "@utils";
 import { PageTransitionContext } from "context";
 import { ModifyTransition } from "hooks";
 import { useContext } from "react";
@@ -34,7 +34,7 @@ export default function GameProducts({ products, platforms, InLibrary, idGame }:
                 <div className="GamePageContent-Main-Product">
                     <div className="GamePageContent-Main-ProductTitle">
                         <h2 className="GamePageContent-Main-ProductTitleText">{name}</h2>
-                        {price.discount && <span className="DiscountActive">Oferta finaliza el {price.discount?.finalDate}</span>}
+                        {price.discount && <span className="DiscountActive">Oferta finaliza el {decodeDate(price.discount?.finalDate)}</span>}
                     </div>
                     <div className="GamePageContent-Main-ProductDetail">
                         <div className="GamePageContent-Main-ProductDetail-Platforms">

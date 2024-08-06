@@ -1,5 +1,5 @@
 import { ProfileContext } from "context"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 // Styles
 import './index.css'
@@ -8,8 +8,11 @@ import { Link } from "react-router-dom";
 export default function ProfileWishlist() {
 
     const { Profile } = useContext(ProfileContext);
+    const { ProfileName, Wishlist } = Profile
 
-    const { ProfileName, Items } = Profile
+    useEffect(() => {
+        document.title = `Deseados por ${ProfileName} - Steam AI`
+    }, [ProfileName])
 
     return (
         <div id="SteamProfileContent-GamesPage">
@@ -17,9 +20,9 @@ export default function ProfileWishlist() {
                 <h2>Deseados por {ProfileName}</h2>
             </div>
             {
-                Items
+                Wishlist
                     ?
-                    Items.map(({ images, name, releaseDate, idGame, icon }, _index) => {
+                    Wishlist.map(({ images, name, releaseDate, idGame, icon }, _index) => {
                         const ImagesFilter = images.filter(({ type }) => type === "image")
                         return (
                             <div key={_index} className="SteamProfileContent-GamesPageElements">
@@ -39,7 +42,7 @@ export default function ProfileWishlist() {
                     })
                     :
                     <div className="SteamProfileContent-GamesPageElements">
-                        <span id="SteamProfileContent-GamesPageElements-Null">{"Lo siento, no poseo juegos por el momento :("}</span>
+                        <span id="SteamProfileContent-GamesPageElements-Null">{"Lo siento, no deseo juegos por el momento >.<"}</span>
                     </div>
             }
         </div>

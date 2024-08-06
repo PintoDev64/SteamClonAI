@@ -4,10 +4,11 @@ import { SearchIcon } from './assets'
 import Constans from './constants'
 import './index.css'
 import { GetActualPath } from '@utils'
-import { useContext } from 'react'
+import { ChangeEvent, useContext, useState } from 'react'
 import { PageTransitionContext } from 'context'
 import { ModifyTransition } from 'hooks'
 import AccountHeader from '@components/account'
+import { URL_API } from '@constants'
 
 export default function Header() {
 
@@ -17,6 +18,8 @@ export default function Header() {
 
   const { loader, ModifyPageTransition } = useContext(PageTransitionContext)
 
+  const [SearchElements, setSearchElements] = useState([])
+
   enum States {
     Active = "Active",
     Desactive = "Desactive"
@@ -24,6 +27,16 @@ export default function Header() {
 
   function ClickLink(url: string) {
     url !== pathname && ModifyTransition(ModifyPageTransition)
+  }
+
+  async function CreateSearch(event: ChangeEvent<HTMLInputElement>) {
+    const SearchQuery = event.target.value
+    if (SearchQuery.length === 0) return
+    const ResponseSearch = await fetch(`${URL_API}/api/v1/search?QuerySearch=${SearchQuery}`, {
+      credentials: "include"
+    })
+    const { data } = await ResponseSearch.json()
+    setSearchElements(data);
   }
 
   return (
@@ -36,9 +49,21 @@ export default function Header() {
         )}
       </div>
       <div id="SteamHeader-Search">
-        <input id='SteamHeader-SearchInput' placeholder='Buscar...' type="search" name="browse" />
+        <input id='SteamHeader-SearchInput' aria-autocomplete='none' onChange={CreateSearch} placeholder='Buscar...' type="search" name="browse" />
         <div id="SteamHeader-SearchIcon">
           <SearchIcon />
+        </div>
+        <div id="SteamHeader-SearchElements">
+          {SearchElements.map(({ name, idGame, icon }) => {
+            return (
+              <Link to={`/game/${idGame}`} onClick={() => ClickLink(`/game/${idGame}`)} className="SteamHeader-SearchElements-Result">
+                <img className='SteamHeader-SearchElements-ResultImage' src={icon} alt={name} width={35} height={35}/>
+                <span className="SteamHeader-SearchElements-ResultTitle">
+                  {name}
+                </span>
+              </Link>
+            )
+          })}
         </div>
       </div>
       <div id="SteamHeader-Personal">

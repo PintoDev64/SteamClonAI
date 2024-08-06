@@ -1,4 +1,3 @@
-import { createMongoConnection, createMySQLConnection } from "..";
 import ErrorHandler from "../Handlers/Error";
 import MysqlHandler from "../Handlers/MysqlHandler";
 import MongoHandler from "../Handlers/MongoHandler";
@@ -23,22 +22,23 @@ export async function getProducts(userId: number): DatabaseOperation.GenericClas
  */
 export async function setProducts(userId: number, productId: string): DatabaseOperation.GenericClassReturnType {
     return await ErrorHandler.Wrapper(async () => {
-        const { _id, downloadUrl, ...rest } = await MongoHandler.Select<getGameDataType>(collectionName, { idGame: productId })
 
-        const { ITEMS: PatsProducts } = await MysqlHandler.Select("Cart", ["ITEMS"], {
+        const { downloadUrl, ...rest } = await MongoHandler.Select<getGameDataType>(collectionName, { idGame: productId })
+
+        const { ITEMS } = await MysqlHandler.Select("Cart", ["ITEMS"], {
             Where: {
                 Columns: ["ACCOUNT_ID"],
                 Values: [userId]
             }
         })
 
-        const FilterPatsProducts = PatsProducts.some(({ idGame }) => idGame === productId)
+        const FilterPatsProducts = ITEMS !== null && ITEMS.some(({ idGame }) => idGame === productId)
 
         if (FilterPatsProducts) {
-            return PatsProducts
+            return ITEMS
         }
 
-        const UpdateCart = [...PatsProducts, { ...rest }]
+        const UpdateCart = ITEMS !== null ? [...ITEMS, { ...rest }] : [{ ...rest }]
 
         await MysqlHandler.Update("Cart", ["ITEMS"], [JSON.stringify(UpdateCart)], {
             Where: {
@@ -93,9 +93,16 @@ export async function buyProducts(userId: number): DatabaseOperation.GenericClas
             message: "No tienes suficiente fondos para esta transaccion"
         }
 
-        const GamesCartPrice = ITEMS.map(({ products }) => products[0].price.default).reduce((a, b) => a + b, 0)
+        const ProductsWithDiscount = ITEMS.filter(({ products }) => products[0].price.discount !== undefined).map(({ products }) => products[0].price.discount?.value)
 
-        if (CURRENCY < GamesCartPrice) {
+        const ProductsNormal = ITEMS.filter(({ products }) => products[0].price.discount === undefined).map(({ products }) => products[0].price.default)
+
+        const TotalPrice = [...ProductsWithDiscount, ...ProductsNormal].filter((n): n is number => n !== null && n !== undefined) // Filtra los valores no válidos
+            .reduce((accumulator: number, currentValue: number) => {
+                return accumulator + currentValue;
+            }, 0);
+
+        if (CURRENCY < TotalPrice) {
             return {
                 buyState: false,
                 message: "No tienes suficiente fondos para esta transaccion"
@@ -108,9 +115,9 @@ export async function buyProducts(userId: number): DatabaseOperation.GenericClas
                 }
             })
 
-            const UpdateCart = [...LIBRARY, { ...ITEMS }]
+            const UpdateCart = LIBRARY !== null ? [...LIBRARY, ...ITEMS] : [...ITEMS]
 
-            await MysqlHandler.Update("User", ["LIBRARY"], [JSON.stringify(UpdateCart)], {
+            await MysqlHandler.Update("User", ["LIBRARY", "CURRENCY"], [JSON.stringify(UpdateCart), CURRENCY - TotalPrice], {
                 Where: {
                     Columns: ["ACCOUNT_ID"],
                     Values: [userId]

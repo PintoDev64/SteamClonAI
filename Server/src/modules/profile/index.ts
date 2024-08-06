@@ -19,6 +19,7 @@ import { insertProfileReview } from '../../database/MongoModels/ProfileReviews';
 import { JWT_SECRET, SALT_ROUNDS } from '../../constants';
 import SessionHandler from '../../database/Handlers/Sessions';
 import MysqlHandler from '../../database/Handlers/MysqlHandler';
+import { getWishlist } from '../../database/MysqlModels/Wishlist';
 
 /**
  * 
@@ -42,7 +43,6 @@ ProfileRouter.post(`${PathService}/register`, VerifyBodyContent, createPublicId,
     }
 
     const userCreated = await createUser(RequestData)
-    console.log("User Craeted: ", userCreated);
 
     response.json({ userCreated })
 })
@@ -86,10 +86,18 @@ ProfileRouter.post(`${PathService}/verify`, async (request, response) => {
             }
         })
 
+        const { ITEMS } = await MysqlHandler.Select("Wishlist", ["ITEMS"], {
+            Where: {
+                Columns: ["PUBLIC_ID"],
+                Values: [rest.PUBLIC_ID]
+            }
+        })
+
         response.json({
             ...rest,
             CURRENCY,
-            LIBRARY
+            LIBRARY,
+            WISHLIST: ITEMS
         })
     } catch (err: any) {
         console.log(err);
@@ -103,8 +111,14 @@ ProfileRouter.post(`${PathService}/verify`, async (request, response) => {
 ProfileRouter.get(`${PathService}/:publicId`, async (request, response) => {
     const { params } = request
     const users = await getUser({ publicId: params.publicId })
-    console.log(users);
-    response.json(users)
+    const wishlist = await getWishlist(params.publicId)
+    response.json({
+        status: 200,
+        data: {
+            ...users.data,
+            WISHLIST: wishlist.data
+        }
+    })
 })
 
 ProfileRouter.get(`${PathService}/:publicId/games`, async (request, response) => {
@@ -138,10 +152,6 @@ ProfileRouter.post(`${PathService}/login`, async (request, response) => {
             ACCOUNT_ID: data.ACCOUNT_ID
         }, JWT_SECRET, { expiresIn: 7 * 24 * 60 * 60 * 1000 });
 
-        console.log(data);
-
-        console.log(token);
-
         response
             .cookie("userUniqueToken", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "none", partitioned: true })
             .json({
@@ -153,6 +163,51 @@ ProfileRouter.post(`${PathService}/login`, async (request, response) => {
     } catch (error) {
         console.error('Error in login route:', error);
         response.status(500).json({ error: "Internal Server Error" });
+    }
+})
+
+ProfileRouter.put(`${PathService}/currency`, async (request, response) => {
+    const Token = request.cookies.userUniqueToken
+
+    try {
+        if (!Token) {
+            response.json({ status: 401 })
+            return
+        }
+
+        const { exp, iat, ...rest } = verify(Token, JWT_SECRET) as {
+            exp: number,
+            iat: number,
+            PROFILE_NAME: string,
+            PROFILE_PICTURE: number,
+            ACCOUNT_ID: number,
+            PUBLIC_ID: string
+        }
+
+        const { CURRENCY } = await MysqlHandler.Select("User", ["CURRENCY"], {
+            Where: {
+                Columns: ["ACCOUNT_ID"],
+                Values: [rest.ACCOUNT_ID]
+            }
+        })
+
+        const newCurrency = CURRENCY + 10
+
+        await MysqlHandler.Update("User", ["CURRENCY"], [newCurrency > 99 ? 99 : newCurrency], {
+            Where: {
+                Columns: ["ACCOUNT_ID"],
+                Values: [rest.ACCOUNT_ID]
+            }
+        })
+
+        response.json({
+            status: 200,
+            data: true
+        })
+
+    } catch (err: any) {
+        console.log(err.message);
+        response.json({ status: 500 })
     }
 })
 

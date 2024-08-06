@@ -31,6 +31,12 @@
     flex-direction: column;
 }
 
+.DiscountActive {
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 14px;
+    color: var(--color-primary);
+}
+
 .GamePageContent-Main-ProductDetail {
     display: flex;
 }
@@ -129,6 +135,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: var(--bg-main);
+    border-radius: 5px;
+    height: auto;
+    padding: 25px;
+    box-sizing: border-box;
 }
 
 #GamePageContent-Sidebar-SteamAI {
@@ -227,16 +238,7 @@
     margin: 12px 0;
 }
 
-#GamePageContent-Sidebar-Features {
-    width: 100%;
-    background-color: var(--bg-main);
-    border-radius: 5px;
-    height: auto;
-    padding: 25px;
-    box-sizing: border-box;
-}
-
-#GamePageContent-Sidebar-Features-Title {
+.GamePageContent-Sidebar-Features-Title {
     font-family: "MotivaSansRegular", sans-serif;
     font-size: 18px;
     color: var(--text-dim);
@@ -245,11 +247,15 @@
 
 .GamePageContent-Sidebar-Features-Element {
     width: 100%;
-    height: 34px;
+    height: fit-content;
     display: flex;
+    align-items: center;
     background-color: var(--special-bg);
     padding: 9px 18px;
     box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+    position: relative;
 }
 
 .GamePageContent-Sidebar-Features-Element:nth-child(odd) {
@@ -258,8 +264,30 @@
 
 .GamePageContent-Sidebar-Features-Element span {
     font-family: "MotivaSansRegular", sans-serif;
-    font-size: 12px;
+    font-size: 16px;
+    margin: 0 0 0 15px;
     color: var(--color-primary);
+}
+
+.GamePageContent-Sidebar-Features-Element.NoLinks span {
+    font-family: "MotivaSansRegular", sans-serif;
+    font-size: 16px;
+    margin: 0 0 0 15px;
+    color: var(--text-dim);
+}
+
+#GamePageContent-Sidebar-Features-Checkbox:checked ~ .GamePageContent-Sidebar-Features-Element.NoLinks::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0 10px 0 0;
+    content: "Texto Copiado";
+    color: var(--accent-green);
 }
 
 @media (width <=1400px) {

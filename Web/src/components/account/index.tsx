@@ -4,13 +4,18 @@ import './index.css'
 // Assets
 import { DownArrow } from './assets'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { UserContext } from 'context'
+import { PageTransitionContext, UserContext } from 'context'
 import { URL_API } from '@constants'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { ModifyTransition } from 'hooks'
 
 export default function AccountHeader() {
 
     const { pathname } = useLocation()
+
+    const { ModifyPageTransition } = useContext(PageTransitionContext)
+
+    const navigate = useNavigate()
 
     const CheckBox = useRef<HTMLInputElement>(null!)
 
@@ -23,6 +28,20 @@ export default function AccountHeader() {
         CheckBox.current.click()
         fetch(`${URL_API}/api/v1/profile/close`, { credentials: "include" })
             .then(() => window.location.reload())
+            .catch(err => console.log(err.message))
+    }
+
+    async function MoreCurrency() {
+        CheckBox.current.click()
+        ModifyTransition(ModifyPageTransition)
+        fetch(`${URL_API}/api/v1/profile/currency`, {
+            credentials: "include",
+            method: "put",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(() => { navigate("/") })
             .catch(err => console.log(err.message))
     }
 
@@ -43,7 +62,8 @@ export default function AccountHeader() {
                     Picture: result.PROFILE_PICTURE,
                     Currency: result.CURRENCY,
                     PublicId: result.PUBLIC_ID,
-                    Library: result.LIBRARY
+                    Library: result.LIBRARY,
+                    Wishlist: result.WISHLIST
                 });
             } catch (error) {
                 setError((error as Error).message);
@@ -63,7 +83,7 @@ export default function AccountHeader() {
     if (User.PublicId) return (
         <div id="AccountHeader">
             <div id='AccountHeaderGroup' onClick={() => CheckBox.current.click()}>
-                <input type="checkbox" id="AccountHeaderDropdown" hidden ref={CheckBox} />
+                <input type="checkbox" id="AccountHeaderDropdown" aria-hidden hidden ref={CheckBox} />
                 <img id='AccountHeaderImage' fetchPriority="high" src={User.Picture} />
                 <span id='AccountHeaderName'>{User.Name}</span>
                 <span id='AccountHeaderCurrency'>${User.Currency}</span>
@@ -75,6 +95,9 @@ export default function AccountHeader() {
                 <Link to={`/profile/${User.PublicId}`} className='AccountHeaderOptions-Element' onClick={() => CheckBox.current.click()}>
                     Ir a tu perfil
                 </Link>
+                <button className="AccountHeaderOptions-Element" onClick={MoreCurrency}>
+                    añadir 10 usd
+                </button>
                 <button className="AccountHeaderOptions-Element" onClick={CloseSession}>
                     Cerrar sesion
                 </button>

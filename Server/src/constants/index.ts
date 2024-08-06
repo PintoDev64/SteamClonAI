@@ -13,7 +13,7 @@ const OPENAI_APIKEY = process.env.OPENAI_APIKEY
 
 // --------------> Global
 export const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS as string)
-export const CORS_AUTH = process.env.NODE_ENV === "production" ? "https://steam-clon-ai-web.vercel.app/" : "http://localhost:5173"
+export const CORS_AUTH = process.env.NODE_ENV === "production" ? ["https://steam-clon-ai-web.vercel.app/", "https://steam-clon-ai-web.vercel.app"] : ["http://localhost:5173", "http://localhost:5173/"]
 
 // --------------> MongoDB
 export const SERVERPORT = process.env.PORT ?? 0

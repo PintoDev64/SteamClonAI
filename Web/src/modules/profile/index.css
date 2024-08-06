@@ -58,6 +58,7 @@
     height: 221px;
     border-radius: 2px;
     border: 4px solid var(--text-dim);
+    background-color: var(--text-main);
 }
 
 #SteamProfileContent-DetailsSide {

@@ -1,5 +1,5 @@
 import { ProfileContext } from "context"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 // Styles
 import './index.css'
@@ -8,8 +8,11 @@ import { Link } from "react-router-dom";
 export default function ProfileGames() {
 
     const { Profile } = useContext(ProfileContext);
-
     const { ProfileName, Library } = Profile
+
+    useEffect(() => {
+        document.title = `Juegos de ${ProfileName} - Steam AI`
+    }, [ProfileName])
 
     return (
         <div id="SteamProfileContent-GamesPage">

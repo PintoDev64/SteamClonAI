@@ -59,7 +59,7 @@ GameRouter.get(PathService, async (request, response) => {
             }
         })
 
-        InLibrary = LIBRARY.some(({ idGame: GameId }) => GameId === idGame)
+        InLibrary = LIBRARY !== null ? LIBRARY.some(({ idGame: GameId }) => GameId === idGame) : false
     }
 
     if (idGame) {

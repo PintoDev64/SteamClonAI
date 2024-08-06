@@ -1,14 +1,17 @@
 import { SteamLogoIndividual } from "@components/separator/assets"
 import { URL_API } from "@constants"
 import { UserContext } from "context"
-import { useContext, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
+import { GameFeatureIcon, ShareIcon } from "../assets"
 
 export default function GameSidebar({ features, categories }: ComponentsRequestProps.GameSidebar) {
 
     const { IdGame } = useParams()
 
     const { User } = useContext(UserContext);
+
+    const CheckBoxCopyLink = useRef<HTMLInputElement>(null!)
 
     const [SteamAIResponse, setSteamAIResponse] = useState<string | null>(null)
 
@@ -27,9 +30,19 @@ export default function GameSidebar({ features, categories }: ComponentsRequestP
                 categories: CategoriesJoin
             })
         })
-        .then(data => data.json() )
-        .then(({ Response_AI }) => setSteamAIResponse(Response_AI))
-        .catch(err => console.log(err.message))
+            .then(data => data.json())
+            .then(({ Response_AI }) => setSteamAIResponse(Response_AI))
+            .catch(err => console.log(err.message))
+    }
+
+    const ShareLink = () => {
+        CheckBoxCopyLink.current.click()
+        const blobData = new Blob([window.location.href], { type: 'text/plain' })
+        const CreateClipboardItem = new ClipboardItem({ 'text/plain': blobData })
+        navigator.clipboard.write([CreateClipboardItem])
+        setTimeout(() => {
+            CheckBoxCopyLink.current.click()
+        }, 2000);
     }
 
     return (
@@ -54,13 +67,22 @@ export default function GameSidebar({ features, categories }: ComponentsRequestP
                 }
 
             </div>
-            <div className="GamePageContent-Sidebar-Element" id="GamePageContent-Sidebar-Features">
-                <h3 id="GamePageContent-Sidebar-Features-Title" >Features</h3>
+            <div className="GamePageContent-Sidebar-Element">
+                <h3 className="GamePageContent-Sidebar-Features-Title" >Features</h3>
                 {features.map(value =>
                     <div className="GamePageContent-Sidebar-Features-Element">
+                        <GameFeatureIcon />
                         <span>{value}</span>
                     </div>
                 )}
+            </div>
+            <div className="GamePageContent-Sidebar-Element" >
+                <h3 className="GamePageContent-Sidebar-Features-Title" >Features</h3>
+                <input type="checkbox" id="GamePageContent-Sidebar-Features-Checkbox" ref={CheckBoxCopyLink} hidden aria-hidden />
+                <button onClick={ShareLink} className="GamePageContent-Sidebar-Features-Element NoLinks">
+                    <ShareIcon />
+                    <span>Compartir</span>
+                </button>
             </div>
         </div>
     )

@@ -1,9 +1,9 @@
-import { useRef, ComponentProps, useState } from 'react'
+import { useRef, ComponentProps, useState, useEffect } from 'react'
 import './index.css'
 import { WishlistIcon } from './assets/icons'
 
-type SteamSwitchProps = { mode: "Square" | "Normal" } & ComponentProps<"input">
-export default function SteamWishlist({ mode, ...props }: SteamSwitchProps) {
+type SteamSwitchProps = { mode: "Square" | "Normal", state?: boolean, wishlistFunction: (state: boolean) => void } & ComponentProps<"input">
+export default function SteamWishlist({ mode, state, wishlistFunction, ...props }: SteamSwitchProps) {
 
   enum States {
     Active = "Active",
@@ -11,12 +11,17 @@ export default function SteamWishlist({ mode, ...props }: SteamSwitchProps) {
   }
 
   const InputCheckboxElement = useRef<HTMLInputElement>(null!)
-  const [SwitchState, setSwitchState] = useState(false)
+  const [SwitchState, setSwitchState] = useState(state ?? false)
 
   function Execute() {
     setSwitchState(!SwitchState)
     InputCheckboxElement.current.checked = !SwitchState
+    wishlistFunction(!SwitchState)
   }
+
+  useEffect(() => {
+    setSwitchState(state ?? false)
+  }, [state])
 
   if (mode === "Square") {
     return (

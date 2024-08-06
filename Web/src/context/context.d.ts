@@ -16,7 +16,7 @@ declare namespace PageTransition {
 }
 
 declare namespace User {
-    type ProviderJSONExpect = "Currency" | "Name" | "Picture" | "PublicId"
+    type ProviderJSONExpect = "Currency" | "Name" | "Picture" | "PublicId" | "Wishlist"
 
     type ProviderProps = { children: ReactNode }
 
@@ -26,6 +26,7 @@ declare namespace User {
         PublicId: string
         Currency: number,
         Library: RequestAPI.GameDataType[] | null
+        Wishlist: RequestAPI.GameDataType[] | null
     }
 
     type ReducerObject = ProviderVariables
@@ -47,6 +48,7 @@ declare namespace Profile {
         RealName: string
         Status: "Offline" | "Online"
         Items: RequestAPI.GameDataType[] | null
+        Wishlist: RequestAPI.GameDataType[] | null
     }
 
     type ReducerObject = ProviderVariables

@@ -54,8 +54,20 @@ CartRouter.put(`${PathService}/remove`, async (request, response) => {
 })
 
 CartRouter.post(`${PathService}/payment`, async (request, response) => {
-    const { body } = request
-    const data = await buyProducts(body.accountId)
+    const Token = request.cookies.userUniqueToken
+
+    if (!Token) return response.json({ status: 401 })
+
+    const { exp, iat, ...rest } = verify(Token, JWT_SECRET) as {
+        exp: number,
+        iat: number,
+        PROFILE_NAME: string,
+        PROFILE_PICTURE: number,
+        ACCOUNT_ID: number,
+        PUBLIC_ID: string
+    }
+
+    const data = await buyProducts(rest.ACCOUNT_ID)
     response.json(data)
 })
 

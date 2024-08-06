@@ -17,7 +17,7 @@ export default function Main() {
         {
             name: "Deseados",
             url: "wishlist",
-            value: Profile.Items?.length ?? 0,
+            value: Profile.Wishlist?.length ?? 0,
         }
     ]
 

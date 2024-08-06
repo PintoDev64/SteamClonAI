@@ -14,7 +14,9 @@ export function ProfileLoader({ params }: LoaderType) {
 }
 
 export function GameLoader({ params }: LoaderType) {
-    return fetch(`${URL_API}/api/v1/game?idGame=${params.IdGame}`)
+    return fetch(`${URL_API}/api/v1/game?idGame=${params.IdGame}`,{
+        credentials: "include",
+    })
 }
 
 export function StoreLoader() {
@@ -22,5 +24,7 @@ export function StoreLoader() {
 }
 
 export function CartLoader() {
-    return fetch(`${URL_API}/api/v1`)
+    return fetch(`${URL_API}/api/v1/cart`, {
+        credentials: "include",
+    })
 }

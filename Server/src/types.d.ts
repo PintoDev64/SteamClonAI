@@ -165,6 +165,7 @@ declare type TokenType = { token: string }
 declare type PublicIdType = { publicId: UUIDPattern }
 declare
 declare type GameDataType = {
+    idGame: UUIDPattern
     name: string,
     shortDescription: string,
     icon: string,

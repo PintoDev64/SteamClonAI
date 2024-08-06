@@ -4,7 +4,7 @@ import MysqlHandler from "../../database/Handlers/MysqlHandler";
 export default async function StatusWebsocket(socket: Socket) {
     const { yourPublicId } = socket.handshake.query
 
-    console.log(`the user ${yourPublicId} is connected to /chat`);
+    console.log(`the user ${yourPublicId} is connected`);
 
     MysqlHandler.Update("User", ["STATUS"], ["Online"], {
         Where: {
@@ -14,7 +14,7 @@ export default async function StatusWebsocket(socket: Socket) {
     })
 
     socket.on('disconnect', () => {
-        console.log(`user ${yourPublicId} disconnected from /chat`);
+        console.log(`user ${yourPublicId} disconnected`);
 
         MysqlHandler.Update("User", ["STATUS"], ["Offline"], {
             Where: {

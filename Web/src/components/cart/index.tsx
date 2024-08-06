@@ -19,8 +19,8 @@ export default function AddtoCart({ mode = "Huge", ActiveDate = true, price, tex
   return (
     <div className={`SteamCart${mode}`}>
       <ProductPrice ActiveDate={ActiveDate} mode={mode} price={price.value} discount={price.discount} date={price.discountDate} />
-      <button {...ButtonProps} className={`SteamCart${mode}-Button`} disabled={InLibrary}>
-        <span className={`SteamCart${mode}-ButtonText ${InLibrary && "InLibrary"}`}>{InLibrary ? "En tu libreria" : text ?? "Carrito"}</span>
+      <button {...ButtonProps} className={`SteamCart${mode}-Button ${InLibrary && "InLibrary"}`} disabled={InLibrary}>
+        <span className={`SteamCart${mode}-ButtonText`}>{InLibrary ? "En tu libreria" : text ?? "Carrito"}</span>
       </button>
     </div>
   )

@@ -23,6 +23,7 @@
     width: 31px;
     height: 31px;
     border-radius: 2px;
+    background-color: var(--text-main);
 }
 
 #AccountHeaderName,
@@ -56,14 +57,12 @@
 
 /* --------- Sesion Dropdown --------- */
 
-#AccountHeaderDropdown {}
-
 #AccountHeaderOptions {
     position: absolute;
     right: 0;
     width: 100%;
     height: fit-content;
-    bottom: -125%;
+    top: 100%;
     align-items: flex-start;
     flex-direction: column;
     background-color: var(--bg-highlight);

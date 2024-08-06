@@ -24,7 +24,7 @@ export default function Footer() {
           )}
         </div>
         <div className="SteamFooter-AboutLinks-Element">
-          {AboutLinks[0].map(({ Text, Url }, _index) =>
+          {AboutLinks[1].map(({ Text, Url }, _index) =>
             <a key={_index} className='SteamFooter-AboutLinks-ElementAnchor' href={Url}>{Text}</a>
           )}
         </div>

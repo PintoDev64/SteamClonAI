@@ -11,7 +11,8 @@ export default function UserProvider({ children }: User.ProviderProps) {
         Library: null,
         Name: "",
         Picture: "",
-        PublicId: ""
+        PublicId: "",
+        Wishlist: null
     }
 
     function UserReducer(_state: User.ProviderVariables, data: User.ReducerObject) {

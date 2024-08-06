@@ -55,17 +55,16 @@ export async function getUser({ limited = true, publicId }: User.getUserParams):
             }
         })
 
-        const responseWhislist = await MysqlHandler.Select("Wishlist", ["ITEMS"], {
+        const { ITEMS } = await MysqlHandler.Select("Wishlist", ["ITEMS"], {
             Where: {
                 Columns: ["PUBLIC_ID"],
                 Values: [publicId]
             }
         })
-        
 
         return {
             ...responseData,
-            ...responseWhislist
+            ITEMS: ITEMS
         }
     })
 }
