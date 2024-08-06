@@ -30,9 +30,9 @@ export default function CartPage() {
 
     useEffect(() => CompleteTransition(ModifyPageTransition), [])
 
-    const ProductsWithDiscount = ITEMS.filter(({ products }) => products[0].price.discount !== undefined).map(({ products }) => products[0].price.discount?.value)
+    const ProductsWithDiscount = !ITEMS ? [0] : ITEMS.filter(({ products }) => products[0].price.discount !== undefined).map(({ products }) => products[0].price.discount?.value)
 
-    const ProductsNormal = ITEMS.filter(({ products }) => products[0].price.discount === undefined).map(({ products }) => products[0].price.default)
+    const ProductsNormal = !ITEMS ? [0] : ITEMS.filter(({ products }) => products[0].price.discount === undefined).map(({ products }) => products[0].price.default)
 
     const TotalPrice = [...ProductsWithDiscount, ...ProductsNormal].filter((n): n is number => n !== null && n !== undefined) // Filtra los valores no válidos
         .reduce((accumulator: number, currentValue: number) => {
