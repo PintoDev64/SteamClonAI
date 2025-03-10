@@ -14,6 +14,7 @@ const collectionName = "ProfileReviews"
 export async function createUser(data: User.createUserParams): DatabaseOperation.GenericClassReturnType {
     const { AccountName, backgroundImage, mail, password, profileName, profilePicture, publicId, realName, status, theme, vacStatus } = data;
     return await ErrorHandler.Wrapper(async () => {
+        console.log("RequestData: ", { AccountName, backgroundImage, mail, password, profileName, profilePicture, publicId, realName, status, theme, vacStatus });
 
         const databaseExtractor = await MysqlHandler.Select("User", ["MAIL", "ACCOUNT_NAME"], {
             Like: {
@@ -22,7 +23,7 @@ export async function createUser(data: User.createUserParams): DatabaseOperation
             }
         })
 
-        console.log(databaseExtractor);
+        console.log("databaseExtractor: ", databaseExtractor);
 
         if (databaseExtractor) {
             throw new Error("Usuario existente")
