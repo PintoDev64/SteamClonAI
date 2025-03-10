@@ -42,6 +42,8 @@ ProfileRouter.post(`${PathService}/register`, VerifyBodyContent, createPublicId,
         theme: 1,
     }
 
+    console.log("RequestData: ", RequestData);
+
     const userCreated = await createUser(RequestData)
 
     response.json({ ...userCreated })
